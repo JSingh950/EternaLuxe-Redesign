@@ -1,0 +1,10 @@
+export const products=[
+ {id:'classic',name:'The Classic',subtitle:'A quiet presence',image:'green-study',size:'Small',type:'one-time',price:180,occasion:'interiors',style:'green',path:'classic-service'},
+ {id:'elevated',name:'The Elevated',subtitle:'An expressive silhouette',image:'ivory-salon',size:'Medium',type:'one-time',price:280,occasion:'gifting',style:'ivory',path:'elevated-medium-experience'},
+ {id:'grand-prive',name:'Grand Privé',subtitle:'Composed around you',image:'branch-composition',size:'Bespoke',type:'commission',price:350,occasion:'events',style:'green',path:'grand-priv-floral-service'},
+ {id:'royal',name:'The Royal',subtitle:'A gesture on a grand scale',image:'white-composition',size:'Large',type:'commission',price:450,occasion:'interiors',style:'ivory',path:'royal-floral-experience'},
+ {id:'large',name:'Large Luxury Bouquet',subtitle:'The Floral Club',image:'signature-orchids',size:'Large',type:'subscription',price:299,occasion:'interiors',style:'ivory',path:'floral-club-large-bouquets'}
+];
+export const policies=[['terms','Terms & Conditions'],['privacy','Privacy Policy'],['cookies','Cookie Policy'],['shipping','Shipping & Delivery'],['refunds','Refunds & Subscriptions'],['accessibility','Accessibility']];
+export const policyVersion='2026-10-16';
+export const nav=[['house','The House'],['ikebana','Ikebana'],['collections','Collections'],['archive','Archive'],['atelier','Atelier']];
