@@ -48,12 +48,16 @@
     choices={...next,version:'2026-10-16',expiresAt:Date.now()+180*86400000};
     const stored=storage.set('eternaluxe-privacy-v1',choices);
     cookieStatus('');
+    // The visitor's choice takes effect locally even when the optional evidence API is offline.
+    // Close the UI immediately so a static deployment never appears unresponsive.
+    banner.hidden=true;
+    const preferences=$('#cookie-dialog');
+    if(preferences?.open)preferences.close();
     try{
       const result=await api('/api/consent',{choices:next,receipt,source:'cookie-preferences'});
       receipt=result.receipt;storage.set('eternaluxe-receipt-v1',receipt);
-      banner.hidden=true;$('#cookie-dialog').close();
       if(!stored)cookieStatus('Your choices apply to this visit. Browser storage is unavailable.');
-    }catch(error){cookieStatus('Your choices apply now. The server could not record the change; try saving again when connected.');}
+    }catch(error){/* Local privacy choices remain applied when evidence sync is unavailable. */}
     finally{consentBusy=false;}
   }
   $$('[data-cookie]').forEach(b=>b.addEventListener('click',()=>saveChoices(b.dataset.cookie)));
