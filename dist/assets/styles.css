@@ -48,3 +48,10 @@ body .film-toggle[aria-pressed="false"]>span[aria-hidden]:before{content:'';posi
 body .film-toggle[aria-pressed="true"]>span[aria-hidden]:before{content:'';position:absolute;left:1px;top:1px;width:2px;height:9px;background:currentColor;box-shadow:5px 0 0 currentColor;border:0}
 body .house-cinema-film .film-toggle,body .house-composition-screen .film-toggle{right:10px;bottom:10px}
 @media(max-width:700px){body .film-toggle{width:26px;height:26px;min-height:26px}body .film-toggle:after{inset:-9px}}
+
+/* Collections: a fuller, editorial catalogue rather than a uniform product grid. */
+.collection-grid .collection-item:nth-child(5n+4){width:82%;margin-left:auto}
+.collection-grid .collection-item:nth-child(5n) .collection-photo picture{aspect-ratio:3/4}
+.collection-grid .collection-item:nth-child(7n) .collection-photo picture{aspect-ratio:5/6}
+@media(max-width:1050px){.filter-bar{display:grid;grid-template-columns:repeat(4,1fr)}.filter-bar .quiet-button{justify-self:start}.filter-count{justify-self:end;margin-left:0}}
+@media(max-width:700px){.collection-grid .collection-item:nth-child(5n+4){width:auto;margin-left:15%}.filter-bar{grid-template-columns:1fr 1fr}.filter-count{justify-self:start}}
