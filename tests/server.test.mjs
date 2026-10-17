@@ -72,3 +72,36 @@ test('privacy, forms, immutable evidence and static delivery',async t=>{
  });
  await t.test('does not silently enter production without reviewed configuration',()=>{assert.throws(()=>createApp({dataDir,mode:'production',origin:'https://example.com'}),/Production requires/);});
 });
+
+test('production enquiry delivery targets the designated inbox',async t=>{
+ const dataDir=await fs.mkdtemp(path.join(os.tmpdir(),'eternaluxe-delivery-test-'));
+ const deliveries=[];
+ const app=createApp({
+   dataDir,
+   mode:'production',
+   origin:'https://www.eternaluxe.net',
+   legalApproved:true,
+   webhookUrl:'https://delivery.example.test/intake',
+   webhookSecret:'test-secret',
+   enquiryRecipient:'nicky.vanessaus@gmail.com',
+   fetchImpl:async(url,options)=>{deliveries.push({url:String(url),options});return new Response(null,{status:204});}
+ });
+ await new Promise(resolve=>app.server.listen(0,'127.0.0.1',resolve));
+ const base=`http://127.0.0.1:${app.server.address().port}`;
+ t.after(async()=>{await new Promise(resolve=>app.server.close(resolve));await fs.rm(dataDir,{recursive:true,force:true});});
+ const configResponse=await fetch(base+'/api/config',{headers:{Origin:'https://www.eternaluxe.net'}});
+ const config=await configResponse.json();
+ const cookie=configResponse.headers.get('set-cookie').split(';')[0];
+ const values={email:'visitor@example.com',name:'Test Visitor',project:'Hospitality',location:'New York',message:'A private dining room installation',terms:'on',privacy:'on'};
+ const response=await fetch(base+'/api/forms',{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://www.eternaluxe.net',Cookie:cookie},body:JSON.stringify({csrf:config.csrf,type:'enquiry',values,requestId:randomUUID()})});
+ assert.equal(response.status,201);
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(deliveries.length,1);
+ const delivery=JSON.parse(deliveries[0].options.body);
+ assert.equal(delivery.kind,'enquiry');
+ assert.equal(delivery.recipient,'nicky.vanessaus@gmail.com');
+ assert.equal(delivery.replyTo,'visitor@example.com');
+ assert.match(delivery.subject,/Hospitality.*Test Visitor/);
+ assert.equal(deliveries[0].options.headers.Authorization,'Bearer test-secret');
+ assert.equal(app.db.prepare('SELECT delivery_status FROM submissions').get().delivery_status,'delivered');
+});

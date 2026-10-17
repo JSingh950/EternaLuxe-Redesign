@@ -8,10 +8,12 @@ import {DatabaseSync} from 'node:sqlite';
 const root=path.dirname(fileURLToPath(import.meta.url));
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.avif':'image/avif','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2','.mp4':'video/mp4','.webm':'video/webm','.xml':'application/xml','.txt':'text/plain; charset=utf-8'};
 const allowedEvents=new Set(['hero_interaction','product_view','cta_select','checkout','form_start','form_complete']);
+const defaultEnquiryRecipient='nicky.vanessaus@gmail.com';
 const hash=v=>createHash('sha256').update(v).digest('hex');
 const safeEqual=(a,b)=>typeof a==='string'&&typeof b==='string'&&Buffer.byteLength(a)===Buffer.byteLength(b)&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
-export function createApp({dataDir=process.env.DATA_DIR||path.join(root,'.runtime'),mode=process.env.NODE_ENV==='production'?'production':'preview',origin=process.env.SITE_ORIGIN||'http://localhost:4173',legalApproved=process.env.LEGAL_APPROVED==='true'}={}){
-  if(mode==='production'&&(!legalApproved||!origin.startsWith('https://')||!process.env.ENQUIRY_WEBHOOK_URL||!process.env.ENQUIRY_WEBHOOK_SECRET))throw Error('Production requires reviewed policies, HTTPS SITE_ORIGIN and an authenticated enquiry delivery webhook. See deployment documentation.');
+export function createApp({dataDir=process.env.DATA_DIR||path.join(root,'.runtime'),mode=process.env.NODE_ENV==='production'?'production':'preview',origin=process.env.SITE_ORIGIN||'http://localhost:4173',legalApproved=process.env.LEGAL_APPROVED==='true',webhookUrl=process.env.ENQUIRY_WEBHOOK_URL||'',webhookSecret=process.env.ENQUIRY_WEBHOOK_SECRET||'',enquiryRecipient=process.env.ENQUIRY_RECIPIENT||defaultEnquiryRecipient,fetchImpl=fetch}={}){
+  const validRecipient=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(enquiryRecipient);
+  if(mode==='production'&&(!legalApproved||!origin.startsWith('https://')||!webhookUrl||!webhookSecret||!validRecipient))throw Error('Production requires reviewed policies, HTTPS SITE_ORIGIN, an authenticated enquiry delivery webhook and a valid ENQUIRY_RECIPIENT. See deployment documentation.');
   fs.mkdirSync(dataDir,{recursive:true,mode:0o700});fs.chmodSync(dataDir,0o700);
   const db=new DatabaseSync(path.join(dataDir,'eternaluxe.sqlite'));
   fs.chmodSync(path.join(dataDir,'eternaluxe.sqlite'),0o600);
@@ -53,8 +55,11 @@ export function createApp({dataDir=process.env.DATA_DIR||path.join(root,'.runtim
     const item=db.prepare('SELECT * FROM submissions WHERE id=?').get(id);
     if(!item||item.delivery_status==='delivered')return;
     try{
-      const url=new URL(process.env.ENQUIRY_WEBHOOK_URL);if(url.protocol!=='https:')throw Error('HTTPS required');
-      const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${process.env.ENQUIRY_WEBHOOK_SECRET}`,'Idempotency-Key':id},body:JSON.stringify({id,kind:item.kind,values:JSON.parse(item.payload),createdAt:item.created_at}),signal:AbortSignal.timeout(10000)});
+      const url=new URL(webhookUrl);if(url.protocol!=='https:')throw Error('HTTPS required');
+      const values=JSON.parse(item.payload);
+      const payload={id,kind:item.kind,values,createdAt:item.created_at};
+      if(item.kind==='enquiry')Object.assign(payload,{recipient:enquiryRecipient,replyTo:values.email,subject:`Eternaluxe enquiry — ${values.project||'Private enquiry'} — ${values.name||'Website visitor'}`});
+      const response=await fetchImpl(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${webhookSecret}`,'Idempotency-Key':id},body:JSON.stringify(payload),signal:AbortSignal.timeout(10000)});
       if(!response.ok)throw Error('Delivery failed');db.prepare("UPDATE submissions SET delivery_status='delivered' WHERE id=?").run(id);
     }catch{db.prepare("UPDATE submissions SET delivery_status='retry' WHERE id=?").run(id);}
   }

@@ -17,6 +17,7 @@ Deploy the Node server on a persistent host with a durable filesystem, not an ep
 | LEGAL_APPROVED=true | Only after actual counsel/business approval |
 | ENQUIRY_WEBHOOK_URL | HTTPS endpoint for enquiries and email preference changes |
 | ENQUIRY_WEBHOOK_SECRET | Secret bearer credential from the deployment secret manager |
+| ENQUIRY_RECIPIENT | Enquiry inbox. Set to `nicky.vanessaus@gmail.com` |
 
 Use a reverse proxy with TLS, bounded request timeouts, appropriate distributed rate limits and minimal logs. The current rate limiter and sessions are per-process. Multi-instance operation requires a shared session/rate-limit store and a supported shared database strategy. Do not serve SQLite files, consent exports, environment files or originals publicly. Restrict host/database access and configure encrypted disks/backups, recovery tests, retention, incident response and operational alerts before launch.
 
@@ -24,7 +25,9 @@ For Squarespace, host the API on a **same-site** HTTPS subdomain (for example ap
 
 ### Delivery contract
 
-The server POSTs `{id, kind, values, createdAt}` with `Authorization: Bearer …` and `Idempotency-Key: id`. The receiver must authenticate, deduplicate and durably accept the event before returning 2xx. `kind` is enquiry, newsletter or withdrawal. Respect `values.marketing`: a newsletter form without marketing opt-in must not create a promotional subscription. Process withdrawals and enquiry marketing preferences as new events, not overwritten history. Provider-side unsubscribe links and a verified identity workflow for access/deletion requests are still required.
+The server POSTs `{id, kind, values, createdAt}` with `Authorization: Bearer …` and `Idempotency-Key: id`. Enquiry events additionally include `recipient`, `replyTo` and `subject`; the configured receiver must email the complete enquiry to `nicky.vanessaus@gmail.com`, using `replyTo` for the visitor's address. The receiver must authenticate, deduplicate and durably accept the event before returning 2xx. `kind` is enquiry, newsletter or withdrawal. Respect `values.marketing`: a newsletter form without marketing opt-in must not create a promotional subscription. Process withdrawals and enquiry marketing preferences as new events, not overwritten history. Provider-side unsubscribe links and a verified identity workflow for access/deletion requests are still required.
+
+If the live enquiries page remains a native Squarespace Form Block instead of this API, open the block's **Storage** settings, add **Email**, set the recipient to `nicky.vanessaus@gmail.com`, remove any obsolete recipient, save, and complete a real staging submission. Keep the address server-side or in Squarespace storage settings rather than exposing it in page markup.
 
 Failed delivery is marked retry and retried every minute in batches of ten. Monitor pending/retry records and alert on aging failures; the user response confirms receipt by this service, not successful delivery to a human. Verify provider operations and recovery with the chosen vendor before launch. Do not expose an unauthenticated admin interface.
 
