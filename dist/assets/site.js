@@ -115,7 +115,8 @@
       const id=isHero?(mobile.matches?'orchid-film':'house-film'):video.dataset.video;
       if(state.id===id)return;
       state.id=id;video.poster=`assets/media/${id}-poster.jpg?v=${assetVersion}`;
-      video.replaceChildren(...['webm','mp4'].map(format=>{const s=document.createElement('source');s.src=`assets/media/${id}.${format}?v=${assetVersion}`;s.type=`video/${format}`;return s;}));
+      video.preload='auto';
+      video.replaceChildren(...['mp4','webm'].map(format=>{const s=document.createElement('source');s.src=`assets/media/${id}.${format}?v=${assetVersion}`;s.type=`video/${format}`;return s;}));
       video.load();state.loaded=true;
     };
     state.sync=()=>{
@@ -140,7 +141,7 @@
     mm.add('(prefers-reduced-motion: no-preference)',()=>{
       const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
         if(!entry.isIntersecting)return;observer.unobserve(entry.target);
-        gsap.fromTo(entry.target,{y:24,opacity:0},{y:0,opacity:1,duration:1.05,ease:'power2.out',clearProps:'transform,opacity'});
+        gsap.fromTo(entry.target,{y:16,autoAlpha:0,willChange:'transform,opacity'},{y:0,autoAlpha:1,duration:1.25,ease:'power3.out',clearProps:'transform,opacity,visibility,willChange'});
       }),{threshold:.08});
       $$('[data-reveal]').forEach(el=>observer.observe(el));
       return ()=>observer.disconnect();

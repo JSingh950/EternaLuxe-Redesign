@@ -1,5 +1,11 @@
 # Verification record — 16 October 2026
 
+## House motion and media clarity update — 17 October 2026
+
+The former 43-second overlapping collage in “Moving compositions” was replaced with a clean 30-second, 1440×1080 film generated from five owner-supplied high-resolution Eternaluxe photographs. The new sequence uses restrained optical movement, 1.2-second dissolves and a matching first/final frame for a calmer loop. H.264 is offered first for hardware-friendly playback; visible films preload, off-screen films still pause, and all House video surfaces use compositor-backed rendering. Browser inspection confirmed continuous playback at full 1440×1080 dimensions, ready state 4 and no console warnings or errors.
+
+All photographs were regenerated from their originals with Lanczos resampling, restrained output sharpening, higher AVIF/WebP quality, a 1,920-pixel JPEG fallback and responsive sources up to 2,400 or 2,560 pixels where the original supports them. All supplied videos were re-encoded from their originals at higher quality without inventing detail or upscaling low-resolution footage. Build, all 11 tests, the 23-route/1,115-reference static check and the high-severity dependency audit passed.
+
 ## Enquiry routing update — 17 October 2026
 
 Production enquiry events now carry the designated recipient `nicky.vanessaus@gmail.com`, the visitor address as `replyTo`, and an Eternaluxe project/name subject. An automated production-mode test verifies the authenticated webhook payload and delivered database state. All 11 tests, the 20-page build, the 23-route/1,115-reference static check and a high-severity dependency audit passed. The local preview deliberately continues to store submissions locally and send no email. A real staging submission remains required after the webhook email receiver—or the native Squarespace Form Block Email storage—is configured.

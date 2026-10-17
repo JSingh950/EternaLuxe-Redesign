@@ -12,7 +12,7 @@
 /* House: a portrait campaign and a moving editorial. */
 .house-cinema-screen{display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:center;padding:45px 12%;background:var(--paper)}
 .house-cinema-film{position:relative;aspect-ratio:9/16;height:auto;width:100%;max-width:410px;justify-self:center;background:#d8d0c3;overflow:hidden}
-.house-cinema-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.house-cinema-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;backface-visibility:hidden;transform:translateZ(0)}
 .house-cinema-film .film-toggle{right:16px;bottom:16px}
 .house-cinema-title{color:var(--ink)}
 .house-cinema-title .eyebrow{font-size:9px;margin-bottom:20px;letter-spacing:.24em}
@@ -24,8 +24,8 @@
 .house-film-statement{padding:120px 24px 125px;text-align:center}.house-film-statement .eyebrow{margin-bottom:26px}.house-film-statement h2{font-size:clamp(66px,6vw,100px)}.house-film-statement>p:last-child{margin:30px auto 0;max-width:370px;font-size:12px;color:var(--muted)}
 .house-film-chapter{display:grid;grid-template-columns:1.25fr .7fr;gap:9%;padding:80px var(--gutter) 90px;background:#e9e3d8;align-items:center;scroll-margin-top:30px}
 .house-chapter-label{display:flex;justify-content:space-between;gap:20px;font-size:8px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px}
-.house-composition-screen{aspect-ratio:1442/1080;height:auto;position:relative;background:#312c27;overflow:hidden}
-.house-composition-screen video{width:100%;height:100%;object-fit:contain}.house-composition-screen .film-toggle{bottom:18px;right:18px}
+.house-composition-screen{aspect-ratio:4/3;height:auto;position:relative;background:#312c27;overflow:hidden}
+.house-composition-screen video{width:100%;height:100%;object-fit:cover;backface-visibility:hidden;transform:translateZ(0)}.house-composition-screen .film-toggle{bottom:18px;right:18px}
 .house-film-credit{font-size:10px;color:var(--muted);margin-top:15px}.house-philosophy-copy .eyebrow{margin-bottom:25px}.house-philosophy-copy h2{font-size:clamp(48px,4.8vw,78px);margin-bottom:30px}.house-philosophy-copy>p:not(.eyebrow){font-size:12px;max-width:340px;color:var(--muted);margin-bottom:20px}.house-philosophy-copy .text-link{margin-top:6px}
 .house-portrait-chapter{padding-top:140px}
 @media(max-width:1050px){.house-film-chapter{gap:6%;grid-template-columns:1.1fr .8fr}.house-cinema-screen{padding:45px 7%;gap:6%}}
