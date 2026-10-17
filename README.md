@@ -1,6 +1,6 @@
 # Eternaluxe — the digital House
 
-A responsive editorial storefront built around Eternaluxe's supplied photography and films. The current build contains 20 pages, five service/product pages, all 16 supplied photographs and all three supplied films. The former 3D and composited venue experiments are preserved under `legacy/`, not served on the website.
+A responsive editorial storefront built around Eternaluxe's supplied photography and films. The current build contains 20 pages, five service/product pages, all 16 supplied photographs and all three supplied films, plus the composition film from the existing House page. The former 3D and composited venue experiments are preserved under `legacy/`, not served on the website. The House opens with the supplied glass-vase orchid film in an uncropped portrait presentation.
 
 ## Run the preview
 

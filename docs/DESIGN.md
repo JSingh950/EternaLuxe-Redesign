@@ -38,4 +38,8 @@ Films are silent, inline and manually pausable. Only visible media plays; inacti
 
 ## Seasonal operation
 
+### House film refinement — 17 October 2026
+
+The House now opens with the supplied glass-vase orchid film (`orchid-film`), displayed in its native 9:16 proportions beside the title on desktop and above it on mobile. It is not stretched into a landscape background or artificially upscaled. The darker opening film from the old site was rejected after review and retained only as reference material. The site's existing `Images Motion ETERNALUXE Video.mp4` is preserved as `house-compositions-film` in the philosophy section, framed at its original 1442:1080 aspect ratio. Both films retain pause controls, posters, reduced-motion/data-saving behavior and off-screen pausing. Only the opening film loads initially.
+
 Update catalogue/media data and approved copy, regenerate assets and rebuild. Keep stable page routes and layout components. Archive previous campaigns deliberately. Each release must preserve consent behavior, policy versions, accessibility and live commerce tests; the visual refresh never exempts these checks.

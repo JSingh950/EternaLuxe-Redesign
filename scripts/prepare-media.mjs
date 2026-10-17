@@ -28,8 +28,11 @@ for(const item of images){
   console.log(`Prepared ${item.id}`);
 }
 for(const item of videos){
-  const dest=`${originals}/${item.id}.mov`;
-  try{await fs.access(dest)}catch{await fs.copyFile(path.join(input,item.original),dest)}
+  const dest=`${originals}/${item.id}${path.extname(item.original).toLowerCase()}`;
+  try{await fs.access(dest)}catch{
+    if(item.sourceUrl)execFileSync(ffmpeg,['-y','-allowed_extensions','ALL','-i',item.sourceUrl,'-c','copy','-movflags','+faststart',dest],{stdio:['ignore','ignore','pipe']});
+    else await fs.copyFile(path.join(input,item.original),dest);
+  }
   for(const format of ['mp4','webm']){
     const output=`${out}/${item.id}.${format}`;
     try{await fs.access(output)}catch{

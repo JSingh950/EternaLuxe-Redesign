@@ -1,5 +1,9 @@
 # Verification record — 16 October 2026
 
+## House update — 17 October 2026
+
+The opening now uses the supplied glass-vase orchid film, not the dark film on the old site. Its native 9:16 framing is retained; no landscape stretching or invented resolution enhancement is applied. A second film from the existing House page appears in the philosophy section. Browser checks confirmed correct playback, manual pause, lazy loading of the second film and off-screen pausing. The updated House page had no horizontal overflow and one H1 at actual viewports of 375, 768, 1440 and 1920 CSS pixels. Desktop/mobile screenshots were visually inspected; no browser errors were observed. Build, all 10 reported tests, the Squarespace package generator and dependency audit passed. The expanded static check verified 1,115 references and all 20 active media records, including video posters and exclusion of the rejected opening.
+
 ## Automated
 
 - `npm run build`: 20 pages plus three legacy-route redirects generated.
