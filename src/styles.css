@@ -97,3 +97,57 @@ button,input,select,textarea{font-family:var(--sans)}
 .archive-film{max-height:650px;overflow:hidden}.archive-film video{width:100%;max-height:650px;object-fit:cover}
 #ikebana{scroll-margin-top:35px}.text-link{gap:0}
 @media(max-width:700px){.venue-scene,.venue-controls{aspect-ratio:1560/820}.venue-caption{display:block;padding:24px 24px 35px}.venue-caption .text-link{margin-top:20px}.venue-controls .film-toggle{bottom:14px;right:14px}.venue-manual{bottom:10px;left:14px}.venue-manual button{font-size:10px;padding:6px 10px}.wordmark{width:156px}.footer-wordmark{padding-top:30px}.house-cinema-title h1{font-size:56px}}
+/* Concise editorial pacing: space around the work, not between repeated chapters. */
+:root{--paper:#f2ebdd}
+.house-statement{margin:48px auto 56px}.house-statement h2{font-size:clamp(30px,3.3vw,48px)}
+.collection-section{padding-bottom:55px}.editorial-collection{gap:7%;grid-template-columns:1fr 1fr}
+.editorial-collection .collection-item:nth-child(2){padding-top:45px}
+.editorial-collection .collection-photo picture{aspect-ratio:5/4}
+.house-motion{padding:40px 0 35px}.motion-heading{padding-bottom:20px}.motion-canvas{padding:12px 0 45px}
+.motion-lane{height:clamp(170px,18vw,250px);margin-bottom:18px}
+.motion-canvas.is-static .motion-lane{height:clamp(170px,18vw,250px);overflow-x:auto;margin-bottom:18px}
+.motion-canvas.is-static .motion-track{width:max-content;height:100%}
+.motion-canvas.is-static .motion-group{display:flex;width:auto;height:100%;padding:0 24px;gap:24px;margin:0}
+.motion-canvas.is-static .motion-frame{width:auto;height:88%;flex-shrink:0}
+.discovery-pair{display:grid;grid-template-columns:1fr 1fr;gap:8%;padding:45px var(--gutter)}
+.discovery-pair article{border-top:1px solid var(--rule);padding-top:24px}
+.discovery-pair h2{font-size:clamp(25px,2.6vw,38px);margin:12px 0}.discovery-pair p{font-size:12px}
+.club-image{max-height:400px}.club-copy{padding:45px}.club-copy h2{font-size:38px}
+.house-cinema-screen{padding-top:30px;padding-bottom:30px}.house-cinema-film{max-height:480px;width:auto;aspect-ratio:9/16;justify-self:center}
+.house-film-chapter{padding:40px var(--gutter)}.house-philosophy-copy h2{font-size:38px;margin-bottom:18px}
+.page-intro{padding-top:45px;padding-bottom:35px}.page-intro h1{font-size:clamp(38px,5vw,65px)}
+.film-editorial{padding:35px var(--gutter);margin-bottom:30px}.film-editorial>.film{max-height:380px;aspect-ratio:9/16;width:auto;justify-self:center}
+.atelier-opening{padding-bottom:45px}.atelier-opening picture{max-height:500px}
+.three-notes{padding-top:35px;padding-bottom:35px}
+.collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 30px}
+.collection-grid .collection-item:nth-child(n){padding:0;margin:0;width:auto}
+.collection-grid .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5}
+.collection-grid .item-caption h3{font-size:23px}
+.archive-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.archive-grid>figure:nth-child(n){padding:0;margin:0}.archive-grid picture{aspect-ratio:4/5}
+.invitation{padding:35px var(--gutter)}.invitation h2{font-size:32px}
+.site-footer{padding-top:35px}.footer-wordmark{max-width:520px;padding-top:25px}
+.related-grid{grid-template-columns:1fr 1fr}.related-grid picture{max-height:330px}
+@media(max-width:700px){
+ .venue-scene,.venue-controls{aspect-ratio:1774/820}
+ .house-statement{margin:32px auto}.house-statement h2{font-size:30px}
+ .editorial-collection{gap:16px}.editorial-collection .collection-item:nth-child(2){padding:24px 0 0}
+ .editorial-collection .collection-photo picture{aspect-ratio:3/4}.item-caption h3{font-size:20px}
+ .section-top h2{font-size:30px}.house-motion{padding:28px 0 20px}.motion-heading>p{display:none}
+ .motion-lane,.motion-canvas.is-static .motion-lane{height:185px}
+ .discovery-pair{gap:28px;padding:30px 24px;grid-template-columns:1fr}.discovery-pair h2{font-size:27px}
+ .club-image{height:240px}.club-image picture{height:100%;aspect-ratio:auto}.club-copy{padding:30px 24px}.club-copy h2{font-size:30px}
+ .house-cinema-film{max-height:340px}.house-cinema-screen{gap:24px}.house-cinema-title h1{font-size:45px}
+ .house-philosophy-copy{padding:0}.house-philosophy-copy h2{font-size:30px}
+ .film-editorial{gap:25px}.film-editorial>.film{height:300px;width:auto}.film-editorial h2{font-size:32px}
+ .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 16px}.collection-grid .item-caption h3{font-size:19px}
+ .archive-grid{grid-template-columns:1fr 1fr;gap:18px}.archive-film{max-height:300px}
+ .atelier-opening picture{max-height:330px}.atelier-opening h2{font-size:32px}
+ .three-notes{gap:18px}.three-notes article{padding-bottom:12px}.three-notes h3{font-size:23px}
+ .invitation h2{font-size:27px}.related-grid{gap:16px}.related-grid picture{max-height:230px}
+}
+/* Explicit inline size prevents an intrinsic-free video collapsing in the grid. */
+.house-cinema-film{width:min(100%,270px);height:480px}
+@media(max-width:700px){.house-cinema-film{width:191px;height:340px}}
+
+

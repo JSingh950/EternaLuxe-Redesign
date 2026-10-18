@@ -107,20 +107,22 @@
   }
   const scene=$('[data-venue]');
   if(scene&&window.gsap){
-    const layers=[$('.venue-table',scene),$('.venue-moss',scene)];
+    const layers=[$('.venue-table',scene),$('.venue-console',scene),$('.venue-pedestal',scene),$('.venue-moss',scene)];
     const controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
     const connection=navigator.connection;
-    let ready=false,visible=false,userPaused=false,step=2,staticMode=false;
+    let ready=false,visible=false,userPaused=false,step=4,staticMode=false;
     const still=()=>reduced.matches||connection?.saveData;
     if(!still())gsap.set(layers,{opacity:0});
     const timeline=gsap.timeline({paused:true,repeat:-1});
     timeline.set(layers,{opacity:0},0)
       .to(layers[0],{opacity:1,duration:1.4,ease:'sine.inOut'},1.2)
-      .to(layers[1],{opacity:1,duration:1.6,ease:'sine.inOut'},4.8)
-      .to(layers,{opacity:0,duration:1.5,ease:'sine.inOut'},9.9);
+      .to(layers[1],{opacity:1,duration:1.6,ease:'sine.inOut'},3.4)
+      .to(layers[2],{opacity:1,duration:1.6,ease:'sine.inOut'},5.4)
+      .to(layers[3],{opacity:1,duration:1.8,ease:'sine.inOut'},7.4)
+      .to(layers,{opacity:0,duration:1.8,ease:'sine.inOut'},13.7);
     function sync(){
       const running=ready&&visible&&!document.hidden&&!userPaused&&!still();
-      if(still()){timeline.pause();if(!staticMode){gsap.set(layers,{opacity:1});step=2;}}
+      if(still()){timeline.pause();if(!staticMode){gsap.set(layers,{opacity:1});step=4;}}
       else if(running)timeline.play();else timeline.pause();
       staticMode=!!still();
       toggle.hidden=!!still();manual.hidden=!still();
@@ -129,7 +131,7 @@
       toggle.querySelector('span').textContent=running?'Ⅱ':'▷';
     }
     toggle.addEventListener('click',()=>{userPaused=!userPaused;sync();});
-    function show(delta){step=(step+delta+3)%3;gsap.set(layers[0],{opacity:step>0?1:0});gsap.set(layers[1],{opacity:step>1?1:0});}
+    function show(delta){step=(step+delta+layers.length+1)%(layers.length+1);layers.forEach((layer,i)=>gsap.set(layer,{opacity:step>i?1:0}));}
     $('[data-scene-prev]').addEventListener('click',()=>show(-1));
     $('[data-scene-next]').addEventListener('click',()=>show(1));
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
@@ -140,8 +142,8 @@
       scene.setAttribute('aria-label','A warm New York room with a central stone table');
     });
   }
-  const montage=$('[data-house-motion]');
-  if(montage&&window.gsap){
+  $$('[data-house-motion]').forEach(montage=>{
+  if(window.gsap){
     const button=$('[data-motion-toggle]',montage),tracks=$$('.motion-track',montage);
     const films=$$('video[data-motion-video]',montage).map(video=>({video,visible:false,loaded:false}));
     const connection=navigator.connection;
@@ -163,7 +165,7 @@
       montage.classList.toggle('is-static',!!staticView());button.hidden=!!staticView();
       if(!staticView())tracks.forEach((track,i)=>{
         const right=track.dataset.direction==='1';
-        tweens.push(gsap.fromTo(track,{xPercent:right?-50:0},{xPercent:right?0:-50,duration:[100,112,106][i],ease:'none',repeat:-1,paused:true}));
+        tweens.push(gsap.fromTo(track,{xPercent:right?-50:0},{xPercent:right?0:-50,duration:Math.max(100,track.scrollWidth/2/24),ease:'none',repeat:-1,paused:true}));
       });
       sync();
     }
@@ -174,6 +176,7 @@
     document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',configure);connection?.addEventListener('change',configure);
     configure();
   }
+  });
   const players=[];
   function player(video,button,isHero=false){
     const state={video,button,visible:false,userPaused:false,loaded:false,id:null,manual:false};players.push(state);

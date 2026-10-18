@@ -19,7 +19,7 @@ for(const width of [375,768,1440,1920]){
 }
 await page.emulateMedia({reducedMotion:'reduce'});await page.waitForTimeout(150);assert.equal(await page.locator('.motion-canvas').evaluate(e=>e.classList.contains('is-static')),true);
 await page.emulateMedia({reducedMotion:'no-preference'});await page.locator('[data-motion-toggle]').click();
-await page.locator('h1').scrollIntoViewIfNeeded();await page.waitForTimeout(300);
+await page.locator('.site-footer').scrollIntoViewIfNeeded();await page.waitForTimeout(300);
 assert.equal(await page.locator('[data-motion-video]').evaluateAll(v=>v.every(x=>x.paused)),true);
 const context=await browser.newContext({javaScriptEnabled:false});const fallback=await context.newPage();await fallback.goto(base+'/house.html');assert.equal(await fallback.locator('.motion-canvas.is-static').count(),1);await context.close();
 assert.deepEqual(errors,[]);await browser.close();console.log('House motion: responsive layouts, 19 sources, drift, pause, reduced motion, offscreen films and no-JS passed.');
