@@ -149,5 +149,23 @@ button,input,select,textarea{font-family:var(--sans)}
 /* Explicit inline size prevents an intrinsic-free video collapsing in the grid. */
 .house-cinema-film{width:min(100%,270px);height:480px}
 @media(max-width:700px){.house-cinema-film{width:191px;height:340px}}
+/* Color-led browsing and a compact wall-design edit. */
+.filter-bar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:end}
+.filter-bar label{min-width:0}.filter-bar select{max-width:100%}
+.filter-count{grid-column:2/-1;justify-self:end}
+.collection-more{display:flex;justify-content:center;margin:32px 0}
+.concept-label{display:block!important;font-size:10px!important;color:var(--muted);margin-top:8px}
+.wall-showcase{padding:35px var(--gutter) 45px}
+.wall-intro{font-size:12px;color:var(--muted);margin-bottom:25px;max-width:75ch}
+.wall-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.wall-options picture{aspect-ratio:4/5}.wall-options .item-caption h3{font-size:23px}
+.wall-options .item-caption{display:block}.wall-options .price{display:block;margin-top:10px}
+@media(max-width:700px){
+ .filter-bar{grid-template-columns:1fr 1fr;gap:14px}.filter-count{grid-column:1/-1;justify-self:start}
+ .collection-grid .item-caption{display:block}.collection-grid .price{display:block;margin-top:8px}
+ .wall-options{grid-template-columns:1fr 1fr;gap:25px 16px}.wall-options .item-caption h3{font-size:20px}
+ .wall-showcase .section-top{display:block}.wall-showcase .section-top .text-link{margin-top:12px}
+}
+
 
 

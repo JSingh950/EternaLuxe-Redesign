@@ -93,17 +93,30 @@
       for(const [name,description,url] of matches){const a=document.createElement('a');a.href=url;const strong=document.createElement('strong');strong.textContent=name;const small=document.createElement('small');small.textContent=description;a.append(strong,small);results.append(a);}
       $('.search-status').textContent=`${matches.length} result${matches.length===1?'':'s'}`;
     };
-    fetch(`assets/catalog.json?v=${assetVersion}`).then(r=>r.json()).then(items=>{items.forEach(p=>entries.push([p.name,`${p.subtitle} · ${p.size}`,`product-${p.id}.html`]));renderSearch();}).catch(()=>renderSearch());
+    fetch(`assets/catalog.json?v=${assetVersion}`).then(r=>r.json()).then(items=>{items.forEach(p=>entries.push([p.name,`${p.subtitle||'AI design concept'} · ${p.size} · ${p.style}`,p.concept?`enquiries.html?project=Residential&composition=${encodeURIComponent(p.name+' (concept)')}`:`product-${p.id}.html`]));renderSearch();}).catch(()=>renderSearch());
     searchInput.addEventListener('input',renderSearch);renderSearch();
   }
   if(filters){
+    const items=$$('.collection-grid .collection-item'),more=$('[data-show-more]');
+    let limit=6;
+    for(const key of ['size','type','occasion','style','format']){
+      const field=filters.elements.namedItem(key),value=query.get(key);
+      if(field&&value&&[...field.options].some(o=>o.value===value))field.value=value;
+    }
     const filter=()=>{
-      const vals=Object.fromEntries(new FormData(filters));let count=0;
-      $$('.collection-grid .collection-item').forEach(item=>{const show=Object.entries(vals).every(([k,v])=>!v||item.dataset[k]===v);item.hidden=!show;if(show)count++;});
-      $('.filter-count').textContent=`${count} composition${count===1?'':'s'}`;$('.empty-state').hidden=count!==0;
+      const vals=Object.fromEntries(new FormData(filters));
+      const matches=items.filter(item=>Object.entries(vals).every(([k,v])=>!v||(item.dataset[k]||'').split(' ').includes(v)));
+      items.forEach(item=>{item.hidden=true;});
+      matches.slice(0,limit).forEach(item=>{item.hidden=false;});
+      $('.filter-count').textContent=`Showing ${Math.min(limit,matches.length)} of ${matches.length} compositions`;
+      $('.empty-state').hidden=matches.length!==0;more.hidden=matches.length<=limit;
+      more.textContent=`Show more compositions (${Math.max(0,matches.length-limit)} remaining)`;
     };
-    filters.addEventListener('change',filter);filters.addEventListener('reset',()=>queueMicrotask(filter));
+    filters.addEventListener('change',()=>{limit=6;filter();});
+    filters.addEventListener('reset',()=>queueMicrotask(()=>{limit=6;filter();}));
+    more.addEventListener('click',()=>{limit+=6;filter();});
     $('[data-reset-filters]')?.addEventListener('click',()=>filters.reset());
+    filter();
   }
   const scene=$('[data-venue]');
   if(scene&&window.gsap){
