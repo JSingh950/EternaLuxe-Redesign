@@ -1,5 +1,6 @@
 import './prepare-brand.mjs';
 import fs from 'node:fs/promises';
+import {houseMotion} from '../src/house-motion.mjs';
 import {createHash} from 'node:crypto';
 import {images} from '../src/media.mjs';
 import {products,policies,policyVersion,nav} from '../src/catalog.mjs';
@@ -34,8 +35,8 @@ const house=()=>`
   <div class="house-film-colophon"><span>01 / The art of presence</span><span>Orchids · A moving study</span><span>The House of Eternaluxe</span></div>
 </section>
 <section class="house-film-statement" data-reveal><p class="eyebrow">The language of the House</p><h2>Not simply seen.<br><em>Felt.</em></h2><p>A composition changes more than a room. It changes how a room feels. Our work begins with that possibility.</p></section>
-<section id="house-philosophy" class="house-film-chapter" aria-labelledby="house-philosophy-title">
-  <div class="house-film-study"><div class="house-chapter-label"><span>02 / Moving compositions</span><span>The Eternaluxe collection</span></div>${video('house-compositions-film','house-composition-screen','Eternaluxe compositions — a film study')}<p class="house-film-credit">A study in line, texture and the spaces between.</p></div>
+${houseMotion(img)}
+<section id="house-philosophy" class="house-film-chapter house-motion-philosophy" aria-labelledby="house-philosophy-title">
   <div class="house-philosophy-copy" data-reveal><p class="eyebrow">Our philosophy</p><h2 id="house-philosophy-title">Form becomes<br><em>feeling.</em></h2><p>Our creative language draws on ikebana: a sensitivity to line, balance and the relationship between a composition and its surroundings.</p><p>The space between stems matters as much as the flowers. A branch, a vessel, a shift in light—each changes the whole.</p>${link('house.html#ikebana','Explore our inspiration')}</div>
 </section>
 <section class="house-opening house-portrait-chapter">${photo('house-portrait','The House of Eternaluxe')}<div data-reveal><p class="eyebrow">Our point of view</p><h2>Considered form.<br><em>Lasting impression.</em></h2><p>Eternaluxe brings sculptural floristry into conversation with interiors, objects and the people around them. Our work moves between intimate arrangements and larger botanical installations.</p><p>We are drawn to tension and balance: the softness of a petal against a strong branch, a gesture of color against a quiet room, the beauty of leaving space.</p>${link('atelier.html','Inside the atelier')}</div></section>

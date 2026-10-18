@@ -140,6 +140,40 @@
       scene.setAttribute('aria-label','A warm New York room with a central stone table');
     });
   }
+  const montage=$('[data-house-motion]');
+  if(montage&&window.gsap){
+    const button=$('[data-motion-toggle]',montage),tracks=$$('.motion-track',montage);
+    const films=$$('video[data-motion-video]',montage).map(video=>({video,visible:false,loaded:false}));
+    const connection=navigator.connection;
+    let visible=false,paused=false,tweens=[];
+    const staticView=()=>reduced.matches||connection?.saveData;
+    function sync(){
+      const moving=visible&&!paused&&!document.hidden&&!staticView();
+      tweens.forEach(t=>moving?t.play():t.pause());
+      button.setAttribute('aria-label',paused?'Play moving collection':'Pause moving collection');
+      button.setAttribute('aria-pressed',String(!paused));button.querySelector('span').textContent=paused?'▷':'Ⅱ';
+      films.forEach(item=>{
+        if(!moving||!item.visible){item.video.pause();return;}
+        if(!item.loaded){item.loaded=true;item.video.src=`assets/media/${item.video.dataset.motionVideo}.mp4?v=${assetVersion}`;}
+        item.video.play().catch(()=>{});
+      });
+    }
+    function configure(){
+      tweens.forEach(t=>t.kill());tweens=[];gsap.set(tracks,{clearProps:'transform'});
+      montage.classList.toggle('is-static',!!staticView());button.hidden=!!staticView();
+      if(!staticView())tracks.forEach((track,i)=>{
+        const right=track.dataset.direction==='1';
+        tweens.push(gsap.fromTo(track,{xPercent:right?-50:0},{xPercent:right?0:-50,duration:[100,112,106][i],ease:'none',repeat:-1,paused:true}));
+      });
+      sync();
+    }
+    button.addEventListener('click',()=>{paused=!paused;sync();});
+    new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.05}).observe(montage);
+    const filmObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{const item=films.find(f=>f.video===e.target);item.visible=e.isIntersecting;});sync();},{threshold:.15});
+    films.forEach(f=>filmObserver.observe(f.video));
+    document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',configure);connection?.addEventListener('change',configure);
+    configure();
+  }
   const players=[];
   function player(video,button,isHero=false){
     const state={video,button,visible:false,userPaused:false,loaded:false,id:null,manual:false};players.push(state);

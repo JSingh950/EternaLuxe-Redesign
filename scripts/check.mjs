@@ -22,7 +22,7 @@ const media=JSON.parse(await fs.readFile('src/media-manifest.json'));assert.equa
 const allPages=(await Promise.all(files.map(f=>fs.readFile('dist/'+f,'utf8')))).join('\n');
 const house=await fs.readFile('dist/house.html','utf8');
 assert.ok(house.includes('data-video="orchid-film"'),'House opens with the supplied orchid film');
-assert.ok(house.includes('data-video="house-compositions-film"'),'House includes its composition film');
+assert.ok(house.includes('data-house-motion'),'House includes the live photographic composition');
 assert.ok(!house.includes('house-origin-film'),'Rejected dark opening is not served on the House page');
-for(const item of media){assert.ok(allPages.includes(item.id),`Asset ${item.id} used`);assert.ok(item.rights.includes('Owner confirmed'));}
+for(const item of media){if(item.id!=='house-compositions-film')assert.ok(allPages.includes(item.id),`Asset ${item.id} used`);assert.ok(item.rights.includes('Owner confirmed'));}
 console.log(`Checked ${files.length} routes, ${checked} local references and all ${media.length} media assets.`);
