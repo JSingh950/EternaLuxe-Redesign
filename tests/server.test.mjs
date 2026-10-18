@@ -68,6 +68,7 @@ test('privacy, forms, immutable evidence and static delivery',async t=>{
    const home=await fetch(base);assert.equal(home.status,200);assert.ok(home.headers.get('content-security-policy').includes("frame-ancestors 'none'"));
    const range=await fetch(base+'/assets/media/house-film.mp4',{headers:{Range:'bytes=0-99'}});assert.equal(range.status,206);assert.equal((await range.arrayBuffer()).byteLength,100);
    const redirect=await fetch(base+'/accesibility',{redirect:'manual'});assert.equal(redirect.status,301);assert.equal(redirect.headers.get('location'),'/accessibility');
+   for(const route of ['/ikebana','/ikebana.html']){const moved=await fetch(base+route,{redirect:'manual'});assert.equal(moved.status,301);assert.equal(moved.headers.get('location'),'/house.html#ikebana');}
    assert.equal((await fetch(base+'/.runtime/eternaluxe.sqlite')).status,404);
  });
  await t.test('does not silently enter production without reviewed configuration',()=>{assert.throws(()=>createApp({dataDir,mode:'production',origin:'https://example.com'}),/Production requires/);});

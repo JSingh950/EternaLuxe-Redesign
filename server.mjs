@@ -138,7 +138,7 @@ export function createApp({dataDir=process.env.DATA_DIR||path.join(root,'.runtim
         return json(res,404,{error:'Not found.'});
       }
       if(!['GET','HEAD'].includes(req.method))return json(res,405,{error:'Method not allowed.'});
-      const redirects={'/accesibility':'/accessibility','/accesibility.html':'/accessibility.html','/arrangements':'/collections','/bespoke-events':'/atelier'};
+      const redirects={'/ikebana':'/house.html#ikebana','/ikebana.html':'/house.html#ikebana','/accesibility':'/accessibility','/accesibility.html':'/accessibility.html','/arrangements':'/collections','/bespoke-events':'/atelier'};
       if(redirects[url.pathname]){res.writeHead(301,{Location:redirects[url.pathname]});return res.end();}
       let pathname;try{pathname=decodeURIComponent(url.pathname)}catch{return json(res,400,{error:'Invalid path.'})}
       if(pathname.includes('\0')||pathname.split('/').some(p=>p.startsWith('.')))return json(res,404,{error:'Not found.'});

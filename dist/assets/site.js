@@ -86,7 +86,7 @@
   const filters=$('.filter-bar');
   const searchInput=$('#house-search');
   if(searchInput){
-    const entries=[['The House','Philosophy and floral art','house.html'],['Ikebana','Line, space and balance','ikebana.html'],['The Collection','Floral arrangements','collections.html'],['The Atelier','Hospitality, interiors and commissions','atelier.html'],['The Archive','Campaigns and installations','archive.html'],['The Floral Club','Monthly floral service','floral-club.html']];
+    const entries=[['The House','Philosophy, Ikebana, line, space and floral art','house.html'],['The Collection','Floral arrangements','collections.html'],['The Atelier','Hospitality, interiors and commissions','atelier.html'],['The Archive','Campaigns and installations','archive.html'],['The Floral Club','Monthly floral service','floral-club.html']];
     const renderSearch=()=>{
       const q=searchInput.value.trim().toLowerCase();const matches=entries.filter(e=>e.join(' ').toLowerCase().includes(q));
       const results=$('.search-results');results.replaceChildren();
@@ -104,6 +104,41 @@
     };
     filters.addEventListener('change',filter);filters.addEventListener('reset',()=>queueMicrotask(filter));
     $('[data-reset-filters]')?.addEventListener('click',()=>filters.reset());
+  }
+  const scene=$('[data-venue]');
+  if(scene&&window.gsap){
+    const layers=[$('.venue-table',scene),$('.venue-moss',scene)];
+    const controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
+    const connection=navigator.connection;
+    let ready=false,visible=false,userPaused=false,step=2,staticMode=false;
+    const still=()=>reduced.matches||connection?.saveData;
+    if(!still())gsap.set(layers,{opacity:0});
+    const timeline=gsap.timeline({paused:true,repeat:-1});
+    timeline.set(layers,{opacity:0},0)
+      .to(layers[0],{opacity:1,duration:1.4,ease:'sine.inOut'},1.2)
+      .to(layers[1],{opacity:1,duration:1.6,ease:'sine.inOut'},4.8)
+      .to(layers,{opacity:0,duration:1.5,ease:'sine.inOut'},9.9);
+    function sync(){
+      const running=ready&&visible&&!document.hidden&&!userPaused&&!still();
+      if(still()){timeline.pause();if(!staticMode){gsap.set(layers,{opacity:1});step=2;}}
+      else if(running)timeline.play();else timeline.pause();
+      staticMode=!!still();
+      toggle.hidden=!!still();manual.hidden=!still();
+      toggle.setAttribute('aria-label',running?'Pause room animation':'Play room animation');
+      toggle.setAttribute('aria-pressed',String(running));
+      toggle.querySelector('span').textContent=running?'Ⅱ':'▷';
+    }
+    toggle.addEventListener('click',()=>{userPaused=!userPaused;sync();});
+    function show(delta){step=(step+delta+3)%3;gsap.set(layers[0],{opacity:step>0?1:0});gsap.set(layers[1],{opacity:step>1?1:0});}
+    $('[data-scene-prev]').addEventListener('click',()=>show(-1));
+    $('[data-scene-next]').addEventListener('click',()=>show(1));
+    new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
+    document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',()=>{timeline.restart().pause();sync();});
+    connection?.addEventListener('change',sync);
+    Promise.all($$('img',scene).map(img=>img.decode())).then(()=>{ready=true;controls.hidden=false;timeline.seek(0);staticMode=false;sync();}).catch(()=>{
+      timeline.kill();layers.forEach(layer=>layer.hidden=true);controls.hidden=true;
+      scene.setAttribute('aria-label','A warm New York room with a central stone table');
+    });
   }
   const players=[];
   function player(video,button,isHero=false){
@@ -146,6 +181,8 @@
       const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
         if(!entry.isIntersecting)return;observer.unobserve(entry.target);
         gsap.fromTo(entry.target,{y:16,autoAlpha:0,willChange:'transform,opacity'},{y:0,autoAlpha:1,duration:1.25,ease:'power3.out',clearProps:'transform,opacity,visibility,willChange'});
+        const photograph=entry.target.querySelector('picture img');
+        if(photograph)gsap.fromTo(photograph,{scale:1.02},{scale:1,duration:2.2,ease:'sine.out',clearProps:'transform'});
       }),{threshold:.08});
       $$('[data-reveal]').forEach(el=>observer.observe(el));
       return ()=>observer.disconnect();

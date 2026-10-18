@@ -1,0 +1,7 @@
+assets/source-media
+legacy
+.runtime
+node_modules
+.git
+tmp
+integration

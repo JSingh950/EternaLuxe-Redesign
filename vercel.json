@@ -5,6 +5,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
+    { "source": "/ikebana", "destination": "/house.html#ikebana", "permanent": true },
+    { "source": "/ikebana.html", "destination": "/house.html#ikebana", "permanent": true },
     { "source": "/accesibility", "destination": "/accessibility.html", "permanent": true },
     { "source": "/accesibility.html", "destination": "/accessibility.html", "permanent": true },
     { "source": "/arrangements", "destination": "/collections.html", "permanent": true },

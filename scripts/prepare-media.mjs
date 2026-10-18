@@ -64,7 +64,7 @@ await fs.writeFile('src/media-manifest.json',JSON.stringify(register,null,2)+'\n
 const csv=['asset_filename,source_filename,owner,permission,usage_scope,confirmation_date,provenance,status',...register.map(i=>[i.id,i.original,'Eternaluxe','User confirmation in project conversation','Commercial website and campaign use','2026-10-16',i.provenance||'Owner supplied; photographer not specified','APPROVED FOR PRODUCTION'].map(v=>'"'+v.replaceAll('"','""')+'"').join(','))].join('\n');
 await fs.writeFile('image-rights-register.csv',csv+'\n');
 await fs.mkdir('dist/assets/fonts',{recursive:true});
-for(const [family,files] of Object.entries({'cormorant-garamond':['latin-400-normal','latin-400-italic'],'manrope':['latin-400-normal','latin-500-normal']})){
+for(const [family,files] of Object.entries({'nunito-sans':['latin-400-normal','latin-600-normal'],'manrope':['latin-500-normal']})){
  for(const file of files) await fs.copyFile(`node_modules/@fontsource/${family}/files/${family}-${file}.woff2`,`dist/assets/fonts/${family}-${file}.woff2`);
  await fs.copyFile(`node_modules/@fontsource/${family}/LICENSE`,`dist/assets/fonts/${family}-LICENSE.txt`);
 }

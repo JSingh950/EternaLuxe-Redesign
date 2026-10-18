@@ -14,4 +14,4 @@ export const products=[
 ];
 export const policies=[['terms','Terms & Conditions'],['privacy','Privacy Policy'],['cookies','Cookie Policy'],['shipping','Shipping & Delivery'],['refunds','Refunds & Subscriptions'],['accessibility','Accessibility']];
 export const policyVersion='2026-10-16';
-export const nav=[['house','The House'],['ikebana','Ikebana'],['collections','Collections'],['archive','Archive'],['atelier','Atelier']];
+export const nav=[['house','The House'],['collections','Collections'],['archive','Archive'],['atelier','Atelier']];
