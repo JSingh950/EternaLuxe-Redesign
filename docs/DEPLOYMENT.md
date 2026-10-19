@@ -19,6 +19,12 @@ Deploy the Node server on a persistent host with a durable filesystem, not an ep
 | ENQUIRY_WEBHOOK_SECRET | Secret bearer credential from the deployment secret manager |
 | ENQUIRY_RECIPIENT | Enquiry inbox. Set to `nicky.vanessaus@gmail.com` |
 
+### Vercel deployment
+
+The repository also includes small Web-standard functions under `api/` for the connected Vercel project. They preserve same-origin checks, an HttpOnly CSRF cookie, field validation, separate Terms and Privacy states, policy hashes, UTC timestamps, privacy-preserving receipt hashes and idempotency keys. They do not write to Vercel's ephemeral filesystem. Instead, an authenticated HTTPS receiver must durably store the event before returning a successful response.
+
+Configure `LEGAL_APPROVED=true`, `ENQUIRY_WEBHOOK_URL`, and `ENQUIRY_WEBHOOK_SECRET` for the Production environment in Vercel, then redeploy. The webhook secret must be at least 16 characters. Enquiry delivery is fail-closed: if legal approval or the authenticated receiver is missing, the form returns an unavailable message and never claims that an enquiry was received. The receiver must email enquiry events to the `recipient` in the signed payload, which is fixed by the application to `nicky.vanessaus@gmail.com`.
+
 Use a reverse proxy with TLS, bounded request timeouts, appropriate distributed rate limits and minimal logs. The current rate limiter and sessions are per-process. Multi-instance operation requires a shared session/rate-limit store and a supported shared database strategy. Do not serve SQLite files, consent exports, environment files or originals publicly. Restrict host/database access and configure encrypted disks/backups, recovery tests, retention, incident response and operational alerts before launch.
 
 For Squarespace, host the API on a **same-site** HTTPS subdomain (for example api.eternaluxe.net) and set SITE_ORIGIN to the actual storefront origin. Exact-origin credentialed CORS is implemented; cross-site requests remain rejected and the session cookie is SameSite=Strict. Add `<meta name="eternaluxe-api" content="https://YOUR-ACTUAL-SAME-SITE-API-HOST">` in page/global head injection. Do not use the example host without configuring it. Browser fetches include credentials and a session-bound CSRF token.
