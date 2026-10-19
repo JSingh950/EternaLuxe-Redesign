@@ -222,6 +222,24 @@ body:not([data-page="index"]) main{padding-top:130px}
 .site-header .header-utilities,.site-header .desktop-nav,.site-header .menu-toggle{filter:drop-shadow(0 1px 8px rgba(20,16,12,.18))}
 @media(max-width:700px){.product-info,.policy-layout nav{top:auto}}
 
+/* Archive campaign film: preserve the complete 16:9 composition at every width. */
+.archive-film{
+ width:100%;
+ max-height:none;
+ aspect-ratio:16/9;
+ background:#211e1b;
+}
+.archive-film video{
+ width:100%;
+ height:100%;
+ max-height:none;
+ object-fit:contain;
+ object-position:center;
+}
+@media(max-width:700px){
+ .archive-film{max-height:none;aspect-ratio:16/9}
+}
+
 
 
 
