@@ -15,8 +15,32 @@ const consoleFlowers=await sharp(extras).extract({left:650,top:100,width:450,hei
 const pedestalFlowers=await sharp(extras).extract({left:1450,top:100,width:324,height:340}).png().toBuffer();
 layers.console=await sharp(blank).composite([{input:consoleFlowers,left:730,top:80}]).png().toBuffer();
 layers.pedestal=await sharp(blank).composite([{input:pedestalFlowers,left:1462,top:67}]).png().toBuffer();
+// Extract independent, transparent generated objects; anchor vase feet to the same surfaces.
+const placements={
+ coral:[
+  ['wall',{left:0,top:0,width:870,height:445},480,300,370,355,0],
+  ['table',{left:900,top:0,width:874,height:444},500,350,1285,475,6],
+  ['console',{left:200,top:450,width:520,height:437},220,210,940,365,4],
+  ['pedestal',{left:1060,top:450,width:650,height:437},190,200,1650,374,4]
+ ],
+ jewel:[
+  ['wall',{left:0,top:0,width:880,height:435},440,310,370,405,0],
+  ['table',{left:900,top:0,width:874,height:440},500,340,1285,475,1],
+  ['console',{left:0,top:440,width:880,height:447},220,210,940,365,1],
+  ['pedestal',{left:1000,top:445,width:774,height:442},190,200,1650,374,1]
+ ]
+};
+for(const [palette,objects] of Object.entries(placements)){
+ const sheet=await sharp(`assets/brand/venue-${palette}-sheet.png`).resize(1774,887).png().toBuffer();
+ for(const [part,rect,width,height,cx,base,shadow] of objects){
+  const crop=await sharp(sheet).extract(rect).png().toBuffer();
+  const {data,info}=await sharp(crop).trim({threshold:10}).resize({width,height,fit:'inside'}).png().toBuffer({resolveWithObject:true});
+  layers[`${palette}-${part}`]=await sharp(blank).composite([{input:data,left:Math.round(cx-info.width/2),top:base-info.height+shadow}]).png().toBuffer();
+ }
+}
 for(const [name,buffer]of Object.entries(layers)) {
  await sharp(buffer).webp({quality:92}).toFile(`dist/assets/scene/${name}.webp`);
  await sharp(buffer).extract({left:0,top:30,width:1774,height:820}).resize(1200).webp({quality:90}).toFile(`dist/assets/scene/${name}-mobile.webp`);
 }
+for(const palette of ['coral','jewel'])await sharp(layers.room).composite(['wall','console','pedestal','table'].map(part=>({input:layers[`${palette}-${part}`]}))).jpeg({quality:92}).toFile(`dist/assets/scene/composed-${palette}.jpg`);
 await sharp(layers.room).composite([{input:layers.console},{input:layers.pedestal},{input:layers.table},{input:layers.moss}]).jpeg({quality:92}).toFile('dist/assets/scene/composed.jpg');

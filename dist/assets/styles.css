@@ -166,6 +166,9 @@ button,input,select,textarea{font-family:var(--sans)}
  .wall-options{grid-template-columns:1fr 1fr;gap:25px 16px}.wall-options .item-caption h3{font-size:20px}
  .wall-showcase .section-top{display:block}.wall-showcase .section-top .text-link{margin-top:12px}
 }
+/* Alternate floral sets are hidden in the no-script fallback. */
+.venue-variant{opacity:0}
+
 
 
 

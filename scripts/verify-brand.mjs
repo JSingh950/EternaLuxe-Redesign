@@ -11,7 +11,7 @@ for(const width of [375,768,1440,1920]){
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`${width} overflow`);
  assert.match(await page.locator('h1').evaluate(e=>getComputedStyle(e).fontFamily),/Manrope/);
  assert.match(await page.locator('body').evaluate(e=>getComputedStyle(e).fontFamily),/Nunito Sans/);
- await page.screenshot({path:`/tmp/eternaluxe-brand-${width}.png`});
+ console.log('Viewport passed',width);
 }
 await page.locator('[data-venue-toggle]').click();
 const opacity=await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity);
@@ -24,10 +24,18 @@ assert.equal(await page.locator('a[href="ikebana.html"]').count(),0);
 await page.getByRole('button',{name:'Cookie preferences',exact:true}).first().click();await page.getByRole('button',{name:'Save preferences',exact:true}).click();assert.equal(await page.locator('#cookie-dialog').evaluate(e=>e.open),false);
 const nojs=await browser.newContext({javaScriptEnabled:false});const staticPage=await nojs.newPage();await staticPage.goto(base);assert.equal(await staticPage.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1');await nojs.close();
 const saving=await browser.newContext();await saving.addInitScript(()=>Object.defineProperty(navigator,'connection',{value:{saveData:true,addEventListener(){}}}));const saved=await saving.newPage();await saved.goto(base);await saved.locator('[data-scene-next]').waitFor({state:'visible'});assert.equal(await saved.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');await saving.close();
-const broken=await browser.newContext();await broken.route('**/scene/moss*',route=>route.abort());const fallback=await broken.newPage();await fallback.goto(base);await fallback.waitForTimeout(300);assert.equal(await fallback.locator('.venue-base img').evaluate(e=>e.naturalWidth>0),true);assert.equal(await fallback.locator('.venue-controls').isVisible(),false);await broken.close();
+const broken=await browser.newContext();await broken.route('**/scene/moss*',route=>route.abort());const fallback=await broken.newPage();await fallback.goto(base);await fallback.waitForTimeout(300);assert.equal(await fallback.locator('.venue-base img').evaluate(e=>e.naturalWidth>0),true);await fallback.locator('[data-venue-toggle]').waitFor({state:'visible'});assert.equal(await fallback.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');await broken.close();
 await page.emulateMedia({reducedMotion:'no-preference'});await page.goto(base);await page.locator('[data-venue-toggle]').waitFor({state:'visible'});
 await page.evaluate(()=>{const scene=document.querySelector('[data-venue]');window.roomTimeline=gsap.globalTimeline.getChildren().find(t=>t.repeat?.()===-1&&t.getChildren?.().some(c=>c.targets?.().some(e=>scene.contains(e))));window.roomTimeline.pause().time(11);});
-assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');assert.equal(await page.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1');await page.screenshot({path:'/tmp/eternaluxe-brand-composed.png'});
+assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');assert.equal(await page.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1');console.log('Primary set passed');
+for(const [palette,time] of [['coral',27],['jewel',43]]){
+ await page.evaluate(t=>{window.roomTimeline.pause().time(t);},time);
+ assert.equal(await page.locator('.venue-'+palette+'-table').evaluate(e=>getComputedStyle(e).opacity),'1');
+ assert.equal(await page.locator('.venue-'+palette+'-wall').evaluate(e=>getComputedStyle(e).opacity),'1');
+ assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');
+ assert.equal(await page.locator('.venue-base').evaluate(e=>getComputedStyle(e).transform),'none');
+}
+assert.equal(await page.evaluate(()=>window.roomTimeline.duration()),48);
 await page.evaluate(()=>{window.roomTimeline.time(0);});assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');
 await page.locator('.site-footer').scrollIntoViewIfNeeded();await page.waitForTimeout(200);assert.equal(await page.evaluate(()=>window.roomTimeline.paused()),true);
 assert.deepEqual(errors,[]);await browser.close();console.log('Responsive, branding, pause, reduced motion, no-JS, House and cookie checks passed.');

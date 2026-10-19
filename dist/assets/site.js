@@ -120,39 +120,46 @@
   }
   const scene=$('[data-venue]');
   if(scene&&window.gsap){
-    const layers=[$('.venue-table',scene),$('.venue-console',scene),$('.venue-pedestal',scene),$('.venue-moss',scene)];
-    const controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
+    const primary=[$('.venue-table',scene),$('.venue-console',scene),$('.venue-pedestal',scene),$('.venue-moss',scene)];
+    let sets=[primary,...['coral','jewel'].map(palette=>['table','console','pedestal','wall'].map(part=>$('.venue-'+palette+'-'+part,scene)))];
+    const layers=sets.flat(),controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
     const connection=navigator.connection;
-    let ready=false,visible=false,userPaused=false,step=4,staticMode=false;
+    let ready=false,visible=false,userPaused=false,step=1,staticMode=false;
     const still=()=>reduced.matches||connection?.saveData;
-    if(!still())gsap.set(layers,{opacity:0});
     const timeline=gsap.timeline({paused:true,repeat:-1});
-    timeline.set(layers,{opacity:0},0)
-      .to(layers[0],{opacity:1,duration:1.4,ease:'sine.inOut'},1.2)
-      .to(layers[1],{opacity:1,duration:1.6,ease:'sine.inOut'},3.4)
-      .to(layers[2],{opacity:1,duration:1.6,ease:'sine.inOut'},5.4)
-      .to(layers[3],{opacity:1,duration:1.8,ease:'sine.inOut'},7.4)
-      .to(layers,{opacity:0,duration:1.8,ease:'sine.inOut'},13.7);
+    const present=index=>{gsap.set(layers,{opacity:0});if(index>0)gsap.set(sets[index-1],{opacity:1});};
     function sync(){
       const running=ready&&visible&&!document.hidden&&!userPaused&&!still();
-      if(still()){timeline.pause();if(!staticMode){gsap.set(layers,{opacity:1});step=4;}}
+      if(still()){timeline.pause();if(!staticMode){step=1;present(step);}}
       else if(running)timeline.play();else timeline.pause();
-      staticMode=!!still();
-      toggle.hidden=!!still();manual.hidden=!still();
+      staticMode=!!still();toggle.hidden=!!still();manual.hidden=!still();
       toggle.setAttribute('aria-label',running?'Pause room animation':'Play room animation');
       toggle.setAttribute('aria-pressed',String(running));
-      toggle.querySelector('span').textContent=running?'Ⅱ':'▷';
     }
     toggle.addEventListener('click',()=>{userPaused=!userPaused;sync();});
-    function show(delta){step=(step+delta+layers.length+1)%(layers.length+1);layers.forEach((layer,i)=>gsap.set(layer,{opacity:step>i?1:0}));}
+    function show(delta){step=(step+delta+sets.length+1)%(sets.length+1);present(step);}
     $('[data-scene-prev]').addEventListener('click',()=>show(-1));
     $('[data-scene-next]').addEventListener('click',()=>show(1));
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
-    document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',()=>{timeline.restart().pause();sync();});
-    connection?.addEventListener('change',sync);
-    Promise.all($$('img',scene).map(img=>img.decode())).then(()=>{ready=true;controls.hidden=false;timeline.seek(0);staticMode=false;sync();}).catch(()=>{
-      timeline.kill();layers.forEach(layer=>layer.hidden=true);controls.hidden=true;
-      scene.setAttribute('aria-label','A warm New York room with a central stone table');
+    document.addEventListener('visibilitychange',sync);
+    reduced.addEventListener('change',()=>{timeline.restart().pause();staticMode=false;sync();});
+    connection?.addEventListener('change',()=>{timeline.restart().pause();staticMode=false;sync();});
+    const decodeSet=set=>Promise.all(set.map(layer=>$('img',layer).decode()));
+    Promise.allSettled(sets.map(decodeSet)).then(results=>{
+      sets=sets.filter((set,i)=>results[i].status==='fulfilled');
+      gsap.set(layers,{opacity:0});
+      if(!sets.length){controls.hidden=true;return;}
+      // Sequential fades avoid seeing two incompatible vases at the same location.
+      sets.forEach((set,index)=>{
+        const at=index*16;
+        timeline.set(layers,{opacity:0},at)
+          .to(set[0],{opacity:1,duration:1.6,ease:'sine.inOut'},at+1.2)
+          .to(set[1],{opacity:1,duration:1.6,ease:'sine.inOut'},at+2.7)
+          .to(set[2],{opacity:1,duration:1.6,ease:'sine.inOut'},at+4.2)
+          .to(set[3],{opacity:1,duration:1.8,ease:'sine.inOut'},at+5.7)
+          .to(set,{opacity:0,duration:1.8,ease:'sine.inOut'},at+14.2);
+      });
+      ready=true;controls.hidden=false;timeline.seek(0);staticMode=false;sync();
     });
   }
   $$('[data-house-motion]').forEach(montage=>{
