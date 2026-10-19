@@ -12,18 +12,16 @@
   let choices=storage.get('eternaluxe-privacy-v1');
   if(!choices?.expiresAt||choices.expiresAt<Date.now())choices=null;
   let receipt=storage.get('eternaluxe-receipt-v1');
-  let settings=null;
-  const config=fetch(`${apiBase}/api/config`,{cache:'no-store',credentials:'include'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(c=>{
-    settings=c;
-    $$('.form-mode').forEach(el=>el.textContent=c.mode==='preview'?'Local preview: submissions are saved on this computer and are not sent to Eternaluxe.':'');
-    return c;
-  }).catch(()=>{ $$('.form-mode').forEach(el=>el.textContent='Open this preview through its local server to use the forms.');return null; });
+  const config=fetch(`${apiBase}/api/config`,{cache:'no-store',credentials:'include'}).then(r=>{if(!r.ok)throw Error();return r.json()}).catch(()=>null);
+  const header=$('.site-header');
+  const syncHeader=()=>header?.classList.toggle('is-scrolled',pageRoot.dataset.page!=='index'||scrollY>24);
+  addEventListener('scroll',syncHeader,{passive:true});syncHeader();
   const openers=new WeakMap();
   $('.menu-toggle')?.setAttribute('aria-label','Open menu');
   function openDialog(id,trigger){const d=document.getElementById(id);if(!d)return;const parent=trigger.closest('dialog');if(parent){trigger=openers.get(parent)||trigger;parent.close();}openers.set(d,trigger);if(id==='cookie-dialog')for(const k of ['analytics','preferences','advertising'])$(`[name="${k}"]`,d).checked=!!choices?.[k];d.showModal();}
   $$('[data-open]').forEach(b=>b.addEventListener('click',()=>openDialog(b.dataset.open,b)));
   $$('dialog').forEach(d=>{
-    d.setAttribute('aria-label',({'menu-dialog':'Navigation','bag-dialog':'Your bag','cookie-dialog':'Your privacy choices','search-dialog':'Search the House'})[d.id]||'Dialog');
+    d.setAttribute('aria-label',({'menu-dialog':'Navigation','bag-dialog':'Your bag','cookie-dialog':'Your privacy choices'})[d.id]||'Dialog');
     $('[data-close]',d)?.addEventListener('click',()=>d.close());
     d.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();d.close();}});
     d.addEventListener('close',()=>openers.get(d)?.focus());
@@ -34,7 +32,7 @@
   function cookieStatus(message){$$('.cookie-status').forEach(el=>el.textContent=message);}
   async function api(path,payload){
     const c=await config;
-    if(!c)throw Error('The form service is unavailable. Please open the preview at http://localhost:4173 or try again later.');
+    if(!c)throw Error('The form service is unavailable. Please try again later.');
     const r=await fetch(`${apiBase}${path}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,csrf:c.csrf}),credentials:'include'});
     let result;try{result=await r.json()}catch{throw Error('The service is unavailable. Please try again later.')}
     if(!r.ok)throw Error(result.error||'Please try again later.');return result;
@@ -84,31 +82,21 @@
   const enquiry=$('[data-form=enquiry]');
   if(enquiry){if(query.get('project'))$('[name=project]',enquiry).value=query.get('project');if(query.get('composition'))$('[name=message]',enquiry).value=`I am interested in ${query.get('composition')}.`;}
   const filters=$('.filter-bar');
-  const searchInput=$('#house-search');
-  if(searchInput){
-    const entries=[['The House','Philosophy, Ikebana, line, space and floral art','house.html'],['The Collection','Floral arrangements','collections.html'],['The Atelier','Hospitality, interiors and commissions','atelier.html'],['The Archive','Campaigns and installations','archive.html'],['The Floral Club','Monthly floral service','floral-club.html']];
-    const renderSearch=()=>{
-      const q=searchInput.value.trim().toLowerCase();const matches=entries.filter(e=>e.join(' ').toLowerCase().includes(q));
-      const results=$('.search-results');results.replaceChildren();
-      for(const [name,description,url] of matches){const a=document.createElement('a');a.href=url;const strong=document.createElement('strong');strong.textContent=name;const small=document.createElement('small');small.textContent=description;a.append(strong,small);results.append(a);}
-      $('.search-status').textContent=`${matches.length} result${matches.length===1?'':'s'}`;
-    };
-    fetch(`assets/catalog.json?v=${assetVersion}`).then(r=>r.json()).then(items=>{items.forEach(p=>entries.push([p.name,`${p.subtitle||'AI design concept'} · ${p.size} · ${p.style}`,p.concept?`enquiries.html?project=Residential&composition=${encodeURIComponent(p.name+' (concept)')}`:`product-${p.id}.html`]));renderSearch();}).catch(()=>renderSearch());
-    searchInput.addEventListener('input',renderSearch);renderSearch();
-  }
   if(filters){
     const items=$$('.collection-grid .collection-item'),more=$('[data-show-more]');
     let limit=6;
+    const collection=query.get('collection');
+    const activeCollection=['table','wall','floral-club','bespoke'].includes(collection)?collection:'';
     for(const key of ['size','type','occasion','style','format']){
       const field=filters.elements.namedItem(key),value=query.get(key);
       if(field&&value&&[...field.options].some(o=>o.value===value))field.value=value;
     }
     const filter=()=>{
       const vals=Object.fromEntries(new FormData(filters));
-      const matches=items.filter(item=>Object.entries(vals).every(([k,v])=>!v||(item.dataset[k]||'').split(' ').includes(v)));
+      const matches=items.filter(item=>(!activeCollection||(item.dataset.collection||'').split(' ').includes(activeCollection))&&Object.entries(vals).every(([k,v])=>!v||(item.dataset[k]||'').split(' ').includes(v)));
       items.forEach(item=>{item.hidden=true;});
       matches.slice(0,limit).forEach(item=>{item.hidden=false;});
-      $('.filter-count').textContent=`Showing ${Math.min(limit,matches.length)} of ${matches.length} compositions`;
+      $('.collection-status').textContent=`Showing ${Math.min(limit,matches.length)} of ${matches.length} compositions`;
       $('.empty-state').hidden=matches.length!==0;more.hidden=matches.length<=limit;
       more.textContent=`Show more compositions (${Math.max(0,matches.length-limit)} remaining)`;
     };
