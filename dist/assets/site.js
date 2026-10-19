@@ -14,7 +14,8 @@
   let receipt=storage.get('eternaluxe-receipt-v1');
   const config=fetch(`${apiBase}/api/config`,{cache:'no-store',credentials:'include'}).then(r=>{if(!r.ok)throw Error();return r.json()}).catch(()=>null);
   const header=$('.site-header');
-  const syncHeader=()=>header?.classList.toggle('is-scrolled',pageRoot.dataset.page!=='index'||scrollY>24);
+  const overlayHeader=['index','archive'].includes(pageRoot.dataset.page);
+  const syncHeader=()=>header?.classList.toggle('is-scrolled',!overlayHeader||scrollY>24);
   addEventListener('scroll',syncHeader,{passive:true});syncHeader();
   const openers=new WeakMap();
   $('.menu-toggle')?.setAttribute('aria-label','Open menu');
