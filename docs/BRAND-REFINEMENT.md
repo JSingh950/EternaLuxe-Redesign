@@ -12,5 +12,5 @@ Generation brief: transparent 1774x887 overlay for the approved room; sculptural
 ## Verification
 Run npm run build, npm run check, npm test. For browser tests install Chromium with npx playwright install chromium, then node scripts/verify-brand.mjs against localhost:4173. Optional TEST_URL targets another deployment. Responsive screenshots are written to /tmp/eternaluxe-brand-WIDTH.png, not committed.
 
-## Unchanged production limitations
-Vercel currently hosts the static storefront, not the persistent Node/SQLite form service. Cookie choices apply locally even when that service is unavailable. Durable consent receipts, enquiry delivery to nicky.vanessaus@gmail.com and newsletter processing still require the configured API/webhook described in DEPLOYMENT.md. Tests exercise the local server and mocked delivery contract; they do not prove real inbox delivery. Legal policies remain review drafts. Native store checkout remains an external handoff.
+## Production limitations
+Vercel now serves the storefront and the fail-closed Web-standard form bridge under `/api`. Cookie choices apply locally even when evidence delivery is unavailable. Durable consent receipts and enquiry delivery to `nicky.vanessaus@gmail.com` require the authenticated durable webhook and legal-approval environment gate described in DEPLOYMENT.md. Automated tests exercise the local server and mocked Vercel delivery contract; they do not prove real inbox delivery. Legal policies remain review drafts. Native store checkout remains an external handoff.

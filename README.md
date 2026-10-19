@@ -1,6 +1,6 @@
 # Eternaluxe — the digital House
 
-A responsive editorial storefront built around Eternaluxe's supplied photography and films. The current build contains 20 pages, five service/product pages, all 16 supplied photographs and all three supplied films, plus the composition film from the existing House page. The former 3D and composited venue experiments are preserved under `legacy/`, not served on the website. The House opens with the supplied glass-vase orchid film in an uncropped portrait presentation.
+A responsive editorial storefront built around Eternaluxe's supplied photography and films. The current build contains 29 generated pages, an editorial About route, a grouped collection catalogue, all supplied active photography and films, and the approved layered venue sequence. The House opens with the supplied glass-vase orchid film in an uncropped portrait presentation.
 
 ## Run the preview
 
@@ -13,7 +13,7 @@ npm run build
 npm start
 ```
 
-Open http://localhost:4173/ . Use the HTTP server, not `file://`: forms, consent evidence, search and media delivery need it. Preview submissions are stored only on this computer; they are not emailed and do not subscribe anyone.
+Open http://localhost:4173/ . Use the HTTP server, not `file://`: forms, consent evidence and media delivery need it. Preview submissions are stored only on this computer; they are not emailed and do not subscribe anyone.
 
 ```sh
 npm test
@@ -25,7 +25,7 @@ npm run check
 - `scripts/build.mjs`: semantic page templates and metadata.
 - `src/catalog.mjs`: service names, prices, routes and navigation.
 - `src/media.mjs`: source media inventory, descriptions and assignments.
-- `src/styles.css`, `src/site.js`: responsive design, search, filters, accessible drawers, film playback and consent UI.
+- `src/styles.css`, `src/site.js`: responsive design, filters, accessible drawers, film playback and consent UI.
 - `src/policies/`: working legal drafts, requiring business inputs and counsel review.
 - `server.mjs`: local preview and consent/form API.
 - `dist/`: generated deliverable; edit source and rebuild rather than editing generated HTML.
@@ -38,7 +38,7 @@ Run `npm run media` to prepare responsive AVIF/WebP/JPEG images, silent MP4/WebM
 
 This is a working local storefront and integration package, not a deployed replacement for Squarespace. Bag and order links hand off to Eternaluxe's existing store. No simulated payment or local cart is presented as a real order. Prices and new photograph-to-service mappings require final business confirmation; photographs are explicitly described as creative references where exact SKU matching is not established.
 
-The local implementation includes separate Terms/Privacy controls, optional unchecked marketing consent, equal-prominence cookie choices, server-side evidence, policy hashes, append-only preference changes, and an internal export command. It does not establish legal compliance by itself. Native Squarespace checkout/order consent, payment events, vendor cookies, customer cancellation flows and production retention controls must be integrated and tested on the live platform.
+The Contact Us form includes separate required Terms/Privacy controls and no combined or optional marketing checkbox. The implementation also includes equal-prominence cookie choices, server-side evidence, policy hashes, append-only preference changes, and an internal export command. It does not establish legal compliance by itself. Native Squarespace checkout/order consent, payment events, vendor cookies, customer cancellation flows and production retention controls must be integrated and tested on the live platform.
 
 Read [deployment instructions](docs/DEPLOYMENT.md), [design and asset direction](docs/DESIGN.md), and the [release checklist](RELEASE-CHECKLIST.md). Policy drafts must be reviewed by New York-qualified counsel before publication. Unverified claims, testimonials, founder biographies and delivery promises are not invented.
 

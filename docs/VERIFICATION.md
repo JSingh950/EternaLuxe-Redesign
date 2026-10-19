@@ -30,11 +30,11 @@ The opening now uses the supplied glass-vase orchid film, not the dark film on t
 - Responsive film sources loaded and played; preserved still posters cover loading/failure states.
 - Collection scale/experience filters narrowed to the Large Floral Club arrangement.
 - Local enquiry submitted with fictional QA data; response explicitly confirmed local-only storage and no email/subscription delivery.
-- Mobile menu → search returned relevant service results. Escape closes the search drawer and restores focus to its opener.
+- Mobile menu → Collections expanded into All, Table, Wall, Floral Club and Bespoke destinations. Escape closes the menu and restores focus to its opener.
 - Bag drawer links to the existing Eternaluxe store cart; no purchase was made.
 - Cookie preferences reopened with optional categories off; Reject Nonessential saved and closed the dialog.
 - No browser console errors observed in the final pass.
 
 ## Not established by these tests
 
-Live payment/subscription/order evidence, vendor newsletter delivery, cancellation operations, actual Squarespace cookie behavior, screen-reader conformance, production Lighthouse/mobile-hardware performance and legal compliance remain release gates. See RELEASE-CHECKLIST.md. Local functional tests must not be represented as successful live commerce transactions.
+Live payment/subscription/order evidence, verified inbox delivery, cancellation operations, actual Squarespace cookie behavior, screen-reader conformance, production Lighthouse/mobile-hardware performance and legal compliance remain release gates. See RELEASE-CHECKLIST.md. Local functional tests must not be represented as successful live commerce transactions.

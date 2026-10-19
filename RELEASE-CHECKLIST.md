@@ -4,11 +4,11 @@ Checked items describe this local implementation, not live Squarespace certifica
 
 ## Implemented
 
-- [x] Solid editorial header outside the hero; responsive luxury-house layouts and restrained typography.
-- [x] House, Ikebana, Collections, Archive, Atelier, Concierge, Floral Club, five product pages and six policy pages.
+- [x] Transparent-to-translucent sticky header; responsive luxury-house layouts and restrained typography.
+- [x] House, Collections, About, Archive, Atelier, Contact Us, Floral Club, product pages and six policy pages.
 - [x] All 16 supplied images and three films assigned across the site; optimized derivatives and source inventory.
-- [x] Search, collection filters, navigation/bag drawers, film play/pause, offscreen pausing and reduced-motion behavior.
-- [x] Separate Terms/Privacy controls and optional unchecked marketing consent.
+- [x] Grouped collection sidebar, detailed collection filters, navigation/bag drawers, film play/pause, offscreen pausing and reduced-motion behavior.
+- [x] Separate required Terms/Privacy controls with no combined or optional marketing checkbox.
 - [x] Equal cookie choices, editable preferences and optional measurement gated by consent.
 - [x] Server-side policy hashes, append-only consent events and withdrawals, export command and separate personal-data storage.
 - [x] Origin/CSRF checks, input limits, security headers and private local storage.
@@ -33,7 +33,7 @@ Checked items describe this local implementation, not live Squarespace certifica
 - [ ] Map catalogue records to live SKUs, stock, shipping, taxes and subscription plans.
 - [ ] Connect checkout/order acceptance to policy-version evidence; local enquiry evidence alone is insufficient.
 - [ ] Deploy the API behind HTTPS on persistent restricted storage; configure backups, encryption, least-privilege access, monitoring and retention/archive procedures.
-- [ ] Configure and test the authenticated webhook, idempotent delivery, retries, newsletter preferences and verified consumer-request workflow.
+- [ ] Configure and test the authenticated Vercel webhook, idempotent durable delivery and verified consumer-request workflow.
 - [ ] Confirm a real staging enquiry is delivered to `nicky.vanessaus@gmail.com`; if using a native Squarespace Form Block, set that address as its sole Email storage recipient.
 - [ ] Audit every Squarespace/vendor cookie and script; block nonessential processing where required and test accept/reject/change/withdrawal.
 - [ ] Configure server/proxy log minimization, CSP appropriate to Squarespace, asset URLs, canonicals/social images and permanent redirects.
@@ -41,7 +41,7 @@ Checked items describe this local implementation, not live Squarespace certifica
 
 ## Final acceptance on live staging
 
-- [ ] Complete actual one-time and recurring purchases, delivery confirmation, cancellation, enquiry and newsletter flows.
+- [ ] Complete actual one-time and recurring purchases, delivery confirmation, cancellation and enquiry flows.
 - [ ] Confirm evidence policy versions match the text shown; verify export, withdrawal, delivery failure and backup restoration.
 - [ ] Test keyboard, screen reader, zoom, touch, orientation and reduced motion on representative hardware.
 - [ ] Test no JavaScript, slow network, missing media, blocked cookies/storage and API outage.
