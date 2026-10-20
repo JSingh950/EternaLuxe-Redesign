@@ -277,115 +277,166 @@ body[data-page="archive"] .page-intro{position:relative;z-index:4;padding-top:cl
  body[data-page="archive"] .archive-grid{gap:18px 14px}
 }
 
-/* 2026 architectural system: continuous surfaces, directional tension and disciplined crops. */
-body{overflow-x:hidden}
-.architectural-wave{position:relative;z-index:3;width:100%;height:clamp(78px,11vw,188px);overflow:hidden;pointer-events:none;color:var(--paper)}
-.architectural-wave svg{display:block;width:108%;height:100%;margin-left:-4%;overflow:visible}
+/* Sculptural-safe architectural system: every decorative plane owns layout space. */
+html,body{max-width:100%;overflow-x:clip}
+main{isolation:isolate}
+main :is(h1,h2,h3,p,a,button,label,summary,table){position:relative;z-index:2}
+
+.architectural-wave{
+ position:relative;z-index:1;width:100%;height:clamp(66px,7vw,112px);margin:0;
+ overflow:hidden;pointer-events:none;color:var(--paper);background:transparent
+}
+.architectural-wave svg{display:block;width:104%;height:100%;margin-left:-2%;overflow:visible}
 .architectural-wave path{fill:currentColor;transform-origin:center;will-change:transform}
 .architectural-wave--soft{color:#e8e0d2}
-.home-wave{margin-top:clamp(-116px,-6.5vw,-70px);margin-bottom:clamp(-48px,-3vw,-22px)}
-.archive-wave{margin-top:clamp(-118px,-6.5vw,-72px);margin-bottom:0}
-.about-wave,.atelier-wave{margin-top:clamp(-64px,-3.5vw,-30px);margin-bottom:clamp(-54px,-3vw,-28px)}
+.home-wave{display:none}
+.archive-wave{height:clamp(70px,7vw,110px);background:#211e1b;color:var(--paper)}
+.about-wave,.atelier-wave{height:clamp(58px,6vw,96px);background:var(--paper)}
 
-.architectural-ribbon{position:relative;z-index:2;height:clamp(105px,12vw,190px);margin:clamp(-26px,-1.5vw,-12px) 0;overflow:hidden;pointer-events:none}
-.architectural-ribbon svg{display:block;width:108%;height:100%;margin-left:-4%;overflow:visible}
-.ribbon-plane{display:block;will-change:transform;transform-origin:center}
-.ribbon-plane{fill:none;stroke-linecap:round}
-.ribbon-plane-primary{stroke:var(--ink);stroke-width:38}
-.ribbon-plane-secondary{stroke:var(--champagne);stroke-width:14;opacity:.74}
-.house-ribbon{margin-top:-18px;margin-bottom:-54px}.house-ikebana-ribbon{margin-top:-52px;margin-bottom:-48px;transform:scaleY(-1)}
+.architectural-ribbon{
+ position:relative;z-index:1;height:clamp(66px,6vw,92px);margin:0;
+ overflow:hidden;pointer-events:none;background:var(--paper)
+}
+.architectural-ribbon svg{display:block;width:104%;height:100%;margin-left:-2%;overflow:visible}
+.ribbon-plane{display:block;fill:none;stroke-linecap:round;transform-origin:center;will-change:transform}
+.ribbon-plane-primary{stroke:rgba(48,44,40,.88);stroke-width:12}
+.ribbon-plane-secondary{stroke:var(--champagne);stroke-width:4;opacity:.72}
+.house-ikebana-ribbon{transform:scaleY(-1)}
 
-.architectural-field,.diagonal-sweep{position:relative;isolation:isolate;overflow:hidden}
-.architectural-field:before{content:"";position:absolute;z-index:-1;inset:4% -9% -4%;background:linear-gradient(105deg,rgba(198,173,130,.2),rgba(156,148,125,.05) 54%,transparent 54%);clip-path:polygon(0 24%,40% 0,100% 19%,100% 78%,62% 100%,0 82%);pointer-events:none}
-.diagonal-sweep:before{content:"";position:absolute;z-index:-1;inset:-4% -7% -5%;background:rgba(156,148,125,.1);clip-path:polygon(0 15%,67% 0,100% 17%,100% 88%,31% 100%,0 82%);pointer-events:none}
+/* Broad tonal fields stay behind the composition and never clip content. */
+.architectural-field,.diagonal-sweep{position:relative;isolation:isolate;overflow:visible}
+.architectural-field:before,.diagonal-sweep:before{
+ content:"";position:absolute;z-index:0;pointer-events:none;right:-8%;bottom:0;
+ width:min(54vw,780px);height:clamp(80px,18vw,290px);border-radius:62% 0 0 0 / 80% 0 0 0;
+ background:linear-gradient(135deg,rgba(198,173,130,.14),rgba(156,148,125,.045) 62%,transparent)
+}
+.diagonal-sweep:before{width:min(46vw,680px);height:clamp(70px,15vw,240px);opacity:.72}
+.architectural-field>*:not(.architectural-wave),.diagonal-sweep>*{position:relative;z-index:1}
 
-/* Geometry belongs to the page plane, not to unrelated individual cards. */
+/* Images carry the editorial rhythm; words always remain outside the crop. */
 .collection-photo,.editorial-image picture,.about-portrait picture,.wall-options .collection-photo,.motion-frame{border-radius:0!important}
-.collection-grid .collection-item:nth-child(n){margin:0!important;padding:0!important;width:auto!important}
+.collection-grid .collection-item:nth-child(n){margin:0!important;padding:0!important;width:auto!important;min-width:0}
 .collection-grid .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5}
 .editorial-collection .collection-item:nth-child(n) .collection-photo{border-radius:0!important}
 .editorial-collection .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:5/4}
-.editorial-collection .collection-item:nth-child(2){padding-top:clamp(28px,4vw,68px)}
-.wall-options .collection-item:nth-child(n) .collection-photo{border-radius:0!important}
-.motion-frame:nth-child(n){border-radius:0!important}
+.editorial-collection .collection-item:nth-child(2){padding-top:clamp(24px,3vw,48px)}
+.wall-options .collection-item:nth-child(n) .collection-photo,.motion-frame:nth-child(n){border-radius:0!important}
+.collection-photo picture,.archive-grid picture,.wall-options picture{background:#ded6c9}
+.item-caption{min-width:0}.item-caption>div{min-width:0}.item-caption h3{overflow-wrap:anywhere}
 
-/* Collection rows use two deliberate rhythms with equal-height companions and no empty cells. */
-body[data-page="collections"] .page-intro{position:relative;z-index:1;padding-bottom:clamp(58px,7vw,106px);overflow:hidden}
-body[data-page="collections"] .page-intro:after{content:"";position:absolute;z-index:-1;left:-5%;right:-5%;bottom:-44%;height:78%;background:#e8e0d2;clip-path:polygon(0 44%,68% 0,100% 32%,100% 100%,0 100%)}
-body[data-page="collections"] .collections-shell{position:relative;isolation:isolate;overflow:hidden;padding-top:clamp(18px,2.5vw,44px)}
-body[data-page="collections"] .collections-shell:before{content:"";position:absolute;z-index:-1;inset:8% -10% 38%;background:linear-gradient(128deg,transparent 0 37%,rgba(198,173,130,.12) 37% 64%,transparent 64%);clip-path:polygon(0 10%,100% 0,87% 100%,8% 88%)}
+/* Complete, balanced collection rows with no staggered voids. */
+body[data-page="collections"] .page-intro{
+ position:relative;z-index:1;padding-top:clamp(54px,6vw,88px);padding-bottom:clamp(60px,7vw,104px);
+ overflow:visible;background:linear-gradient(176deg,var(--paper) 0 73%,#e8e0d2 73% 100%)
+}
+body[data-page="collections"] .page-intro:after{content:none}
+body[data-page="collections"] .collections-shell{position:relative;isolation:isolate;overflow:visible;padding-top:clamp(34px,4vw,64px)}
+body[data-page="collections"] .collections-shell:before{content:none}
+body[data-page="collections"] .collection-grid{align-items:start}
 @media(min-width:1101px){
- body[data-page="collections"] .collection-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(30px,3.2vw,56px) clamp(18px,2vw,34px)}
- body[data-page="collections"] .collection-item{grid-column:span 2}
- body[data-page="collections"] .collection-item:nth-child(8n+1){grid-column:span 4}
- body[data-page="collections"] .collection-item:nth-child(8n+2){grid-column:span 2}
+ body[data-page="collections"] .collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(42px,4.5vw,72px) clamp(22px,2.4vw,40px)}
+ body[data-page="collections"] .collection-item{grid-column:auto}
+ body[data-page="collections"] .collection-item:nth-child(8n+1){grid-column:span 2}
+ body[data-page="collections"] .collection-item:nth-child(8n+2){grid-column:auto}
  body[data-page="collections"] .collection-item:nth-child(8n+1) .collection-photo picture{aspect-ratio:2/1}
  body[data-page="collections"] .collection-item:nth-child(8n+2) .collection-photo picture{aspect-ratio:1/1}
 }
 
-/* Home: the room remains architecturally fixed while the following planes sweep forward. */
-body[data-page="index"] .venue-hero{z-index:2}
-body[data-page="index"] .house-statement{z-index:4;margin-top:0;padding-top:clamp(46px,6vw,92px);padding-bottom:clamp(48px,6vw,94px);margin-bottom:0}
-body[data-page="index"] .collection-section{padding-top:clamp(70px,8vw,128px);padding-bottom:clamp(72px,8vw,126px)}
-body[data-page="index"] .editorial-collection{align-items:start;gap:clamp(20px,5vw,84px)}
-body[data-page="index"] .home-ribbon{margin-top:-40px;margin-bottom:-42px}
-body[data-page="index"] .discovery-pair{padding-top:clamp(86px,9vw,144px);padding-bottom:clamp(76px,8vw,130px)}
-body[data-page="index"] .discovery-pair article{border-top:0;position:relative;padding:32px 0 0}
-body[data-page="index"] .discovery-pair article:before{content:"";position:absolute;left:0;top:0;width:42%;height:1px;background:var(--ink);transform:skewX(-38deg);transform-origin:left}
-body[data-page="index"] .club-feature{overflow:hidden;isolation:isolate;background:#e4ded0}
-body[data-page="index"] .club-feature:before{inset:-20% -10%;background:rgba(245,241,233,.34);clip-path:polygon(48% 0,100% 0,100% 100%,31% 100%)}
+/* Homepage: the hero title and every CTA sit in quiet, dedicated bands. */
+body[data-page="index"] .venue-hero{position:relative;z-index:2;background:var(--paper)}
+body[data-page="index"] .venue-caption{position:relative;z-index:4;min-height:clamp(118px,11vw,166px);padding-top:clamp(28px,3vw,44px);padding-bottom:clamp(34px,4vw,58px)}
+body[data-page="index"] .venue-caption h1{max-width:14ch;line-height:1.08;overflow:visible}
+body[data-page="index"] .house-statement{z-index:1;margin:0;padding-top:clamp(66px,7vw,108px);padding-bottom:clamp(68px,7vw,112px)}
+body[data-page="index"] .collection-section{padding-top:clamp(72px,7vw,112px);padding-bottom:clamp(74px,7vw,116px)}
+body[data-page="index"] .editorial-collection{align-items:start;gap:clamp(24px,5vw,78px)}
+body[data-page="index"] .discovery-pair{padding-top:clamp(70px,7vw,112px);padding-bottom:clamp(72px,7vw,116px)}
+body[data-page="index"] .discovery-pair article{border-top:0;position:relative;padding:28px 0 0}
+body[data-page="index"] .discovery-pair article:before{content:"";position:absolute;z-index:1;left:0;top:0;width:38%;height:1px;background:var(--ink)}
+body[data-page="index"] .club-feature{overflow:visible;isolation:isolate;background:#e4ded0}
+body[data-page="index"] .club-feature:before{left:0;right:auto;width:48%;height:100%;border-radius:0;background:linear-gradient(110deg,rgba(245,241,233,.18),transparent 72%)}
+body[data-page="index"] .club-copy{position:relative;z-index:2;background:#e4ded0}
 
-/* House: one cinematic surface, then a continuous ribbon into philosophy and Ikebana. */
-body[data-page="house"] .house-cinema{position:relative;isolation:isolate;overflow:hidden}
-body[data-page="house"] .house-cinema:after{content:"";position:absolute;z-index:-1;left:-4%;right:-4%;bottom:-10%;height:34%;background:#e8e0d2;clip-path:polygon(0 62%,39% 3%,100% 38%,100% 100%,0 100%)}
-body[data-page="house"] .house-cinema-screen{position:relative;background:linear-gradient(112deg,var(--paper) 0 52%,#e6dfd2 52%)}
-body[data-page="house"] .house-cinema-screen:before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 0 44%,rgba(198,173,130,.18) 44% 60%,transparent 60%);pointer-events:none}
+/* House: ribbons are reserved separators, never overlays. */
+body[data-page="house"] .house-cinema{position:relative;isolation:isolate;overflow:visible}
+body[data-page="house"] .house-cinema:after{content:none}
+body[data-page="house"] .house-cinema-screen{position:relative;background:linear-gradient(112deg,var(--paper) 0 55%,#e6dfd2 55%)}
+body[data-page="house"] .house-cinema-screen:before{content:none}
+body[data-page="house"] .house-cinema-title,.house-philosophy-copy,body[data-page="house"] #ikebana .page-intro,body[data-page="house"] .film-editorial>div{position:relative;z-index:3}
 body[data-page="house"] .house-motion{position:relative;z-index:1;background:#e8e0d2}
-body[data-page="house"] .architectural-ribbon{z-index:5}
-body[data-page="house"] .house-motion-philosophy{position:relative;z-index:3;background:var(--paper);padding-top:clamp(86px,9vw,145px);padding-bottom:clamp(84px,9vw,140px)}
-body[data-page="house"] #ikebana{position:relative;z-index:3;background:var(--paper);padding-top:clamp(50px,6vw,88px)}
-body[data-page="house"] .film-editorial{position:relative;overflow:hidden;background:#e8e0d2;clip-path:polygon(0 6%,72% 0,100% 9%,100% 94%,28% 100%,0 87%);padding-top:clamp(72px,8vw,124px);padding-bottom:clamp(72px,8vw,124px)}
+body[data-page="house"] .architectural-ribbon{z-index:1}
+body[data-page="house"] .house-motion-philosophy{position:relative;z-index:2;background:var(--paper);padding-top:clamp(74px,7vw,110px);padding-bottom:clamp(78px,7vw,116px)}
+body[data-page="house"] #ikebana{position:relative;z-index:2;background:var(--paper);padding-top:clamp(58px,6vw,92px)}
+body[data-page="house"] .film-editorial{position:relative;overflow:visible;clip-path:none;background:#e8e0d2;padding-top:clamp(70px,7vw,108px);padding-bottom:clamp(72px,7vw,112px)}
 
-/* About and Atelier use broad intersecting planes while imagery stays unobstructed. */
-body[data-page="about"] .about-hero{overflow:hidden;padding-top:clamp(70px,7vw,118px);padding-bottom:clamp(92px,9vw,150px)}
-body[data-page="about"] .about-hero:before{inset:0 -13%;background:linear-gradient(115deg,rgba(198,173,130,.23),rgba(156,148,125,.05) 48%,transparent 48%);clip-path:polygon(0 17%,63% 0,100% 26%,100% 83%,36% 100%,0 72%)}
+/* About and Atelier keep sculptural backgrounds without intersecting copy. */
+body[data-page="about"] .about-hero{overflow:visible;padding-top:clamp(74px,7vw,112px);padding-bottom:clamp(82px,8vw,126px)}
+body[data-page="about"] .about-hero:before{right:-10%;bottom:0;width:52%;height:72%;border-radius:68% 0 0 0 / 55% 0 0 0;background:linear-gradient(140deg,rgba(198,173,130,.2),rgba(156,148,125,.04) 70%)}
+body[data-page="about"] .about-title,body[data-page="about"] .about-portrait{position:relative;z-index:2}
 body[data-page="about"] .about-portrait picture{aspect-ratio:4/5}
-body[data-page="about"] .about-story{position:relative;z-index:2;padding-top:clamp(88px,9vw,148px);padding-bottom:clamp(88px,9vw,148px)}
-body[data-page="atelier"] .atelier-opening{overflow:hidden;padding-top:clamp(38px,4vw,62px);padding-bottom:clamp(92px,9vw,150px)}
-body[data-page="atelier"] .atelier-opening:before{inset:-8% -12%;background:linear-gradient(130deg,rgba(198,173,130,.2),transparent 63%);clip-path:polygon(0 6%,100% 24%,88% 100%,9% 83%)}
-body[data-page="atelier"] .wall-showcase{position:relative;z-index:2;padding-top:clamp(76px,8vw,128px);padding-bottom:clamp(82px,8vw,132px)}
-body[data-page="atelier"] .three-notes{border-top:0;padding-top:clamp(76px,8vw,126px);padding-bottom:clamp(76px,8vw,126px)}
+body[data-page="about"] .about-story{position:relative;z-index:2;padding-top:clamp(76px,8vw,124px);padding-bottom:clamp(78px,8vw,128px)}
+body[data-page="about"] .about-story:before{right:-10%;bottom:0;width:38%;height:44%}
+body[data-page="atelier"] .atelier-opening{overflow:visible;padding-top:clamp(42px,4vw,68px);padding-bottom:clamp(78px,8vw,126px)}
+body[data-page="atelier"] .atelier-opening:before{right:-9%;bottom:0;width:44%;height:50%;border-radius:68% 0 0 0 / 58% 0 0 0;background:linear-gradient(140deg,rgba(198,173,130,.18),transparent 76%)}
+body[data-page="atelier"] .wall-showcase{position:relative;z-index:2;padding-top:clamp(72px,7vw,112px);padding-bottom:clamp(76px,7vw,118px)}
+body[data-page="atelier"] .three-notes{border-top:0;padding-top:clamp(72px,7vw,112px);padding-bottom:clamp(74px,7vw,116px)}
 
-/* Forms, product and policy pages receive a restrained directional rule only. */
+/* Archive title receives its own quiet field below the film transition. */
+body[data-page="archive"] .archive-film{position:relative;z-index:2}
+body[data-page="archive"] .archive-wave{position:relative;z-index:1}
+body[data-page="archive"] .page-intro{position:relative;z-index:2;padding-top:clamp(70px,7vw,108px);padding-bottom:clamp(58px,6vw,92px);background:var(--paper)}
+body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bottom:clamp(56px,6vw,94px)}
+
+/* Functional pages use a quiet rule; their content remains conventionally structured. */
 .product-layout,.enquiry-layout,.policy-layout,.membership,.faq-section{position:relative;isolation:isolate}
-.product-layout:before,.enquiry-layout:before,.policy-layout:before,.membership:before,.faq-section:before{content:"";position:absolute;z-index:-1;left:var(--gutter);right:var(--gutter);top:0;height:1px;background:linear-gradient(100deg,var(--ink) 0 17%,transparent 17% 34%,var(--champagne) 34% 56%,transparent 56%);transform:skewX(-35deg);transform-origin:left}
+.product-layout:before,.enquiry-layout:before,.policy-layout:before,.membership:before,.faq-section:before{
+ content:"";position:absolute;z-index:0;left:var(--gutter);right:var(--gutter);top:0;height:1px;
+ background:linear-gradient(90deg,var(--ink) 0 14%,transparent 14% 35%,var(--champagne) 35% 52%,transparent 52%)
+}
+.product-layout>*,.enquiry-layout>*,.policy-layout>*,.membership>*,.faq-section>*{position:relative;z-index:1}
+
+/* A smaller consent card cannot obscure page titles or an entire product row. */
+.cookie-banner{left:24px;right:auto;width:min(560px,calc(100% - 48px));padding:22px 24px;grid-template-columns:1fr;gap:14px}
+.cookie-banner h2{font-size:24px}.cookie-actions{justify-content:flex-start}
 
 @media(max-width:1100px){
- .architectural-ribbon{height:120px}
- body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .architectural-ribbon{height:74px}
+ body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 22px}
 }
 @media(max-width:700px){
- .architectural-wave{height:72px}.home-wave{margin-top:-44px;margin-bottom:-20px}.archive-wave{margin-top:-42px;margin-bottom:0}.about-wave,.atelier-wave{margin-top:-28px;margin-bottom:-24px}
- .architectural-ribbon{height:76px;margin-top:-16px;margin-bottom:-20px}.house-ribbon{margin-bottom:-30px}.house-ikebana-ribbon{margin-top:-30px;margin-bottom:-24px}
- .architectural-field:before,.diagonal-sweep:before{inset:0 -24px;clip-path:polygon(0 12%,100% 0,100% 88%,0 100%)}
+ .architectural-wave{height:54px}.archive-wave{height:58px}.about-wave,.atelier-wave{height:46px}
+ .architectural-ribbon{height:52px}
+ .ribbon-plane-primary{stroke-width:9}.ribbon-plane-secondary{stroke-width:3}
+ .architectural-field:before,.diagonal-sweep:before{display:none}
  .collection-grid .collection-item:nth-child(n){margin:0!important}
  .collection-grid .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5!important}
- body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}
+ body[data-page="collections"] .page-intro{padding-top:46px;padding-bottom:58px;background:linear-gradient(177deg,var(--paper) 0 80%,#e8e0d2 80% 100%)}
+ body[data-page="collections"] .collections-shell{padding-top:30px}
+ body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 14px}
+ body[data-page="index"] .venue-caption{display:block;min-height:0;padding:24px 24px 38px}
+ body[data-page="index"] .venue-caption h1{font-size:clamp(32px,10vw,44px);line-height:1.12}
  body[data-page="index"] .editorial-collection{grid-template-columns:1fr 1fr;gap:14px}
- body[data-page="index"] .editorial-collection .collection-item:nth-child(2){padding-top:28px}
+ body[data-page="index"] .editorial-collection .collection-item:nth-child(2){padding-top:18px}
  body[data-page="index"] .editorial-collection .collection-photo picture{aspect-ratio:3/4}
- body[data-page="index"] .house-statement{padding-top:44px;padding-bottom:52px}
- body[data-page="index"] .collection-section{padding-top:58px;padding-bottom:70px}
- body[data-page="index"] .discovery-pair{padding-top:62px;padding-bottom:64px}
- body[data-page="house"] .house-cinema-screen{background:linear-gradient(164deg,var(--paper) 0 62%,#e6dfd2 62%)}
- body[data-page="house"] .house-motion-philosophy{padding-top:72px;padding-bottom:74px}
- body[data-page="house"] #ikebana{padding-top:40px}
- body[data-page="house"] .film-editorial{clip-path:polygon(0 3%,100% 0,100% 97%,0 100%);padding-top:62px;padding-bottom:62px}
- body[data-page="about"] .about-hero{padding-top:56px;padding-bottom:76px}
+ body[data-page="index"] .editorial-collection .item-caption{display:block;padding-top:16px}
+ body[data-page="index"] .editorial-collection .item-caption h3{font-size:17px;line-height:1.22;overflow-wrap:normal}
+ body[data-page="index"] .editorial-collection .price{display:block;padding-top:8px;white-space:normal}
+ body[data-page="index"] .editorial-collection .price small{text-align:left}
+ body[data-page="index"] .house-statement{padding-top:54px;padding-bottom:60px}
+ body[data-page="index"] .collection-section{padding-top:58px;padding-bottom:68px}
+ body[data-page="index"] .discovery-pair{padding-top:56px;padding-bottom:60px}
+ body[data-page="index"] .club-feature:before{content:none}
+ body[data-page="house"] .house-cinema-screen{background:linear-gradient(164deg,var(--paper) 0 66%,#e6dfd2 66%)}
+ body[data-page="house"] .house-motion-philosophy{padding-top:64px;padding-bottom:68px}
+ body[data-page="house"] #ikebana{padding-top:48px}
+ body[data-page="house"] .film-editorial{padding-top:62px;padding-bottom:66px}
+ body[data-page="about"] .about-hero{padding-top:56px;padding-bottom:68px}
  body[data-page="about"] .about-portrait{width:100%}
- body[data-page="about"] .about-story{padding-top:72px;padding-bottom:72px}
- body[data-page="atelier"] .atelier-opening{padding-top:20px;padding-bottom:72px}
- body[data-page="atelier"] .wall-showcase,body[data-page="atelier"] .three-notes{padding-top:68px;padding-bottom:68px}
+ body[data-page="about"] .about-story{padding-top:62px;padding-bottom:66px}
+ body[data-page="atelier"] .atelier-opening{padding-top:24px;padding-bottom:66px}
+ body[data-page="atelier"] .wall-showcase,body[data-page="atelier"] .three-notes{padding-top:62px;padding-bottom:66px}
+ body[data-page="archive"] .page-intro{padding-top:56px;padding-bottom:48px}
+ body[data-page="archive"] .archive-grid{padding-bottom:56px}
+ .cookie-banner{left:12px;right:12px;width:auto;bottom:12px;padding:17px 18px}.cookie-banner h2{font-size:22px}
 }
 
 @media(prefers-reduced-motion:reduce){
