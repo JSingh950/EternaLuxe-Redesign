@@ -122,25 +122,30 @@
     };
     const seen=document.documentElement.classList.contains('opening-seen');
     const connection=navigator.connection;
-    let finished=seen,target=0,progressTween=null,timeline=null,touchY=null;
+    let finished=seen,finishing=false,target=0,progressTween=null,timeline=null,touchY=null;
     const protectedNodes=[header,...$$('main > :not(.floral-opening)'),$('.invitation'),$('.site-footer')].filter(Boolean);
     const protectSite=value=>protectedNodes.forEach(node=>{node.inert=value;});
     const remember=()=>{try{sessionStorage.setItem('eternaluxe-opening-v1','complete');}catch{/* Continue without session persistence. */}};
     const release=({immediate=false,focusVenue=false}={})=>{
       if(finished)return;
-      finished=true;target=1;remember();
+      finished=true;finishing=false;target=1;remember();
       progressTween?.kill();
       if(timeline)timeline.progress(1).pause();
+      // Restore the live page before the final visual fade. This ensures the
+      // same wheel/touch gesture can continue into the homepage and prevents
+      // an invisible opening layer from trapping clicks.
+      opening.style.pointerEvents='none';
+      pageRoot.classList.remove('floral-opening-active');
+      protectSite(false);
+      syncHeader();
+      dispatchEvent(new CustomEvent('eternaluxe:opening-complete'));
       const done=()=>{
         opening.hidden=true;
-        pageRoot.classList.remove('floral-opening-active');
         document.documentElement.classList.add('opening-seen');
-        protectSite(false);
-        dispatchEvent(new CustomEvent('eternaluxe:opening-complete'));
         if(focusVenue){const venue=$('.venue-hero');venue?.setAttribute('tabindex','-1');venue?.focus({preventScroll:true});}
       };
       if(immediate||!window.gsap)done();
-      else gsap.to(opening,{autoAlpha:0,duration:.48,ease:'power2.out',overwrite:true,onComplete:done});
+      else gsap.to(opening,{autoAlpha:0,duration:.28,ease:'power2.out',overwrite:true,onComplete:done});
     };
     if(seen){opening.hidden=true;}
     else{
@@ -163,11 +168,16 @@
           .to(surface,{backgroundColor:'rgba(35,31,28,0)',duration:.48},.5)
           .to(opening,{autoAlpha:0,duration:.22},.78);
         const advance=delta=>{
-          if(finished||document.hidden)return;
+          if(finished||finishing||document.hidden)return;
           const distance=mobile.matches?720:Math.max(980,innerHeight*1.2);
           target=gsap.utils.clamp(0,1,target+delta/distance);
           progressTween?.kill();
-          progressTween=gsap.to(timeline,{progress:target,duration:.38,ease:'power2.out',overwrite:true,onComplete:()=>{if(target>=.995)release();}});
+          if(target>=.76){
+            finishing=true;
+            progressTween=gsap.to(timeline,{progress:1,duration:.36,ease:'power2.inOut',overwrite:true,onComplete:()=>release({immediate:true})});
+          }else{
+            progressTween=gsap.to(timeline,{progress:target,duration:.38,ease:'power2.out',overwrite:true});
+          }
         };
         const wheel=e=>{if(finished)return;e.preventDefault();advance(e.deltaY*(e.deltaMode===1?18:e.deltaMode===2?innerHeight:1));};
         const touchStart=e=>{touchY=e.touches[0]?.clientY??null;};

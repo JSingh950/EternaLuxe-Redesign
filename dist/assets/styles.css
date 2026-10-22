@@ -504,6 +504,44 @@ body.floral-opening-active .cookie-banner{opacity:0;visibility:hidden;pointer-ev
  .floral-opening-surface{will-change:auto}
 }
 
+/* Homepage venue: one complete, cinematic viewport. The scene, title and
+   controls share the same frame so no empty caption band follows the film. */
+body[data-page="index"] .venue-hero{
+ height:100svh;min-height:600px;overflow:hidden;background:#231f1c;isolation:isolate;
+}
+body[data-page="index"] .venue-hero:after{
+ content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+ background:linear-gradient(180deg,rgba(24,20,17,.34) 0,transparent 30%,transparent 58%,rgba(24,20,17,.58) 100%);
+}
+body[data-page="index"] .venue-scene{
+ position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;
+}
+body[data-page="index"] .venue-scene picture,
+body[data-page="index"] .venue-scene img{
+ width:100%;height:100%;object-fit:cover;
+}
+body[data-page="index"] .venue-caption{
+ position:absolute;z-index:5;left:0;right:0;bottom:0;display:block;min-height:0;
+ padding:clamp(150px,20vh,240px) var(--gutter) clamp(34px,5vh,64px);color:#fff9f0;
+}
+body[data-page="index"] .venue-caption h1{
+ max-width:15ch;font-size:clamp(42px,5.3vw,84px);line-height:1.04;text-shadow:0 2px 18px rgba(20,16,12,.28);
+}
+body[data-page="index"] .venue-caption .text-link{
+ margin-top:18px;border-color:currentColor;
+}
+body[data-page="index"] .venue-controls{
+ position:absolute;z-index:7;inset:0;width:100%;height:100%;aspect-ratio:auto;
+}
+
+@media(max-width:700px){
+ body[data-page="index"] .venue-hero{min-height:560px}
+ body[data-page="index"] .venue-scene img{object-position:61% 50%}
+ body[data-page="index"] .venue-caption{padding:150px 24px 30px}
+ body[data-page="index"] .venue-caption h1{font-size:clamp(38px,12vw,52px);line-height:1.06}
+ body[data-page="index"] .venue-caption .text-link{margin-top:12px}
+}
+
 
 
 
