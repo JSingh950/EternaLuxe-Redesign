@@ -504,18 +504,16 @@ body.floral-opening-active .cookie-banner{opacity:0;visibility:hidden;pointer-ev
  .floral-opening-surface{will-change:auto}
 }
 
-/* Show the complete camera frame. The room's 2:1 ratio is never enlarged into
-   a portrait viewport, and the masthead has a reserved area above the flowers. */
+/* The transparent masthead overlays the complete, edge-to-edge camera frame. */
 body[data-page="index"] .venue-hero{
- --venue-header:130px;
- height:auto;min-height:0;padding-top:var(--venue-header);overflow:visible;
- background:#302c28;isolation:isolate;
+ height:auto;min-height:0;padding:0;overflow:visible;
+ background:transparent;isolation:isolate;
 }
 body[data-page="index"] .venue-hero:after{
  content:none;
 }
 body[data-page="index"] .venue-scene{
- position:relative;inset:auto;width:min(100%,calc((100svh - var(--venue-header))*2));
+ position:relative;inset:auto;width:100%;
  height:auto;aspect-ratio:2/1;margin:0 auto;
 }
 body[data-page="index"] .venue-base{width:100%;height:100%}
@@ -524,8 +522,8 @@ body[data-page="index"] .venue-scene img{
  width:100%;height:100%;object-fit:contain;object-position:50% 50%;
 }
 body[data-page="index"] .venue-controls{
- position:absolute;z-index:7;top:var(--venue-header);left:50%;
- width:min(100%,calc((100svh - var(--venue-header))*2));height:auto;
+ position:absolute;z-index:7;top:0;left:50%;
+ width:100%;height:auto;
  aspect-ratio:2/1;transform:translateX(-50%);
 }
 .venue-layer>picture{position:absolute;inset:0}
@@ -535,7 +533,6 @@ body[data-page="index"] .venue-controls{
 }
 
 @media(max-width:700px){
- body[data-page="index"] .venue-hero{--venue-header:76px}
  body[data-page="index"] .venue-controls .film-toggle{right:14px;bottom:14px}
 }
 
