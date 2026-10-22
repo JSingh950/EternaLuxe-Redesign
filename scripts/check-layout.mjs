@@ -26,6 +26,7 @@ try{
   for(const file of pages){
     for(const [width,height] of viewports){
       const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
+      await page.addInitScript(()=>sessionStorage.setItem('eternaluxe-opening-v1','complete'));
       const errors=[];page.on('console',message=>{if(message.type()==='error'&&!message.text().includes('404 (Not Found)'))errors.push(message.text());});
       await page.goto(`http://127.0.0.1:4189/${file}`,{waitUntil:'networkidle'});
       await page.evaluate(async()=>{

@@ -107,6 +107,89 @@
     $('[data-reset-filters]')?.addEventListener('click',()=>filters.reset());
     filter();
   }
+  const opening=$('[data-floral-opening]');
+  const openingIsActive=()=>pageRoot.classList.contains('floral-opening-active');
+  if(opening){
+    const skip=$('[data-opening-skip]',opening),cue=$('[data-opening-cue]',opening);
+    const surface=$('.floral-opening-surface',opening);
+    const logo=$('.floral-opening-logo',opening);
+    const layers={
+      core:$('.floral-spiral-layer--core',opening),
+      inner:$('.floral-spiral-layer--inner',opening),
+      middle:$('.floral-spiral-layer--middle',opening),
+      outer:$('.floral-spiral-layer--outer',opening),
+      edge:$('.floral-spiral-layer--edge',opening)
+    };
+    const seen=document.documentElement.classList.contains('opening-seen');
+    const connection=navigator.connection;
+    let finished=seen,target=0,progressTween=null,timeline=null,touchY=null;
+    const protectedNodes=[header,...$$('main > :not(.floral-opening)'),$('.invitation'),$('.site-footer')].filter(Boolean);
+    const protectSite=value=>protectedNodes.forEach(node=>{node.inert=value;});
+    const remember=()=>{try{sessionStorage.setItem('eternaluxe-opening-v1','complete');}catch{/* Continue without session persistence. */}};
+    const release=({immediate=false,focusVenue=false}={})=>{
+      if(finished)return;
+      finished=true;target=1;remember();
+      progressTween?.kill();
+      if(timeline)timeline.progress(1).pause();
+      const done=()=>{
+        opening.hidden=true;
+        pageRoot.classList.remove('floral-opening-active');
+        document.documentElement.classList.add('opening-seen');
+        protectSite(false);
+        dispatchEvent(new CustomEvent('eternaluxe:opening-complete'));
+        if(focusVenue){const venue=$('.venue-hero');venue?.setAttribute('tabindex','-1');venue?.focus({preventScroll:true});}
+      };
+      if(immediate||!window.gsap)done();
+      else gsap.to(opening,{autoAlpha:0,duration:.48,ease:'power2.out',overwrite:true,onComplete:done});
+    };
+    if(seen){opening.hidden=true;}
+    else{
+      pageRoot.classList.add('floral-opening-active');
+      protectSite(true);
+      scrollTo(0,0);
+      const staticOpening=reduced.matches||connection?.saveData||!window.gsap;
+      if(staticOpening){
+        opening.classList.add('is-static');
+        cue.firstChild.textContent='A floral study by Eternaluxe';
+        skip.textContent='Enter site';
+      }else{
+        timeline=gsap.timeline({paused:true,defaults:{ease:'none'}})
+          .to([logo,cue,skip],{autoAlpha:0,y:-10,duration:.18},0)
+          .to(layers.edge,{xPercent:28,yPercent:-18,rotation:86,scale:1.18,autoAlpha:0,duration:.72},.06)
+          .to(layers.outer,{xPercent:-24,yPercent:18,rotation:-64,scale:1.16,autoAlpha:0,duration:.7},.1)
+          .to(layers.middle,{xPercent:18,yPercent:22,rotation:48,scale:1.13,autoAlpha:0,duration:.65},.17)
+          .to(layers.inner,{xPercent:-12,yPercent:-12,rotation:-32,scale:1.1,autoAlpha:0,duration:.58},.25)
+          .to(layers.core,{rotation:22,scale:1.28,autoAlpha:0,duration:.46},.45)
+          .to(surface,{backgroundColor:'rgba(35,31,28,0)',duration:.48},.5)
+          .to(opening,{autoAlpha:0,duration:.22},.78);
+        const advance=delta=>{
+          if(finished||document.hidden)return;
+          const distance=mobile.matches?720:Math.max(980,innerHeight*1.2);
+          target=gsap.utils.clamp(0,1,target+delta/distance);
+          progressTween?.kill();
+          progressTween=gsap.to(timeline,{progress:target,duration:.38,ease:'power2.out',overwrite:true,onComplete:()=>{if(target>=.995)release();}});
+        };
+        const wheel=e=>{if(finished)return;e.preventDefault();advance(e.deltaY*(e.deltaMode===1?18:e.deltaMode===2?innerHeight:1));};
+        const touchStart=e=>{touchY=e.touches[0]?.clientY??null;};
+        const touchMove=e=>{if(finished||touchY==null)return;const next=e.touches[0]?.clientY??touchY;const delta=touchY-next;touchY=next;e.preventDefault();advance(delta*1.65);};
+        const key=e=>{
+          if(finished)return;
+          if(['ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();advance(mobile.matches?150:220);}
+          if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();advance(mobile.matches?-120:-180);}
+          if(e.key==='Escape'){e.preventDefault();release({focusVenue:true});}
+        };
+        addEventListener('wheel',wheel,{passive:false});
+        addEventListener('touchstart',touchStart,{passive:true});
+        addEventListener('touchmove',touchMove,{passive:false});
+        addEventListener('touchend',()=>{touchY=null;},{passive:true});
+        addEventListener('keydown',key);
+      }
+      skip.addEventListener('click',()=>release({focusVenue:true}));
+      $('.skip-link')?.addEventListener('click',()=>release({immediate:true}));
+      opening.addEventListener('error',e=>{if(e.target.matches('.floral-spiral img'))opening.classList.add('has-asset-error');},true);
+      document.addEventListener('visibilitychange',()=>{if(document.hidden)progressTween?.pause();else progressTween?.resume();});
+    }
+  }
   const scene=$('[data-venue]');
   if(scene&&window.gsap){
     const primary=[$('.venue-table',scene),$('.venue-console',scene),$('.venue-pedestal',scene),$('.venue-moss',scene)];
@@ -118,7 +201,7 @@
     const timeline=gsap.timeline({paused:true,repeat:-1});
     const present=index=>{gsap.set(layers,{opacity:0});if(index>0)gsap.set(sets[index-1],{opacity:1});};
     function sync(){
-      const running=ready&&visible&&!document.hidden&&!userPaused&&!still();
+      const running=ready&&visible&&!document.hidden&&!userPaused&&!still()&&!openingIsActive();
       if(still()){timeline.pause();if(!staticMode){step=1;present(step);}}
       else if(running)timeline.play();else timeline.pause();
       staticMode=!!still();toggle.hidden=!!still();manual.hidden=!still();
@@ -131,6 +214,7 @@
     $('[data-scene-next]').addEventListener('click',()=>show(1));
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
     document.addEventListener('visibilitychange',sync);
+    addEventListener('eternaluxe:opening-complete',sync);
     reduced.addEventListener('change',()=>{timeline.restart().pause();staticMode=false;sync();});
     connection?.addEventListener('change',()=>{timeline.restart().pause();staticMode=false;sync();});
     const decodeSet=set=>Promise.all(set.map(layer=>$('img',layer).decode()));

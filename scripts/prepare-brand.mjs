@@ -3,6 +3,14 @@ import sharp from 'sharp';
 await fs.mkdir('dist/assets/brand',{recursive:true});
 await fs.mkdir('dist/assets/scene',{recursive:true});
 for(const tone of ['white','champagne']) await sharp(`assets/brand/logo-${tone}.png`).trim().png().toFile(`dist/assets/brand/logo-${tone}.png`);
+await sharp('assets/brand/spiral-flower-master.png')
+ .resize({width:1254,height:1254,fit:'inside',withoutEnlargement:true})
+ .webp({quality:93,alphaQuality:100,smartSubsample:true})
+ .toFile('dist/assets/brand/spiral-flower.webp');
+await sharp('assets/brand/spiral-flower-master.png')
+ .resize({width:860,height:860,fit:'inside',withoutEnlargement:true})
+ .webp({quality:91,alphaQuality:100,smartSubsample:true})
+ .toFile('dist/assets/brand/spiral-flower-mobile.webp');
 for(const weight of [400,600]) await fs.copyFile(`node_modules/@fontsource/nunito-sans/files/nunito-sans-latin-${weight}-normal.woff2`,`dist/assets/fonts/nunito-sans-latin-${weight}-normal.woff2`);
 await fs.copyFile('node_modules/@fontsource/nunito-sans/LICENSE','dist/assets/fonts/nunito-sans-LICENSE.txt');
 const source='assets/brand/venue-additions.png';

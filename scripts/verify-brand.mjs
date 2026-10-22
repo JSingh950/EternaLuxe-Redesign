@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true});
 const page=await browser.newPage();
+await page.addInitScript(()=>sessionStorage.setItem('eternaluxe-opening-v1','complete'));
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 const base=process.env.TEST_URL||'http://localhost:4173';
 for(const width of [375,768,1440,1920]){
@@ -21,10 +22,10 @@ assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).
 await page.locator('[data-scene-next]').click();await page.waitForTimeout(100);assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');
 await page.goto(base+'/house.html#ikebana');assert.equal(await page.locator('#ikebana').count(),1);assert.equal(await page.locator('h1').count(),1);
 assert.equal(await page.locator('a[href="ikebana.html"]').count(),0);
-await page.getByRole('button',{name:'Cookie preferences',exact:true}).first().click();await page.getByRole('button',{name:'Save preferences',exact:true}).click();assert.equal(await page.locator('#cookie-dialog').evaluate(e=>e.open),false);
+await page.getByRole('button',{name:'Cookie Preferences',exact:true}).first().click();await page.getByRole('button',{name:'Save preferences',exact:true}).click();assert.equal(await page.locator('#cookie-dialog').evaluate(e=>e.open),false);
 const nojs=await browser.newContext({javaScriptEnabled:false});const staticPage=await nojs.newPage();await staticPage.goto(base);assert.equal(await staticPage.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1');await nojs.close();
-const saving=await browser.newContext();await saving.addInitScript(()=>Object.defineProperty(navigator,'connection',{value:{saveData:true,addEventListener(){}}}));const saved=await saving.newPage();await saved.goto(base);await saved.locator('[data-scene-next]').waitFor({state:'visible'});assert.equal(await saved.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');await saving.close();
-const broken=await browser.newContext();await broken.route('**/scene/moss*',route=>route.abort());const fallback=await broken.newPage();await fallback.goto(base);await fallback.waitForTimeout(300);assert.equal(await fallback.locator('.venue-base img').evaluate(e=>e.naturalWidth>0),true);await fallback.locator('[data-venue-toggle]').waitFor({state:'visible'});assert.equal(await fallback.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');await broken.close();
+const saving=await browser.newContext();await saving.addInitScript(()=>{sessionStorage.setItem('eternaluxe-opening-v1','complete');Object.defineProperty(navigator,'connection',{value:{saveData:true,addEventListener(){}}});});const saved=await saving.newPage();await saved.goto(base);await saved.locator('[data-scene-next]').waitFor({state:'visible'});assert.equal(await saved.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');await saving.close();
+const broken=await browser.newContext();await broken.addInitScript(()=>sessionStorage.setItem('eternaluxe-opening-v1','complete'));await broken.route('**/scene/moss*',route=>route.abort());const fallback=await broken.newPage();await fallback.goto(base);await fallback.waitForTimeout(300);assert.equal(await fallback.locator('.venue-base img').evaluate(e=>e.naturalWidth>0),true);await fallback.locator('[data-venue-toggle]').waitFor({state:'visible'});assert.equal(await fallback.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');await broken.close();
 await page.emulateMedia({reducedMotion:'no-preference'});await page.goto(base);await page.locator('[data-venue-toggle]').waitFor({state:'visible'});
 await page.evaluate(()=>{const scene=document.querySelector('[data-venue]');window.roomTimeline=gsap.globalTimeline.getChildren().find(t=>t.repeat?.()===-1&&t.getChildren?.().some(c=>c.targets?.().some(e=>scene.contains(e))));window.roomTimeline.pause().time(11);});
 assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');assert.equal(await page.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1');console.log('Primary set passed');
