@@ -38,7 +38,7 @@ try{
         const visible=element=>{const style=getComputedStyle(element),rect=element.getBoundingClientRect();return style.display!=='none'&&style.visibility!=='hidden'&&rect.width>0&&rect.height>0;};
         const intersects=(a,b)=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1;
         const clipped=[];
-        for(const element of document.querySelectorAll('h1,h2,h3,[data-content-safe]')){
+        for(const element of document.querySelectorAll('h1:not(.sr-only),h2,h3,[data-content-safe]')){
           if(!visible(element))continue;
           const rect=element.getBoundingClientRect();
           if(rect.left<-.5||rect.right>innerWidth+.5)clipped.push(`${element.tagName}.${element.className||''}: horizontal`);
