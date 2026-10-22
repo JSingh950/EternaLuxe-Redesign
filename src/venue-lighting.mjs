@@ -1,0 +1,30 @@
+// All coordinates share the room photograph's 1774 × 887 camera plane.
+// Shadows belong to their arrangement, so opacity changes affect both together.
+const feet={
+ table:[1287,477,43,7],console:[950,364,29,3],pedestal:[1652,375,23,3],
+ 'coral-table':[1291,475,39,6],'coral-console':[932,366,22,3],'coral-pedestal':[1646,375,17,3],
+ 'jewel-table':[1281,474,49,7],'jewel-console':[939,364,29,3],'jewel-pedestal':[1644,373,17,3]
+};
+
+export function venueLighting(name){
+ const foot=feet[name];
+ if(!foot)return '';
+ const [x,y,rx,ry]=foot;
+ const part=name.split('-').at(-1),id=`light-${name}`;
+ const flatten=part==='table'?.12:.035;
+ const shear=part==='table'?.55:.48;
+ const surface=part==='table'
+  ? '<ellipse cx="1282" cy="469" rx="297" ry="32"/>'
+  :part==='console'
+   ? '<path d="M780 366L1175 353L1205 360L816 378Z"/>'
+   : '<ellipse cx="1654" cy="369" rx="80" ry="8"/>';
+ return `<svg class="venue-lighting" viewBox="0 0 1774 887" aria-hidden="true" focusable="false"><defs>
+ <clipPath id="${id}-surface">${surface}</clipPath>
+ <filter id="${id}-cast" x="-40%" y="-70%" width="180%" height="240%" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .12 0 0 0 0 .095 0 0 0 0 .065 0 0 0 .32 0"/><feGaussianBlur stdDeviation="3"/></filter>
+ <radialGradient id="${id}-contact"><stop stop-color="#281b10" stop-opacity=".78"/><stop offset=".42" stop-color="#392817" stop-opacity=".48"/><stop offset="1" stop-color="#392817" stop-opacity="0"/></radialGradient>
+ <radialGradient id="${id}-bounce"><stop stop-color="#58402b" stop-opacity=".25"/><stop offset="1" stop-color="#58402b" stop-opacity="0"/></radialGradient>
+ </defs><g clip-path="url(#${id}-surface)">
+ <g filter="url(#${id}-cast)"><image href="assets/scene/${name}.webp" width="1774" height="887" transform="matrix(1 0 ${shear} ${-flatten} ${-shear*y} ${(1+flatten)*y})"/></g>
+ <ellipse cx="${x-rx*.35}" cy="${y-1}" rx="${rx*2.2}" ry="${ry*2.3}" fill="url(#${id}-bounce)"/>
+ </g><ellipse cx="${x}" cy="${y}" rx="${rx*1.45}" ry="${ry}" fill="url(#${id}-contact)"/></svg>`;
+}

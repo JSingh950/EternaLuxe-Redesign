@@ -48,7 +48,8 @@ for(const [palette,objects] of Object.entries(placements)){
 }
 for(const [name,buffer]of Object.entries(layers)) {
  await sharp(buffer).webp({quality:92}).toFile(`dist/assets/scene/${name}.webp`);
- await sharp(buffer).extract({left:0,top:30,width:1774,height:820}).resize(1200).webp({quality:90}).toFile(`dist/assets/scene/${name}-mobile.webp`);
+ // Keep the entire camera plane on mobile; every layer must have the same crop.
+ await sharp(buffer).resize(1200,600).webp({quality:92,alphaQuality:100}).toFile(`dist/assets/scene/${name}-mobile.webp`);
 }
 for(const palette of ['coral','jewel'])await sharp(layers.room).composite(['wall','console','pedestal','table'].map(part=>({input:layers[`${palette}-${part}`]}))).jpeg({quality:92}).toFile(`dist/assets/scene/composed-${palette}.jpg`);
 await sharp(layers.room).composite([{input:layers.console},{input:layers.pedestal},{input:layers.table},{input:layers.moss}]).jpeg({quality:92}).toFile('dist/assets/scene/composed.jpg');
