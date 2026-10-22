@@ -324,7 +324,12 @@
         const photograph=entry.target.querySelector('picture img');
         if(photograph)gsap.fromTo(photograph,{scale:1.02},{scale:1,duration:2.2,ease:'sine.out',clearProps:'transform'});
       }),{threshold:.08});
-      $$('[data-reveal]').forEach(el=>observer.observe(el));
+      $$('[data-reveal]').forEach(el=>{
+        // The first copy below the venue must be visible as soon as it enters
+        // the viewport, rather than briefly presenting an empty ivory band.
+        if(pageRoot.dataset.page==='index'&&el.classList.contains('house-statement'))return;
+        observer.observe(el);
+      });
       return ()=>observer.disconnect();
     });
   }
