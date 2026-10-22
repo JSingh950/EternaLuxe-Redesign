@@ -2,6 +2,9 @@ import fs from 'node:fs/promises';
 import sharp from 'sharp';
 await fs.mkdir('dist/assets/brand',{recursive:true});
 await fs.mkdir('dist/assets/scene',{recursive:true});
+for(const variant of ['desktop','mobile']){
+ await sharp(`assets/brand/venue-extended-${variant}.png`).webp({quality:93,smartSubsample:true}).toFile(`dist/assets/scene/venue-extended-${variant}.webp`);
+}
 for(const tone of ['white','champagne']) await sharp(`assets/brand/logo-${tone}.png`).trim().png().toFile(`dist/assets/brand/logo-${tone}.png`);
 await sharp('assets/brand/spiral-flower-master.png')
  .resize({width:1254,height:1254,fit:'inside',withoutEnlargement:true})

@@ -31,9 +31,9 @@ try{
   await page.reload({waitUntil:'networkidle'});
   assert.equal(await opening.isHidden(),true,'repeat visits in the same session open directly to the venue');
   const hero=await page.locator('.venue-hero').boundingBox();
-  const desktopScene=await page.locator('.venue-scene').boundingBox();
+  const desktopScene=await page.locator('.venue-table').boundingBox();
   assert.equal(Math.abs(desktopScene.width/desktopScene.height-2)<.01,true,'desktop venue preserves the entire 2:1 camera frame');
-  assert.equal(hero.height<=1000,true,'desktop venue fits within the viewport');
+  assert.equal(Math.abs(hero.height-1000)<2,true,'desktop venue fills the viewport');
   assert.equal(await page.locator('.venue-caption').count(),0,'homepage hero copy is removed');
   await context.close();
 
@@ -72,9 +72,9 @@ try{
   assert.equal(await touchPage.locator('[data-floral-opening]').isHidden(),true,'touch swipes complete the mobile opening');
   assert.equal(await touchPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile opening has no horizontal overflow');
   const mobileHero=await touchPage.locator('.venue-hero').boundingBox();
-  const mobileScene=await touchPage.locator('.venue-scene').boundingBox();
+  const mobileScene=await touchPage.locator('.venue-table').boundingBox();
   assert.equal(Math.abs(mobileScene.width/mobileScene.height-2)<.01,true,'mobile venue preserves the full room without cropping');
-  assert.equal(mobileHero.height<=812,true,'mobile venue fits within the viewport');
+  assert.equal(Math.abs(mobileHero.height-812)<2,true,'mobile venue fills the viewport');
   assert.equal(await touchPage.locator('.venue-caption').count(),0,'mobile homepage hero copy is removed');
   await touch.close();
 
