@@ -64,7 +64,8 @@ try{
   await touch.close();
 
   const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:900}});
-  const staticPage=await nojs.newPage();await staticPage.goto(base,{waitUntil:'domcontentloaded'});
+  const staticPage=await nojs.newPage();await staticPage.goto(base,{waitUntil:'networkidle'});
+  await staticPage.locator('[data-floral-opening]').waitFor({state:'hidden'});
   assert.equal(await staticPage.locator('[data-floral-opening]').isHidden(),true,'no-JavaScript fallback never blocks the website');
   assert.equal(await staticPage.locator('.venue-scene').isVisible(),true,'no-JavaScript fallback exposes the venue');
   await nojs.close();
