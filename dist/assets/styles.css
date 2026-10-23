@@ -570,6 +570,41 @@ body[data-page="index"] .venue-manual button:hover{text-decoration:underline}
  body[data-page="index"] .venue-manual button{font-size:9px}
 }
 
+/* A coordinated photo vocabulary. Crops never include captions or controls. */
+body[data-page] .collection-item[data-image-shape] .collection-photo{
+ overflow:hidden;isolation:isolate;border-radius:var(--photo-shape,28px)!important;
+}
+.collection-item[data-image-shape="arch"]{--photo-shape:50% 50% 24px 24px / 30% 30% 24px 24px}
+.collection-item[data-image-shape="oval"]{--photo-shape:50%}
+.collection-item[data-image-shape="circle"]{--photo-shape:50%}
+.collection-item[data-image-shape="soft"]{--photo-shape:clamp(18px,3vw,44px)}
+body[data-page="collections"] .collection-item:nth-child(n){grid-column:auto}
+body[data-page="collections"] .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5}
+body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo{
+ /* Keep the same image slot and caption baseline as the portrait frames. */
+ border-radius:0!important;background:none;overflow:visible;
+ aspect-ratio:4/5;display:flex;align-items:center;
+}
+body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo picture{
+ aspect-ratio:1!important;height:auto;width:100%;border-radius:50%;overflow:hidden;
+}
+body[data-page="index"] .editorial-collection{align-items:center}
+body[data-page="index"] .editorial-collection .collection-item:nth-child(n){padding:0}
+body[data-page="index"] .editorial-collection .collection-item[data-image-shape="circle"] picture{aspect-ratio:1!important}
+body[data-page="index"] .editorial-collection .collection-item[data-image-shape="arch"] picture{aspect-ratio:4/5!important}
+.about-portrait picture{border-radius:50% 50% 24px 24px / 28% 28% 24px 24px!important;overflow:hidden}
+.motion-frame:nth-child(3n+1){border-radius:50% 50% 20px 20px / 24% 24% 20px 20px!important}
+.motion-frame:nth-child(3n+2){border-radius:50%!important}
+.motion-frame:nth-child(3n){border-radius:24px!important}
+body[data-page="archive"] .archive-grid picture{border-radius:24px!important;overflow:hidden}
+body[data-page="archive"] .archive-grid>figure:nth-child(3n+1) picture{border-radius:50% 50% 24px 24px / 25% 25% 24px 24px!important}
+body[data-page="archive"] .archive-grid>figure:nth-child(3n+2) picture{border-radius:50%!important}
+@media(max-width:700px){
+ .collection-item[data-image-shape="arch"]{--photo-shape:50% 50% 14px 14px / 24% 24% 14px 14px}
+ .motion-frame:nth-child(3n){border-radius:16px!important}
+ body[data-page="archive"] .archive-grid picture{border-radius:16px!important}
+}
+
 
 
 
