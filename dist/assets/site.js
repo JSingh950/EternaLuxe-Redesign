@@ -372,11 +372,11 @@
           const motion=gsap.timeline({paused:true,repeat:-1,yoyo:true,defaults:{duration:3,ease:'sine.inOut'}})
             .fromTo($('svg',section),{xPercent:-2.5,y:-4},{xPercent:2.5,y:4},0)
             .fromTo($('.ribbon-plane-primary',section),
-              {attr:{d:'M-80 148C240 34 500 36 798 119s544 100 882-54'}},
-              {attr:{d:'M-80 78C240 190 500 184 798 103s544-76 882 48'}},0)
+              {attr:{d:'M -80 148 C 240 34 500 36 798 119 s 544 100 882 -54'}},
+              {attr:{d:'M -80 78 C 240 190 500 184 798 103 s 544 -76 882 48'}},0)
             .fromTo($('.ribbon-plane-secondary',section),
-              {attr:{d:'M-80 171C238 61 497 62 793 141s548 91 887-62'},y:-4},
-              {attr:{d:'M-80 101C238 204 497 197 793 125s548-67 887 42'},y:4},0);
+              {attr:{d:'M -80 171 C 238 61 497 62 793 141 s 548 91 887 -62'},y:-4},
+              {attr:{d:'M -80 101 C 238 204 497 197 793 125 s 548 -67 887 42'},y:4},0);
           return [section,motion];
         }));
         const syncSways=()=>sways.forEach((tween,section)=>{
