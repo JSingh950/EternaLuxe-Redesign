@@ -222,7 +222,7 @@
     }
     const still=()=>reduced.matches||connection?.saveData;
     // Keep each venue edition moving at an editorial pace without a long hold.
-    const editionDuration=11;
+    const editionDuration=10;
     const timeline=gsap.timeline({paused:true,repeat:-1});
     const present=index=>{gsap.set(layers,{opacity:0,lazy:false});if(index>0)gsap.set(sets[index-1],{opacity:1,lazy:false});updateEdition(index-1);};
     timeline.eventCallback('onUpdate',()=>updateEdition(Math.min(sets.length-1,Math.floor(timeline.time()/editionDuration))));
@@ -230,7 +230,7 @@
       const index=sets.findIndex(set=>paletteFor(set)===button.dataset.venueSet);
       if(index<0||!ready)return;
       if(still()){step=index+1;present(step);}
-      else{timeline.seek(index*editionDuration+5.5);sync();}
+      else{timeline.seek(index*editionDuration+5);sync();}
     }));
     function sync(){
       const running=ready&&visible&&!document.hidden&&!userPaused&&!still()&&!openingIsActive();
@@ -260,11 +260,11 @@
       sets.forEach((set,index)=>{
         const at=index*editionDuration;
         timeline.set(layers,{opacity:0},at)
-          .to(set[0],{opacity:1,duration:1.05,ease:'sine.inOut'},at+.45)
-          .to(set[1],{opacity:1,duration:1.05,ease:'sine.inOut'},at+1.75)
-          .to(set[2],{opacity:1,duration:1.05,ease:'sine.inOut'},at+3.05)
-          .to(set[3],{opacity:1,duration:1.2,ease:'sine.inOut'},at+4.35)
-          .to(set,{opacity:0,duration:1.35,ease:'sine.inOut'},at+9.25);
+          .to(set[0],{opacity:1,duration:.95,ease:'sine.inOut'},at+.35)
+          .to(set[1],{opacity:1,duration:.95,ease:'sine.inOut'},at+1.5)
+          .to(set[2],{opacity:1,duration:.95,ease:'sine.inOut'},at+2.65)
+          .to(set[3],{opacity:1,duration:1.1,ease:'sine.inOut'},at+3.8)
+          .to(set,{opacity:0,duration:1.2,ease:'sine.inOut'},at+8.3);
       });
       // Start on the completed original four pieces, held throughout the opening.
       // The existing sequential cycle continues from this point after entry.
