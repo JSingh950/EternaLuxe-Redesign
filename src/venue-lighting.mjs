@@ -7,6 +7,7 @@ const feet={
 };
 
 export function venueLighting(name){
+ if(name==='moss')return `<svg class="venue-lighting" viewBox="0 0 1774 887" aria-hidden="true" focusable="false"><defs><filter id="moss-contact-shadow" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceAlpha" stdDeviation="1.4"/><feOffset dx="-2" dy="3" result="contact"/><feFlood flood-color="#34291c" flood-opacity=".34"/><feComposite in2="contact" operator="in"/></filter></defs><image href="assets/scene/moss.webp" width="1774" height="887" filter="url(#moss-contact-shadow)"/></svg>`;
  const foot=feet[name];
  if(!foot)return '';
  const [x,y,rx,ry]=foot;
