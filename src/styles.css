@@ -302,6 +302,11 @@ main :is(h1,h2,h3,p,a,button,label,summary,table){position:relative;z-index:2}
 .ribbon-plane-primary{stroke:rgba(48,44,40,.88);stroke-width:12}
 .ribbon-plane-secondary{stroke:var(--champagne);stroke-width:4;opacity:.72}
 .house-ikebana-ribbon{transform:scaleY(-1)}
+.bag-page{max-width:900px;margin:auto;padding:0 var(--gutter) 80px}
+.bag-items{list-style:none;margin:0;padding:0}.bag-item{display:grid;grid-template-columns:90px 1fr;gap:22px;padding:24px 0;border-bottom:1px solid var(--rule)}
+.bag-item img{width:90px;height:110px;object-fit:cover;border-radius:12px}.bag-item p,.bag-note{font-size:12px;color:var(--muted)}
+.bag-item label{display:flex;align-items:center;gap:16px;font-size:12px}.bag-item input[type=number]{width:65px;padding:6px}.bag-item .text-link{font-size:11px}
+.bag-note{margin:24px 0}.bag-feedback{font-size:12px;margin:10px 0}.contact-details{font-style:normal;display:grid;gap:8px;font-size:14px;margin-top:24px}.contact-details a{width:fit-content;border-bottom:1px solid currentColor}.footer-location{font-size:11px}
 
 /* Broad tonal fields stay behind the composition and never clip content. */
 .architectural-field,.diagonal-sweep{position:relative;isolation:isolate;overflow:visible}

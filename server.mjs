@@ -8,7 +8,7 @@ import {DatabaseSync} from 'node:sqlite';
 const root=path.dirname(fileURLToPath(import.meta.url));
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.avif':'image/avif','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2','.mp4':'video/mp4','.webm':'video/webm','.xml':'application/xml','.txt':'text/plain; charset=utf-8'};
 const allowedEvents=new Set(['hero_interaction','product_view','cta_select','checkout','form_start','form_complete']);
-const defaultEnquiryRecipient='nicky.vanessaus@gmail.com';
+const defaultEnquiryRecipient='info@eternaluxenet.com';
 const hash=v=>createHash('sha256').update(v).digest('hex');
 const safeEqual=(a,b)=>typeof a==='string'&&typeof b==='string'&&Buffer.byteLength(a)===Buffer.byteLength(b)&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
 export function createApp({dataDir=process.env.DATA_DIR||path.join(root,'.runtime'),mode=process.env.NODE_ENV==='production'?'production':'preview',origin=process.env.SITE_ORIGIN||'http://localhost:4173',legalApproved=process.env.LEGAL_APPROVED==='true',webhookUrl=process.env.ENQUIRY_WEBHOOK_URL||'',webhookSecret=process.env.ENQUIRY_WEBHOOK_SECRET||'',enquiryRecipient=process.env.ENQUIRY_RECIPIENT||defaultEnquiryRecipient,fetchImpl=fetch}={}){

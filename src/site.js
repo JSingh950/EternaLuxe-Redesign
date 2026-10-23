@@ -70,6 +70,14 @@
       const values=Object.fromEntries(new FormData(form));
       requestId ||= crypto.randomUUID();
       try{
+        const service=await config;
+        if(form.dataset.form==='enquiry'&&!service?.deliveryReady){
+          const email=form.dataset.contactEmail||'info@eternaluxenet.com';
+          const body=Object.entries(values).filter(([key])=>!['website','terms','privacy'].includes(key)).map(([key,value])=>`${key}: ${value}`).join('\n\n')+'\n\nI agree to the Terms and acknowledge the Privacy Policy.';
+          location.href=`mailto:${email}?subject=${encodeURIComponent('Eternaluxe enquiry — '+values.name)}&body=${encodeURIComponent(body)}`;
+          status.textContent='Your email app will open with your enquiry. Send the message there to contact the atelier.';
+          return;
+        }
         const result=await api('/api/forms',{type:form.dataset.form,values,receipt,requestId,source:location.pathname});
         receipt=result.receipt||receipt;storage.set('eternaluxe-receipt-v1',receipt);
         status.textContent=result.message;form.reset();requestId=null;
@@ -81,6 +89,7 @@
   });
   const query=new URLSearchParams(location.search);
   const enquiry=$('[data-form=enquiry]');
+  if(enquiry)config.then(service=>{if(!service?.deliveryReady){$('button[type=submit]',enquiry).textContent='Continue to email';$('.form-status',enquiry).textContent='Opens a prepared message in your email app. Send it there to contact the atelier.';}});
   if(enquiry){if(query.get('project'))$('[name=project]',enquiry).value=query.get('project');if(query.get('composition'))$('[name=message]',enquiry).value=`I am interested in ${query.get('composition')}.`;}
   const filters=$('.filter-bar');
   if(filters){

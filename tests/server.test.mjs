@@ -80,27 +80,27 @@ test('production enquiry delivery targets the designated inbox',async t=>{
  const app=createApp({
    dataDir,
    mode:'production',
-   origin:'https://www.eternaluxe.net',
+   origin:'https://eternaluxe-redesign.vercel.app',
    legalApproved:true,
    webhookUrl:'https://delivery.example.test/intake',
    webhookSecret:'test-secret',
-   enquiryRecipient:'nicky.vanessaus@gmail.com',
+   enquiryRecipient:'info@eternaluxenet.com',
    fetchImpl:async(url,options)=>{deliveries.push({url:String(url),options});return new Response(null,{status:204});}
  });
  await new Promise(resolve=>app.server.listen(0,'127.0.0.1',resolve));
  const base=`http://127.0.0.1:${app.server.address().port}`;
  t.after(async()=>{await new Promise(resolve=>app.server.close(resolve));await fs.rm(dataDir,{recursive:true,force:true});});
- const configResponse=await fetch(base+'/api/config',{headers:{Origin:'https://www.eternaluxe.net'}});
+ const configResponse=await fetch(base+'/api/config',{headers:{Origin:'https://eternaluxe-redesign.vercel.app'}});
  const config=await configResponse.json();
  const cookie=configResponse.headers.get('set-cookie').split(';')[0];
  const values={email:'visitor@example.com',name:'Test Visitor',project:'Hospitality',location:'New York',message:'A private dining room installation',terms:'on',privacy:'on'};
- const response=await fetch(base+'/api/forms',{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://www.eternaluxe.net',Cookie:cookie},body:JSON.stringify({csrf:config.csrf,type:'enquiry',values,requestId:randomUUID()})});
+ const response=await fetch(base+'/api/forms',{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://eternaluxe-redesign.vercel.app',Cookie:cookie},body:JSON.stringify({csrf:config.csrf,type:'enquiry',values,requestId:randomUUID()})});
  assert.equal(response.status,201);
  await new Promise(resolve=>setImmediate(resolve));
  assert.equal(deliveries.length,1);
  const delivery=JSON.parse(deliveries[0].options.body);
  assert.equal(delivery.kind,'enquiry');
- assert.equal(delivery.recipient,'nicky.vanessaus@gmail.com');
+ assert.equal(delivery.recipient,'info@eternaluxenet.com');
  assert.equal(delivery.replyTo,'visitor@example.com');
  assert.match(delivery.subject,/Hospitality.*Test Visitor/);
  assert.equal(deliveries[0].options.headers.Authorization,'Bearer test-secret');

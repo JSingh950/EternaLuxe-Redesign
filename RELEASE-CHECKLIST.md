@@ -34,7 +34,7 @@ Checked items describe this local implementation, not live Squarespace certifica
 - [ ] Connect checkout/order acceptance to policy-version evidence; local enquiry evidence alone is insufficient.
 - [ ] Deploy the API behind HTTPS on persistent restricted storage; configure backups, encryption, least-privilege access, monitoring and retention/archive procedures.
 - [ ] Configure and test the authenticated Vercel webhook, idempotent durable delivery and verified consumer-request workflow.
-- [ ] Confirm a real staging enquiry is delivered to `nicky.vanessaus@gmail.com`; if using a native Squarespace Form Block, set that address as its sole Email storage recipient.
+- [ ] Confirm a real staging enquiry is delivered to `info@eternaluxenet.com`; if using a native Squarespace Form Block, set that address as its sole Email storage recipient.
 - [ ] Audit every Squarespace/vendor cookie and script; block nonessential processing where required and test accept/reject/change/withdrawal.
 - [ ] Configure server/proxy log minimization, CSP appropriate to Squarespace, asset URLs, canonicals/social images and permanent redirects.
 - [ ] Connect real add-to-cart/checkout/subscription purchase measurements without personal information and only under applicable consent.

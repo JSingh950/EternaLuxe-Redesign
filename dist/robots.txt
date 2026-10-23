@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.eternaluxe.net/sitemap.xml
+Sitemap: https://eternaluxe-redesign.vercel.app/sitemap.xml

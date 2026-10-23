@@ -1,32 +1,32 @@
 {
   "terms": {
     "version": "2026-10-16",
-    "sha256": "05607aa5dedd3f853955283e8534d73c86b181c300ee3f24b29f66f0498e076f",
-    "snapshot": "policies/terms-2026-10-16-05607aa5dedd3f853955283e8534d73c86b181c300ee3f24b29f66f0498e076f.html"
+    "sha256": "b563b2d7b78b1ef310c3df820fa10263e80c5f15a200d7e3317f7f4016ba997c",
+    "snapshot": "policies/terms-2026-10-16-b563b2d7b78b1ef310c3df820fa10263e80c5f15a200d7e3317f7f4016ba997c.html"
   },
   "privacy": {
     "version": "2026-10-16",
-    "sha256": "9471a6d75231d43196411f77b0fae9dabad1efc36317f80717c8819e05534655",
-    "snapshot": "policies/privacy-2026-10-16-9471a6d75231d43196411f77b0fae9dabad1efc36317f80717c8819e05534655.html"
+    "sha256": "da494621b7e687c2d95c1781f38fb4a93d09b62c7ca29211b0309dcbdd7330be",
+    "snapshot": "policies/privacy-2026-10-16-da494621b7e687c2d95c1781f38fb4a93d09b62c7ca29211b0309dcbdd7330be.html"
   },
   "cookies": {
     "version": "2026-10-16",
-    "sha256": "23069ea6d0ab893f64f23c3042353a51a9e4c4172defc8313cdb03a2d1efe1a1",
-    "snapshot": "policies/cookies-2026-10-16-23069ea6d0ab893f64f23c3042353a51a9e4c4172defc8313cdb03a2d1efe1a1.html"
+    "sha256": "c59f9db3fe125a045d63f2782afb80e8624c61f683ade87f38c774f33ce88882",
+    "snapshot": "policies/cookies-2026-10-16-c59f9db3fe125a045d63f2782afb80e8624c61f683ade87f38c774f33ce88882.html"
   },
   "shipping": {
     "version": "2026-10-16",
-    "sha256": "d1442d2b20f6d187b27e17973860b2bf79e5edde1fea3e670008a665f1472e49",
-    "snapshot": "policies/shipping-2026-10-16-d1442d2b20f6d187b27e17973860b2bf79e5edde1fea3e670008a665f1472e49.html"
+    "sha256": "4d13cc1b54a45b394de9c0d93a080f07eaeda442c0a62b5a7dffb05024489104",
+    "snapshot": "policies/shipping-2026-10-16-4d13cc1b54a45b394de9c0d93a080f07eaeda442c0a62b5a7dffb05024489104.html"
   },
   "refunds": {
     "version": "2026-10-16",
-    "sha256": "0b36b4cf826da80183e1d0257fdb9ababf1d4fcb2be9932d678568cfff773318",
-    "snapshot": "policies/refunds-2026-10-16-0b36b4cf826da80183e1d0257fdb9ababf1d4fcb2be9932d678568cfff773318.html"
+    "sha256": "d45a009fd1e4cbe7e831c6af2191cecefda90ea744abd8f602a7b7fcf8616432",
+    "snapshot": "policies/refunds-2026-10-16-d45a009fd1e4cbe7e831c6af2191cecefda90ea744abd8f602a7b7fcf8616432.html"
   },
   "accessibility": {
     "version": "2026-10-16",
-    "sha256": "ffb03273de4fba81876d60c08ecafa2fa23f01b636cc10b0a8531008d8121295",
-    "snapshot": "policies/accessibility-2026-10-16-ffb03273de4fba81876d60c08ecafa2fa23f01b636cc10b0a8531008d8121295.html"
+    "sha256": "cb03a6b0f74fbcfd1b9c25fbf0b47e7cb3638b06f6d8f93a758d96f16764681f",
+    "snapshot": "policies/accessibility-2026-10-16-cb03a6b0f74fbcfd1b9c25fbf0b47e7cb3638b06f6d8f93a758d96f16764681f.html"
   }
 }
