@@ -536,11 +536,8 @@ body[data-page="index"] .venue-controls{
 }
 .venue-layer>picture{position:absolute;inset:0}
 .venue-lighting{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.venue-moss>picture,.venue-coral-wall>picture,.venue-jewel-wall>picture{
- filter:drop-shadow(0 8px 8px rgba(49,34,19,.32)) drop-shadow(0 2px 2px rgba(28,20,12,.25));
-}
-/* Wall-panel contact shadow is rendered in camera coordinates by its SVG layer. */
-.venue-moss>picture{filter:none}
+/* Directional mounting shadows share the photograph's camera coordinates. */
+.venue-moss>picture,[data-scene-piece$="-wall"]>picture{filter:none}
 
 .about-leadership{padding:clamp(70px,9vw,140px) var(--gutter);background:var(--ivory)}
 .leadership-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,5vw,72px);max-width:1180px;margin:0 auto}

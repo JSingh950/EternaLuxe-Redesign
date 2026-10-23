@@ -86,7 +86,7 @@ for(const [palette,objects] of Object.entries(placements)){
       topLeft:source.topLeft+12,topRight:source.topRight+12,
       bottomLeft:source.bottomLeft-10,bottomRight:source.bottomRight-10};
      const foliage=await projectWall(cleanSheet,{left:x+4,right:x+132,topLeft:t+4-4*wallSlope,topRight:t+4-132*wallSlope,bottomLeft:b-4-4*wallSlope,bottomRight:b-4-132*wallSlope,source:interior});
-     const rails=Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><defs><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#e0c38b"/><stop offset=".45" stop-color="#b39761"/><stop offset="1" stop-color="#81673f"/></linearGradient></defs><path d="M${x} ${t}L${x+136} ${t-rise}V${b-rise}L${x} ${b}Z" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="miter"/><path d="M${x-2} ${b}V${t-2}L${x+138} ${t-2-140*wallSlope}" fill="none" stroke="#e2c994" stroke-width="1.2"/><path d="M${x+4} ${b-4-4*wallSlope}V${t+4-4*wallSlope}L${x+132} ${t+4-4*wallSlope-innerRise}" fill="none" stroke="#66502f" stroke-width="1"/></svg>`);
+     const rails=Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><defs><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#d5bc88"/><stop offset=".45" stop-color="#a78c5d"/><stop offset="1" stop-color="#81673f"/></linearGradient></defs><path d="M${x-3.5} ${t-3.5}L${x-7} ${t}V${b+6}L${x+139.5} ${b-rise+6}V${b-rise+3.5}L${x-3.5} ${b+3.5}Z" fill="#77603d"/><path d="M${x} ${t}L${x+136} ${t-rise}V${b-rise}L${x} ${b}Z" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="miter"/><path d="M${x-2} ${b}V${t-2}L${x+138} ${t-2-140*wallSlope}" fill="none" stroke="#e2c994" stroke-width="1.2"/><path d="M${x+4} ${b-4-4*wallSlope}V${t+4-4*wallSlope}L${x+132} ${t+4-4*wallSlope-innerRise}" fill="none" stroke="#66502f" stroke-width="1"/></svg>`);
      return sharp(foliage).composite([{input:rails}]).png().toBuffer();
     }));
     layers['jewel-wall']=await sharp(blank).composite(panels.map(input=>({input}))).png().toBuffer();
@@ -119,7 +119,10 @@ for(const [palette,parts] of Object.entries({
   const anchor=footWeight?footX/footWeight:info.width/2;
   layers[`${palette}-${part}`]=await sharp(blank).composite([{input:data,left:Math.round(cx-anchor),top:base-info.height}]).png().toBuffer();
  }
- layers[`${palette}-wall`]=palette==='signature'?layers.moss:layers['jewel-wall'];
+ const wallArtwork=await sharp(`assets/brand/venue-${palette}-wall-art.png`).trim({threshold:8}).png().toBuffer();
+ layers[`${palette}-wall`]=await projectWall(wallArtwork,{
+  left:140,right:584,topLeft:124,topRight:106,bottomLeft:402,bottomRight:384
+ });
 }
 for(const [name,buffer]of Object.entries(layers)) {
  await sharp(buffer).webp({quality:92}).toFile(`dist/assets/scene/${name}.webp`);
