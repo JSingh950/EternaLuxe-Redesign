@@ -394,7 +394,7 @@ body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bott
 
 /* Functional pages use a quiet rule; their content remains conventionally structured. */
 .product-layout,.enquiry-layout,.policy-layout,.membership,.faq-section{position:relative;isolation:isolate}
-.product-layout:before,.enquiry-layout:before,.policy-layout:before,.membership:before,.faq-section:before{
+.product-layout:before,.policy-layout:before,.membership:before,.faq-section:before{
  content:"";position:absolute;z-index:0;left:var(--gutter);right:var(--gutter);top:0;height:1px;
  background:linear-gradient(90deg,var(--ink) 0 14%,transparent 14% 35%,var(--champagne) 35% 52%,transparent 52%)
 }
