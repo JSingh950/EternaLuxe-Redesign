@@ -18,7 +18,7 @@ export const images = [
 ].map(([original,id,alt,page])=>({original,id,alt,page}));
 export const videos = [
   {original:'1000105402.MOV',id:'house-film',page:'home',poster:'amber-composition',duration:24.867,orientation:'landscape'},
-  {original:'Floral_arrangement_in_glass_vase_202609071650.MOV',id:'orchid-film',page:'home / collections',poster:'signature-orchids',duration:10,orientation:'portrait'},
+  {original:'Floral_arrangement_in_glass_vase_202609071650.MOV',id:'orchid-film',page:'home / collections',poster:'signature-orchids',duration:6.5,orientation:'portrait'},
   {original:'Firefly Animate the existing image into a 5-second, high-quality, photorealistic video. The only mov.MOV',id:'ikebana-film',page:'ikebana',poster:'',duration:8,orientation:'portrait',provenance:'AI-assisted, supplied by owner'},
   {original:'Images Motion ETERNALUXE Video.mp4',id:'house-compositions-film',page:'house',duration:30,orientation:'landscape',sourceUrl:'https://video.squarespace-cdn.com/content/v1/6912b9200a185e503b035590/7b417892-6d92-4771-a36e-c4a84cd1ba07/playlist.m3u8',provenance:'Clean editorial motion study generated from owner-supplied high-resolution Eternaluxe photographs; original House film retained in source media'}
 ];
