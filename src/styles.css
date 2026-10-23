@@ -550,6 +550,8 @@ body[data-page="index"] .venue-controls{
 .leader-card h3{font:500 clamp(18px,2vw,26px)/1.15 var(--heading);margin:0 0 10px}
 .leader-name{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 18px;color:var(--muted)}
 .leader-card blockquote{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
+.wall-options .collection-item .collection-photo picture{aspect-ratio:4/5!important}
+.wall-options .collection-item .collection-photo img{object-fit:cover}
 @media(max-width:700px){.about-leadership{padding-block:64px}.leadership-grid{grid-template-columns:1fr;gap:48px}.leader-card{grid-template-columns:35% 1fr;gap:18px}.leader-card blockquote{font-size:12px;line-height:1.55}}
 
 /* A functional campaign index gives the photograph an understated folio. */
