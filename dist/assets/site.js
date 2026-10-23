@@ -369,9 +369,14 @@
       flowMedia.add('(prefers-reduced-motion: no-preference)',()=>{
         const active=new Set();
         const sways=new Map(flows.filter(section=>section.classList.contains('architectural-ribbon')).map(section=>{
-          const motion=gsap.timeline({paused:true,repeat:-1,yoyo:true,defaults:{duration:3.4,ease:'sine.inOut'}})
-            .fromTo($('svg',section),{xPercent:-1,y:-5,rotation:-.2},{xPercent:1,y:5,rotation:.2,transformOrigin:'50% 50%'},0)
-            .fromTo($('.ribbon-plane-secondary',section),{y:-7,x:-12},{y:7,x:12},0);
+          const motion=gsap.timeline({paused:true,repeat:-1,yoyo:true,defaults:{duration:3,ease:'sine.inOut'}})
+            .fromTo($('svg',section),{xPercent:-2.5,y:-4},{xPercent:2.5,y:4},0)
+            .fromTo($('.ribbon-plane-primary',section),
+              {attr:{d:'M-80 148C240 34 500 36 798 119s544 100 882-54'}},
+              {attr:{d:'M-80 78C240 190 500 184 798 103s544-76 882 48'}},0)
+            .fromTo($('.ribbon-plane-secondary',section),
+              {attr:{d:'M-80 171C238 61 497 62 793 141s548 91 887-62'},y:-4},
+              {attr:{d:'M-80 101C238 204 497 197 793 125s548-67 887 42'},y:4},0);
           return [section,motion];
         }));
         const syncSways=()=>sways.forEach((tween,section)=>{
