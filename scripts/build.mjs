@@ -1,5 +1,4 @@
 import './prepare-brand.mjs';
-import './prepare-orchid-film.mjs';
 import './prepare-concepts.mjs';
 import {wallConcepts,tableConcepts,concepts} from '../src/concepts.mjs';
 import fs from 'node:fs/promises';
