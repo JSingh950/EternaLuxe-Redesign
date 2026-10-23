@@ -24,6 +24,17 @@ const mossCutout=await sharp('assets/brand/venue-owner-moss-wall-v2.png').trim({
 const moss=await projectWall(mossCutout);
 const table=await sharp(source).extract({left:850,top:90,width:924,height:797}).png().toBuffer();
 const blank={create:{width:1774,height:887,channels:4,background:'#00000000'}};
+// The supplied cutouts carry a bright red chroma-key fringe around a few
+// frames. Remove only those highly saturated edge pixels; the darker burgundy
+// botanicals remain untouched, while the wall objects sit cleanly on the room.
+const cleanCutout=async input=>{
+ const {data,info}=await sharp(input).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ for(let i=0;i<data.length;i+=4){
+  const r=data[i],g=data[i+1],b=data[i+2];
+  if(r>190&&g<72&&b<72)data[i+3]=0;
+ }
+ return sharp(data,{raw:info}).png().toBuffer();
+};
 const layers={room:await sharp('assets/brand/venue-room.webp').png().toBuffer(),table:await sharp(blank).composite([{input:table,left:880,top:0}]).png().toBuffer(),moss};
 const extras=await sharp('assets/brand/venue-extra-arrangements.png').resize(1774,887).png().toBuffer();
 const consoleFlowers=await sharp(extras).extract({left:650,top:100,width:450,height:330}).png().toBuffer();
@@ -48,7 +59,7 @@ const placements={
 for(const [palette,objects] of Object.entries(placements)){
  const sheet=await sharp(`assets/brand/venue-${palette}-sheet.png`).resize(1774,887).png().toBuffer();
  for(const [part,rect,width,height,cx,base,shadow] of objects){
-  const crop=await sharp(sheet).extract(rect).png().toBuffer();
+  const crop=await cleanCutout(await sharp(sheet).extract(rect).png().toBuffer());
   const {data,info}=await sharp(crop).trim({threshold:10}).resize({width,height,fit:'inside'}).png().toBuffer({resolveWithObject:true});
   layers[`${palette}-${part}`]=await sharp(blank).composite([{input:data,left:Math.round(cx-info.width/2),top:base-info.height+shadow}]).png().toBuffer();
  }
