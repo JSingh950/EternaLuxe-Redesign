@@ -61,7 +61,15 @@ for(const [palette,objects] of Object.entries(placements)){
  for(const [part,rect,width,height,cx,base,shadow] of objects){
   const crop=await cleanCutout(await sharp(sheet).extract(rect).png().toBuffer());
   const {data,info}=await sharp(crop).trim({threshold:10}).resize({width,height,fit:'inside'}).png().toBuffer({resolveWithObject:true});
-  layers[`${palette}-${part}`]=await sharp(blank).composite([{input:data,left:Math.round(cx-info.width/2),top:base-info.height+shadow}]).png().toBuffer();
+  const left=Math.round(cx-info.width/2), top=base-info.height+shadow;
+  if(part==='wall'){
+   // Give the installation the same slight architectural pitch as the wall,
+   // then anchor it as one clean mounted piece.
+   const angled=await sharp(data).rotate(palette==='jewel'?1:-1,{background:{r:0,g:0,b:0,alpha:0}}).png().toBuffer();
+   layers[`${palette}-${part}`]=await sharp(blank).composite([{input:angled,left,top}]).png().toBuffer();
+  }else{
+   layers[`${palette}-${part}`]=await sharp(blank).composite([{input:data,left,top}]).png().toBuffer();
+  }
  }
 }
 for(const [name,buffer]of Object.entries(layers)) {
