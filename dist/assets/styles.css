@@ -598,8 +598,16 @@ body[data-page="collections"] .collection-item[data-image-shape="circle"] .colle
 body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo picture{
  aspect-ratio:1!important;height:auto;width:100%;border-radius:50%;overflow:hidden;
 }
-body[data-page="index"] .editorial-collection{align-items:center}
-body[data-page="index"] .editorial-collection .collection-item:nth-child(n){padding:0}
+body[data-page="index"] .editorial-collection{
+ align-items:center;max-width:1040px;margin-inline:auto;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+}
+body[data-page="index"] .editorial-collection .collection-item:nth-child(n){
+ padding:0;width:100%;max-width:clamp(180px,calc((100svh - 340px)*.8),440px);justify-self:center;
+}
+body[data-page="index"] .editorial-collection .item-caption{display:block;padding:18px 0 0}
+body[data-page="index"] .editorial-collection .item-caption h3{font-size:clamp(17px,2vw,26px);line-height:1.2}
+body[data-page="index"] .editorial-collection .price{display:block;padding-top:8px;white-space:normal}
 body[data-page="index"] .editorial-collection .collection-item[data-image-shape="circle"] picture{aspect-ratio:1!important}
 body[data-page="index"] .editorial-collection .collection-item[data-image-shape="arch"] picture{aspect-ratio:4/5!important}
 .about-portrait picture{border-radius:50% 50% 24px 24px / 28% 28% 24px 24px!important;overflow:hidden}
