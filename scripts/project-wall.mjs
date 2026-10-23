@@ -4,7 +4,7 @@ import sharp from 'sharp';
 // Unlike a shear, both horizontal edges follow the room's vanishing point.
 export async function projectWall(input,{
  width=1774,height=887,left=132,right=570,
- topLeft=94,topRight=123,bottomLeft=400,bottomRight=393
+ topLeft=94,topRight=123,bottomLeft=400,bottomRight=393,source=null
 }={}){
  const {data,info}=await sharp(input).ensureAlpha().raw().toBuffer({resolveWithObject:true});
  const output=Buffer.alloc(width*height*4);
@@ -15,7 +15,8 @@ export async function projectWall(input,{
   for(let y=Math.floor(top);y<Math.ceil(bottom);y++){
    const v=(y+.5-top)/(bottom-top);
    if(u<0||u>1||v<0||v>1||x<0||x>=width||y<0||y>=height)continue;
-   const sx=u*(info.width-1),sy=v*(info.height-1);
+   const sx=source?source.left+u*(source.right-source.left):u*(info.width-1);
+   const sy=source?(source.topLeft+(source.topRight-source.topLeft)*u)*(1-v)+(source.bottomLeft+(source.bottomRight-source.bottomLeft)*u)*v:v*(info.height-1);
    const x0=Math.floor(sx),y0=Math.floor(sy),fx=sx-x0,fy=sy-y0;
    let alpha=0;const rgb=[0,0,0];
    for(const [dx,dy,weight] of [[0,0,(1-fx)*(1-fy)],[1,0,fx*(1-fy)],[0,1,(1-fx)*fy],[1,1,fx*fy]]){

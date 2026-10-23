@@ -65,6 +65,22 @@ for(const [palette,objects] of Object.entries(placements)){
   const {data,info}=await sharp(crop).trim({threshold:10}).resize({width,height,fit:'inside'}).png().toBuffer({resolveWithObject:true});
   const left=Math.round(cx-info.width/2), top=base-info.height+shadow;
   if(part==='wall'){
+   if(palette==='jewel'){
+    // Rectify the perspective already baked into each source frame before
+    // projecting all three onto the room's near-frontal wall plane.
+    const sources=[
+     {left:198,right:378,topLeft:28,topRight:51,bottomLeft:417,bottomRight:410},
+     {left:394,right:565,topLeft:49,topRight:68,bottomLeft:406,bottomRight:399},
+     {left:580,right:737,topLeft:68,topRight:86,bottomLeft:398,bottomRight:390}
+    ];
+    const cleanSheet=await cleanCutout(sheet);
+    const panels=await Promise.all(sources.map((source,index)=>{
+     const x=153+index*150;
+     return projectWall(cleanSheet,{left:x,right:x+136,topLeft:111-index*3,topRight:108-index*3,bottomLeft:403-index*3,bottomRight:400-index*3,source});
+    }));
+    layers['jewel-wall']=await sharp(blank).composite(panels.map(input=>({input}))).png().toBuffer();
+    continue;
+   }
    // Give the installation the same slight architectural pitch as the wall,
    // then anchor it as one clean mounted piece.
    const angled=await sharp(data).rotate(palette==='jewel'?1:-1,{background:{r:0,g:0,b:0,alpha:0}}).png().toBuffer();

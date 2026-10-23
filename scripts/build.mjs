@@ -78,6 +78,7 @@ const pages=[['index','Eternaluxe — Floral Art, New York','Sculptural floral c
 const hashes={};
 for(const [key,label]of policies){
  let content=await fs.readFile(`src/policies/${key}.html`,'utf8');
+ content=content.replace(/[ \t]*<p class="legal-notice"><strong>Working draft[\s\S]*?<\/p>/g,'');
  content=content.replaceAll('mailto:info@eternaluxe.net','enquiries.html').replaceAll('info@eternaluxe.net','the Contact Us page').replaceAll('Eternaluxe LLC','Eternaluxe');
  if(key==='cookies')content+=`<h2>This preview’s storage inventory</h2><p>The browser stores your essential cookie preferences as eternaluxe-privacy-v1 and an opaque consent receipt as eternaluxe-receipt-v1. No advertising, external analytics, remote fonts or social embeds load. Optional first-party interaction events are sent only when analytics is enabled. Preference changes append a new event.</p>`;
  if(key==='privacy')content+=`<h2>Local preview and configured deployment</h2><p>In local preview, forms save to the local server only; they do not contact Eternaluxe or subscribe you to a mailing platform. A configured production deployment records enquiry details separately from consent evidence. The application does not persist raw IP addresses or full payment-card details. Retention, connected vendors and the consumer-request contact must be finalized before publication.</p>`;
