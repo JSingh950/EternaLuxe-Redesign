@@ -571,6 +571,14 @@ body[data-page="index"] .venue-manual button:hover{text-decoration:underline}
 }
 
 /* A coordinated photo vocabulary. Crops never include captions or controls. */
+/* This installation must be seen complete, including its lower foliage edge. */
+body[data-page] picture.botanical-wall-photo,
+body[data-page] .collection-item:nth-child(n) picture.botanical-wall-photo{
+ aspect-ratio:3392/5056!important;width:100%;height:auto!important;max-height:none!important;overflow:hidden;
+ border-radius:clamp(16px,3vw,40px)!important;
+}
+body[data-page] picture.botanical-wall-photo img{height:auto!important;object-fit:contain!important}
+body[data-page="atelier"] .atelier-opening>.editorial-image{width:min(100%,480px);justify-self:center}
 body[data-page] .collection-item[data-image-shape] .collection-photo{
  overflow:hidden;isolation:isolate;border-radius:var(--photo-shape,28px)!important;
 }

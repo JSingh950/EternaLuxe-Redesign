@@ -242,14 +242,14 @@
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
     document.addEventListener('visibilitychange',sync);
     addEventListener('eternaluxe:opening-complete',sync);
-    reduced.addEventListener('change',()=>{timeline.restart().pause();staticMode=false;sync();});
-    connection?.addEventListener('change',()=>{timeline.restart().pause();staticMode=false;sync();});
+    reduced.addEventListener('change',()=>{timeline.pause().seek(8);staticMode=false;sync();});
+    connection?.addEventListener('change',()=>{timeline.pause().seek(8);staticMode=false;sync();});
     const decodeSet=set=>Promise.all(set.map(layer=>$('img',layer).decode()));
     Promise.allSettled(sets.map(decodeSet)).then(results=>{
       sets=sets.filter((set,i)=>results[i].status==='fulfilled');
       editionChoices.forEach(button=>{button.hidden=!sets.some(set=>paletteFor(set)===button.dataset.venueSet);});
       currentEdition=-1;
-      gsap.set(layers,{opacity:0});
+      // Keep the primary composition visible while later palettes decode.
       if(!sets.length){controls.hidden=true;return;}
       // Sequential fades avoid seeing two incompatible vases at the same location.
       sets.forEach((set,index)=>{
@@ -261,7 +261,9 @@
           .to(set[3],{opacity:1,duration:1.8,ease:'sine.inOut'},at+5.7)
           .to(set,{opacity:0,duration:1.8,ease:'sine.inOut'},at+14.2);
       });
-      ready=true;controls.hidden=false;timeline.seek(0);staticMode=false;sync();
+      // Start on the completed original four pieces, held throughout the opening.
+      // The existing sequential cycle continues from this point after entry.
+      ready=true;controls.hidden=false;timeline.seek(8);staticMode=false;sync();
     });
   }
   $$('[data-house-motion]').forEach(montage=>{

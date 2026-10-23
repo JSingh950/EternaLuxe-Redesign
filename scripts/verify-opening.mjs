@@ -17,10 +17,14 @@ try{
   assert.equal(await page.evaluate(()=>scrollY),0,'virtual scroll leaves the venue anchored at the top');
   await page.mouse.wheel(0,520);await page.waitForTimeout(480);
   assert.notEqual(await page.locator('.floral-spiral-layer--outer').evaluate(e=>getComputedStyle(e).transform),'none','scroll separates the floral layers');
-  assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0','venue animation waits for the opening');
+  for(const selector of ['.venue-table','.venue-console','.venue-pedestal','.venue-moss']){
+    assert.equal(await page.locator(selector).evaluate(e=>getComputedStyle(e).opacity),'1','original pieces are composed behind the opening');
+  }
+  assert.equal(await page.evaluate(()=>gsap.globalTimeline.getChildren().find(t=>t.repeat?.()===-1&&t.getChildren?.().some(c=>c.targets?.().some(e=>document.querySelector('[data-venue]').contains(e))))?.paused()),true,'venue cycle waits while the floral opening is active');
   for(let i=0;i<5;i++)await page.mouse.wheel(0,320);
   await page.waitForTimeout(1100);
   assert.equal(await opening.isHidden(),true,'scroll completes and removes the opening');
+  assert.equal(await page.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1','entry reveals the supplied moss wall immediately');
   assert.equal(await page.evaluate(()=>sessionStorage.getItem('eternaluxe-opening-v1')),'complete','completion is stored for the session');
   assert.equal(await page.evaluate(()=>scrollY),0,'completion does not jump the page');
   assert.equal(await page.locator('.site-header').evaluate(e=>getComputedStyle(e).visibility),'visible','header returns without another click');
