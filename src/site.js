@@ -247,8 +247,8 @@
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
     document.addEventListener('visibilitychange',sync);
     addEventListener('eternaluxe:opening-complete',sync);
-    reduced.addEventListener('change',()=>{timeline.pause().seek(8);staticMode=false;sync();});
-    connection?.addEventListener('change',()=>{timeline.pause().seek(8);staticMode=false;sync();});
+    reduced.addEventListener('change',()=>{timeline.pause().seek(5.3);staticMode=false;sync();});
+    connection?.addEventListener('change',()=>{timeline.pause().seek(5.3);staticMode=false;sync();});
     const decodeSet=set=>Promise.all(set.map(layer=>$('img',layer).decode()));
     Promise.allSettled(sets.map(decodeSet)).then(results=>{
       sets=sets.filter((set,i)=>results[i].status==='fulfilled');
@@ -268,7 +268,9 @@
       });
       // Start on the completed original four pieces, held throughout the opening.
       // The existing sequential cycle continues from this point after entry.
-      ready=true;controls.hidden=false;timeline.seek(8);staticMode=false;sync();
+      // Enter on the completed original four-piece composition, then hold it
+      // for about three seconds before the faster rotation begins.
+      ready=true;controls.hidden=false;timeline.seek(5.3);staticMode=false;sync();
     });
   }
   $$('[data-house-motion]').forEach(montage=>{
