@@ -221,14 +221,16 @@
       editionChoices.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.venueSet===palette)));
     }
     const still=()=>reduced.matches||connection?.saveData;
+    // Keep each venue edition moving at an editorial pace without a long hold.
+    const editionDuration=11;
     const timeline=gsap.timeline({paused:true,repeat:-1});
     const present=index=>{gsap.set(layers,{opacity:0,lazy:false});if(index>0)gsap.set(sets[index-1],{opacity:1,lazy:false});updateEdition(index-1);};
-    timeline.eventCallback('onUpdate',()=>updateEdition(Math.min(sets.length-1,Math.floor(timeline.time()/16))));
+    timeline.eventCallback('onUpdate',()=>updateEdition(Math.min(sets.length-1,Math.floor(timeline.time()/editionDuration))));
     editionChoices.forEach(button=>button.addEventListener('click',()=>{
       const index=sets.findIndex(set=>paletteFor(set)===button.dataset.venueSet);
       if(index<0||!ready)return;
       if(still()){step=index+1;present(step);}
-      else{timeline.seek(index*16+8);sync();}
+      else{timeline.seek(index*editionDuration+5.5);sync();}
     }));
     function sync(){
       const running=ready&&visible&&!document.hidden&&!userPaused&&!still()&&!openingIsActive();
@@ -256,13 +258,13 @@
       if(!sets.length){controls.hidden=true;return;}
       // Sequential fades avoid seeing two incompatible vases at the same location.
       sets.forEach((set,index)=>{
-        const at=index*16;
+        const at=index*editionDuration;
         timeline.set(layers,{opacity:0},at)
-          .to(set[0],{opacity:1,duration:1.6,ease:'sine.inOut'},at+1.2)
-          .to(set[1],{opacity:1,duration:1.6,ease:'sine.inOut'},at+2.7)
-          .to(set[2],{opacity:1,duration:1.6,ease:'sine.inOut'},at+4.2)
-          .to(set[3],{opacity:1,duration:1.8,ease:'sine.inOut'},at+5.7)
-          .to(set,{opacity:0,duration:1.8,ease:'sine.inOut'},at+14.2);
+          .to(set[0],{opacity:1,duration:1.05,ease:'sine.inOut'},at+.45)
+          .to(set[1],{opacity:1,duration:1.05,ease:'sine.inOut'},at+1.75)
+          .to(set[2],{opacity:1,duration:1.05,ease:'sine.inOut'},at+3.05)
+          .to(set[3],{opacity:1,duration:1.2,ease:'sine.inOut'},at+4.35)
+          .to(set,{opacity:0,duration:1.35,ease:'sine.inOut'},at+9.25);
       });
       // Start on the completed original four pieces, held throughout the opening.
       // The existing sequential cycle continues from this point after entry.
