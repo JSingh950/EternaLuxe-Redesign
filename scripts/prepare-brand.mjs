@@ -75,14 +75,18 @@ for(const [palette,objects] of Object.entries(placements)){
     ];
     const cleanSheet=await cleanCutout(sheet);
     const panels=await Promise.all(sources.map(async(source,index)=>{
-     const x=153+index*150,t=111-index*3,b=403-index*3;
+     // The lower wall moulding rises about 23 px across 580 camera pixels.
+     // Use that single measured slope for both rails and the spacing between panels.
+     const wallSlope=23/580;
+     const x=153+index*150,t=111-index*150*wallSlope,b=403-index*150*wallSlope;
+     const rise=136*wallSlope,innerRise=128*wallSlope;
      // Sample the botanical interior only. Rebuild the slim frame with precise
      // straight rails so the source photograph's uneven bevel cannot distort it.
      const interior={...source,left:source.left+10,right:source.right-10,
       topLeft:source.topLeft+12,topRight:source.topRight+12,
       bottomLeft:source.bottomLeft-10,bottomRight:source.bottomRight-10};
-     const foliage=await projectWall(cleanSheet,{left:x+4,right:x+132,topLeft:t+4,topRight:t+1,bottomLeft:b-4,bottomRight:b-7,source:interior});
-     const rails=Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><defs><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#e0c38b"/><stop offset=".45" stop-color="#b39761"/><stop offset="1" stop-color="#81673f"/></linearGradient></defs><path d="M${x} ${t}L${x+136} ${t-3}V${b-3}L${x} ${b}Z" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="miter"/><path d="M${x-2} ${b}V${t-2}L${x+138} ${t-5}" fill="none" stroke="#e2c994" stroke-width="1.2"/><path d="M${x+4} ${b-4}V${t+4}L${x+132} ${t+1}" fill="none" stroke="#66502f" stroke-width="1"/></svg>`);
+     const foliage=await projectWall(cleanSheet,{left:x+4,right:x+132,topLeft:t+4-4*wallSlope,topRight:t+4-132*wallSlope,bottomLeft:b-4-4*wallSlope,bottomRight:b-4-132*wallSlope,source:interior});
+     const rails=Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><defs><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#e0c38b"/><stop offset=".45" stop-color="#b39761"/><stop offset="1" stop-color="#81673f"/></linearGradient></defs><path d="M${x} ${t}L${x+136} ${t-rise}V${b-rise}L${x} ${b}Z" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="miter"/><path d="M${x-2} ${b}V${t-2}L${x+138} ${t-2-140*wallSlope}" fill="none" stroke="#e2c994" stroke-width="1.2"/><path d="M${x+4} ${b-4-4*wallSlope}V${t+4-4*wallSlope}L${x+132} ${t+4-4*wallSlope-innerRise}" fill="none" stroke="#66502f" stroke-width="1"/></svg>`);
      return sharp(foliage).composite([{input:rails}]).png().toBuffer();
     }));
     layers['jewel-wall']=await sharp(blank).composite(panels.map(input=>({input}))).png().toBuffer();
