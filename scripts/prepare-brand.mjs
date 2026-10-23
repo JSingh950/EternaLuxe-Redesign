@@ -101,10 +101,30 @@ for(const [palette,objects] of Object.entries(placements)){
   }
  }
 }
+// Six owner-supplied arrangements, individually extracted and relit for this room.
+// Foot anchors use the same camera coordinates as the surface-shadow renderer.
+for(const [palette,parts] of Object.entries({
+ signature:[['table',3,300,360,1287,477],['console',1,190,260,950,364],['pedestal',2,210,235,1652,375]],
+ garden:[['table',5,365,350,1287,477],['console',4,220,270,950,364],['pedestal',6,160,225,1652,375]]
+})){
+ for(const [part,number,width,height,cx,base] of parts){
+  const {data,info}=await sharp(`assets/brand/owner-arrangement-${number}.png`).trim({threshold:8})
+   .resize({width,height,fit:'inside'}).png().toBuffer({resolveWithObject:true});
+  const raw=await sharp(data).ensureAlpha().raw().toBuffer();
+  let footWeight=0,footX=0;
+  for(let y=Math.max(0,info.height-5);y<info.height;y++)for(let x=0;x<info.width;x++){
+   const alpha=raw[(y*info.width+x)*4+3]/255;
+   footWeight+=alpha;footX+=x*alpha;
+  }
+  const anchor=footWeight?footX/footWeight:info.width/2;
+  layers[`${palette}-${part}`]=await sharp(blank).composite([{input:data,left:Math.round(cx-anchor),top:base-info.height}]).png().toBuffer();
+ }
+ layers[`${palette}-wall`]=palette==='signature'?layers.moss:layers['jewel-wall'];
+}
 for(const [name,buffer]of Object.entries(layers)) {
  await sharp(buffer).webp({quality:92}).toFile(`dist/assets/scene/${name}.webp`);
  // Keep the entire camera plane on mobile; every layer must have the same crop.
  await sharp(buffer).resize(1200,600).webp({quality:92,alphaQuality:100}).toFile(`dist/assets/scene/${name}-mobile.webp`);
 }
-for(const palette of ['coral','jewel'])await sharp(layers.room).composite(['wall','console','pedestal','table'].map(part=>({input:layers[`${palette}-${part}`]}))).jpeg({quality:92}).toFile(`dist/assets/scene/composed-${palette}.jpg`);
+for(const palette of ['coral','jewel','signature','garden'])await sharp(layers.room).composite(['wall','console','pedestal','table'].map(part=>({input:layers[`${palette}-${part}`]}))).jpeg({quality:92}).toFile(`dist/assets/scene/composed-${palette}.jpg`);
 await sharp(layers.room).composite([{input:layers.console},{input:layers.pedestal},{input:layers.table},{input:layers.moss}]).jpeg({quality:92}).toFile('dist/assets/scene/composed.jpg');

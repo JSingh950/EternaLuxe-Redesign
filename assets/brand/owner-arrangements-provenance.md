@@ -1,0 +1,40 @@
+# Venue arrangement derivatives
+
+Six owner-authorized photographs supplied in the project conversation on 2026-10-23. Originals remain unchanged. These derivatives were prepared with the built-in image editing tool for the homepage venue rotation.
+
+## owner-arrangement-1.png
+
+Original: codex-clipboard-d88ede69-6b37-434a-b7d7-3f84012e13a3.jpg
+
+Prompt: Use case: background-extraction and lighting-weather. Edit target: supplied arrangement photograph. Produce a high-resolution photorealistic transparent PNG of exactly this arrangement: tall blue-and-white patterned ceramic vase with pink and ivory stock flowers, pink carnations and trailing green ivy. Preserve its recognizable vessel shape, emblem/pattern, floral varieties, color, number and branching arrangement; preserve whole silhouette and vase foot. Remove ALL black studio backdrop and tabletop, including between stems. Relight for a warm cream travertine New York interior lit by large windows from upper right: gentle warm daylight on right petals and vessel, soft shaded left edges, natural subtle contrast. Camera eye level slightly above vessel foot, see a little of vessel opening. Keep thin stems crisp. For clear glass make glass genuinely translucent, with warm ivory transmitted light and delicate window highlights rather than opaque black contents (retain black pebbles if present). Entire object fully in frame with narrow transparent padding, vase foot baseline horizontal. No table, no background, no artificial outline, no new flowers or extra props. Genuine alpha transparency.
+
+## owner-arrangement-2.png
+
+Original: codex-clipboard-2e0335f4-4513-4a4c-84cc-517d4ba02e62.jpg
+
+Prompt: Use case: background-extraction and lighting-weather. Edit target: supplied arrangement photograph. Produce a high-resolution photorealistic transparent PNG of exactly this arrangement: black flared trumpet vase with two mauve calla lilies, pink stock flowers and green ivy. Preserve its recognizable vessel shape, emblem/pattern, floral varieties, color, number and branching arrangement; preserve whole silhouette and vase foot. Remove ALL black studio backdrop and tabletop, including between stems. Relight for a warm cream travertine New York interior lit by large windows from upper right: gentle warm daylight on right petals and vessel, soft shaded left edges, natural subtle contrast. Camera eye level slightly above vessel foot, see a little of vessel opening. Keep thin stems crisp. For clear glass make glass genuinely translucent, with warm ivory transmitted light and delicate window highlights rather than opaque black contents (retain black pebbles if present). Entire object fully in frame with narrow transparent padding, vase foot baseline horizontal. No table, no background, no artificial outline, no new flowers or extra props. Genuine alpha transparency.
+
+## owner-arrangement-3.png
+
+Original: codex-clipboard-ab84bfd8-1092-4b2c-b534-5d32b0fc7a20.jpg
+
+Prompt: Use case: background-extraction and lighting-weather. Edit target: supplied arrangement photograph. Produce a high-resolution photorealistic transparent PNG of exactly this arrangement: white square box with gold botanical emblem, blue hydrangea, white orchids and arching ivy. Preserve its recognizable vessel shape, emblem/pattern, floral varieties, color, number and branching arrangement; preserve whole silhouette and vase foot. Remove ALL black studio backdrop and tabletop, including between stems. Relight for a warm cream travertine New York interior lit by large windows from upper right: gentle warm daylight on right petals and vessel, soft shaded left edges, natural subtle contrast. Camera eye level slightly above vessel foot, see a little of vessel opening. Keep thin stems crisp. For clear glass make glass genuinely translucent, with warm ivory transmitted light and delicate window highlights rather than opaque black contents (retain black pebbles if present). Entire object fully in frame with narrow transparent padding, vase foot baseline horizontal. No table, no background, no artificial outline, no new flowers or extra props. Genuine alpha transparency.
+
+## owner-arrangement-4.png
+
+Original: codex-clipboard-6a29aa1c-652d-4fe7-9528-fd9564f8a329.jpg
+
+Prompt: Use case: background-extraction and lighting-weather. Edit target: supplied arrangement photograph. Produce a high-resolution photorealistic transparent PNG of exactly this arrangement: white square box with gold botanical emblem, red dahlias, mauve calla lilies and slim foliage. Preserve its recognizable vessel shape, emblem/pattern, floral varieties, color, number and branching arrangement; preserve whole silhouette and vase foot. Remove ALL black studio backdrop and tabletop, including between stems. Relight for a warm cream travertine New York interior lit by large windows from upper right: gentle warm daylight on right petals and vessel, soft shaded left edges, natural subtle contrast. Camera eye level slightly above vessel foot, see a little of vessel opening. Keep thin stems crisp. For clear glass make glass genuinely translucent, with warm ivory transmitted light and delicate window highlights rather than opaque black contents (retain black pebbles if present). Entire object fully in frame with narrow transparent padding, vase foot baseline horizontal. No table, no background, no artificial outline, no new flowers or extra props. Genuine alpha transparency.
+
+## owner-arrangement-5.png
+
+Original: codex-clipboard-37407c1d-c757-48d2-87e0-2f721de583db.png
+
+Prompt: Use case: background-extraction and lighting-weather. Edit target: supplied arrangement photograph. Produce a high-resolution photorealistic transparent PNG of exactly this arrangement: clear pear-shaped glass vase filled with black pebbles, fern, pale blush tulips, mauve calla and cream dahlias. Preserve its recognizable vessel shape, emblem/pattern, floral varieties, color, number and branching arrangement; preserve whole silhouette and vase foot. Remove ALL black studio backdrop and tabletop, including between stems. Relight for a warm cream travertine New York interior lit by large windows from upper right: gentle warm daylight on right petals and vessel, soft shaded left edges, natural subtle contrast. Camera eye level slightly above vessel foot, see a little of vessel opening. Keep thin stems crisp. For clear glass make glass genuinely translucent, with warm ivory transmitted light and delicate window highlights rather than opaque black contents (retain black pebbles if present). Entire object fully in frame with narrow transparent padding, vase foot baseline horizontal. No table, no background, no artificial outline, no new flowers or extra props. Genuine alpha transparency.
+
+## owner-arrangement-6.png
+
+Original: codex-clipboard-28db98ce-4f1c-4d22-b368-8c50d1d6016a.jpg
+
+Prompt: Use case: background-extraction and lighting-weather. Edit target: supplied arrangement photograph. Produce a high-resolution photorealistic transparent PNG of exactly this arrangement: slender clear sculptural glass vase with gold floral emblem, pink carnations, blush and red dahlias and airy branching foliage. Preserve its recognizable vessel shape, emblem/pattern, floral varieties, color, number and branching arrangement; preserve whole silhouette and vase foot. Remove ALL black studio backdrop and tabletop, including between stems. Relight for a warm cream travertine New York interior lit by large windows from upper right: gentle warm daylight on right petals and vessel, soft shaded left edges, natural subtle contrast. Camera eye level slightly above vessel foot, see a little of vessel opening. Keep thin stems crisp. For clear glass make glass genuinely translucent, with warm ivory transmitted light and delicate window highlights rather than opaque black contents (retain black pebbles if present). Entire object fully in frame with narrow transparent padding, vase foot baseline horizontal. No table, no background, no artificial outline, no new flowers or extra props. Genuine alpha transparency.
+

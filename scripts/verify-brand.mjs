@@ -30,16 +30,16 @@ await page.emulateMedia({reducedMotion:'no-preference'});await page.goto(base);a
 for(const selector of ['.venue-table','.venue-console','.venue-pedestal','.venue-moss']){
  assert.equal(await page.locator(selector).evaluate(e=>getComputedStyle(e).opacity),'1','The original four pieces are already displayed at entry');
 }
-await page.evaluate(()=>{const scene=document.querySelector('[data-venue]');window.roomTimeline=gsap.globalTimeline.getChildren().find(t=>t.repeat?.()===-1&&t.getChildren?.().some(c=>c.targets?.().some(e=>scene.contains(e))));window.roomTimeline.pause().time(11);});
+await page.evaluate(()=>{const scene=document.querySelector('[data-venue]');window.roomTimeline=gsap.globalTimeline.getChildren().find(t=>t.repeat?.()===-1&&t.getChildren?.().some(c=>c.targets?.().some(e=>scene.contains(e))));window.roomTimeline.pause().time(6);});
 assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'1');assert.equal(await page.locator('.venue-moss').evaluate(e=>getComputedStyle(e).opacity),'1');console.log('Primary set passed');
-for(const [palette,time] of [['coral',27],['jewel',43]]){
+for(const [palette,time] of [['coral',16],['jewel',26],['signature',36],['garden',46]]){
  await page.evaluate(t=>{window.roomTimeline.pause().time(t);},time);
  assert.equal(await page.locator('.venue-'+palette+'-table').evaluate(e=>getComputedStyle(e).opacity),'1');
  assert.equal(await page.locator('.venue-'+palette+'-wall').evaluate(e=>getComputedStyle(e).opacity),'1');
  assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');
  assert.equal(await page.locator('.venue-base').evaluate(e=>getComputedStyle(e).transform),'none');
 }
-assert.equal(await page.evaluate(()=>window.roomTimeline.duration()),48);
+assert.equal(await page.evaluate(()=>window.roomTimeline.duration()),49.5);
 await page.evaluate(()=>{window.roomTimeline.time(0);});assert.equal(await page.locator('.venue-table').evaluate(e=>getComputedStyle(e).opacity),'0');
 await page.locator('.site-footer').scrollIntoViewIfNeeded();await page.waitForTimeout(200);assert.equal(await page.evaluate(()=>window.roomTimeline.paused()),true);
 assert.deepEqual(errors,[]);await browser.close();console.log('Responsive, branding, pause, reduced motion, no-JS, House and cookie checks passed.');

@@ -206,7 +206,7 @@
   const scene=$('[data-venue]');
   if(scene&&window.gsap){
     const primary=[$('.venue-table',scene),$('.venue-console',scene),$('.venue-pedestal',scene),$('.venue-moss',scene)];
-    let sets=[primary,...['coral','jewel'].map(palette=>['table','console','pedestal','wall'].map(part=>$('.venue-'+palette+'-'+part,scene)))];
+    let sets=[primary,...['coral','jewel','signature','garden'].map(palette=>['table','console','pedestal','wall'].map(part=>$('.venue-'+palette+'-'+part,scene)))];
     const layers=sets.flat(),controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
     const connection=navigator.connection;
     let ready=false,visible=false,userPaused=false,step=1,staticMode=false;

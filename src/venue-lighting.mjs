@@ -3,7 +3,9 @@
 const feet={
  table:[1287,477,43,7],console:[950,364,29,3],pedestal:[1652,375,23,3],
  'coral-table':[1291,475,39,6],'coral-console':[932,366,22,3],'coral-pedestal':[1646,375,17,3],
- 'jewel-table':[1281,474,49,7],'jewel-console':[939,364,29,3],'jewel-pedestal':[1644,373,17,3]
+ 'jewel-table':[1281,474,49,7],'jewel-console':[939,364,29,3],'jewel-pedestal':[1644,373,17,3],
+ 'signature-table':[1287,477,52,5],'signature-console':[950,364,20,3],'signature-pedestal':[1652,375,32,3],
+ 'garden-table':[1287,477,33,5],'garden-console':[950,364,38,3],'garden-pedestal':[1652,375,15,3]
 };
 
 export function venueLighting(name){
