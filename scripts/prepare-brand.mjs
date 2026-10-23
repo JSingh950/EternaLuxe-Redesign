@@ -7,6 +7,8 @@ for(const variant of ['desktop','mobile']){
  await sharp(`assets/brand/venue-extended-${variant}.png`).webp({quality:93,smartSubsample:true}).toFile(`dist/assets/scene/venue-extended-${variant}.webp`);
 }
 for(const tone of ['white','champagne']) await sharp(`assets/brand/logo-${tone}.png`).trim().png().toFile(`dist/assets/brand/logo-${tone}.png`);
+await sharp('assets/brand/ceo-acero.jpeg').resize({width:900,withoutEnlargement:true}).webp({quality:92}).toFile('dist/assets/brand/ceo-acero.webp');
+await sharp('assets/brand/partner-ramirez.jpg').resize({width:900,withoutEnlargement:true}).webp({quality:92}).toFile('dist/assets/brand/partner-ramirez.webp');
 await sharp('assets/brand/spiral-flower-master.png')
  .resize({width:1254,height:1254,fit:'inside',withoutEnlargement:true})
  .webp({quality:93,alphaQuality:100,smartSubsample:true})
