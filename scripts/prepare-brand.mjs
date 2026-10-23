@@ -74,9 +74,16 @@ for(const [palette,objects] of Object.entries(placements)){
      {left:580,right:737,topLeft:68,topRight:86,bottomLeft:398,bottomRight:390}
     ];
     const cleanSheet=await cleanCutout(sheet);
-    const panels=await Promise.all(sources.map((source,index)=>{
-     const x=153+index*150;
-     return projectWall(cleanSheet,{left:x,right:x+136,topLeft:111-index*3,topRight:108-index*3,bottomLeft:403-index*3,bottomRight:400-index*3,source});
+    const panels=await Promise.all(sources.map(async(source,index)=>{
+     const x=153+index*150,t=111-index*3,b=403-index*3;
+     // Sample the botanical interior only. Rebuild the slim frame with precise
+     // straight rails so the source photograph's uneven bevel cannot distort it.
+     const interior={...source,left:source.left+10,right:source.right-10,
+      topLeft:source.topLeft+12,topRight:source.topRight+12,
+      bottomLeft:source.bottomLeft-10,bottomRight:source.bottomRight-10};
+     const foliage=await projectWall(cleanSheet,{left:x+4,right:x+132,topLeft:t+4,topRight:t+1,bottomLeft:b-4,bottomRight:b-7,source:interior});
+     const rails=Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><defs><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#e0c38b"/><stop offset=".45" stop-color="#b39761"/><stop offset="1" stop-color="#81673f"/></linearGradient></defs><path d="M${x} ${t}L${x+136} ${t-3}V${b-3}L${x} ${b}Z" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="miter"/><path d="M${x-2} ${b}V${t-2}L${x+138} ${t-5}" fill="none" stroke="#e2c994" stroke-width="1.2"/><path d="M${x+4} ${b-4}V${t+4}L${x+132} ${t+1}" fill="none" stroke="#66502f" stroke-width="1"/></svg>`);
+     return sharp(foliage).composite([{input:rails}]).png().toBuffer();
     }));
     layers['jewel-wall']=await sharp(blank).composite(panels.map(input=>({input}))).png().toBuffer();
     continue;
