@@ -10,6 +10,10 @@ try{
   await context.addInitScript(allowCookies);
   const page=await context.newPage();
   await page.goto(base,{waitUntil:'networkidle'});
+  assert.deepEqual(await page.locator('[data-venue] .venue-layer').evaluateAll(layers=>layers.map(e=>e.dataset.scenePiece).sort()),[
+    'garden-console','garden-pedestal','garden-table','garden-wall','moss','signature-console','signature-pedestal','signature-table'
+  ],'venue includes only the six approved arrangements and two approved wall artworks');
+  assert.equal(await page.locator('[data-venue-set]').count(),2,'only two approved editions are selectable');
   const opening=page.locator('[data-floral-opening]');
   assert.equal(await opening.isVisible(),true,'first visit shows the floral opening');
   assert.equal(await page.locator('body').evaluate(e=>e.classList.contains('floral-opening-active')),true,'opening locks the underlying site');

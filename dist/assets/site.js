@@ -215,7 +215,7 @@
   const scene=$('[data-venue]');
   if(scene&&window.gsap){
     const primary=[$('.venue-table',scene),$('.venue-console',scene),$('.venue-pedestal',scene),$('.venue-moss',scene)];
-    let sets=[primary,...['coral','jewel','signature','garden'].map(palette=>['table','console','pedestal','wall'].map(part=>$('.venue-'+palette+'-'+part,scene)))];
+    let sets=[primary,['table','console','pedestal','wall'].map(part=>$('.venue-garden-'+part,scene))];
     const layers=sets.flat(),controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
     const connection=navigator.connection;
     let ready=false,visible=false,userPaused=false,step=1,staticMode=false;
@@ -250,7 +250,7 @@
       toggle.setAttribute('aria-pressed',String(running));
     }
     toggle.addEventListener('click',()=>{userPaused=!userPaused;sync();});
-    function show(delta){step=(step+delta+sets.length+1)%(sets.length+1);present(step);}
+    function show(delta){step=((step-1+delta+sets.length)%sets.length)+1;present(step);}
     $('[data-scene-prev]').addEventListener('click',()=>show(-1));
     $('[data-scene-next]').addEventListener('click',()=>show(1));
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.1}).observe(scene);
@@ -275,9 +275,9 @@
           .to(set[3],{opacity:1,duration:1.1,ease:'sine.inOut'},at+3.8)
           .to(set,{opacity:0,duration:1.2,ease:'sine.inOut'},at+8.3);
       });
-      // Start on the completed original four pieces, held throughout the opening.
+      // Start on the first three approved arrangements and moss wall during opening.
       // The existing sequential cycle continues from this point after entry.
-      // Enter on the completed original four-piece composition, then hold it
+      // Enter on the completed approved four-piece composition, then hold it
       // for about three seconds before the faster rotation begins.
       ready=true;controls.hidden=false;timeline.seek(5.3);staticMode=false;sync();
     });
