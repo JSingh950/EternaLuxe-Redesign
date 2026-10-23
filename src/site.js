@@ -207,9 +207,26 @@
     const layers=sets.flat(),controls=$('.venue-controls'),toggle=$('[data-venue-toggle]'),manual=$('.venue-manual');
     const connection=navigator.connection;
     let ready=false,visible=false,userPaused=false,step=1,staticMode=false;
+    let currentEdition=-1;
+    const editionNumber=$('[data-venue-edition]'),editionChoices=$$('[data-venue-set]');
+    const paletteFor=set=>set[0].dataset.scenePiece.replace('-table','').replace('table','ivory');
+    function updateEdition(index){
+      if(index===currentEdition)return;
+      currentEdition=index;
+      const palette=sets[index]?paletteFor(sets[index]):null;
+      if(editionNumber)editionNumber.textContent=`${String(index+1).padStart(2,'0')} / ${String(sets.length).padStart(2,'0')}`;
+      editionChoices.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.venueSet===palette)));
+    }
     const still=()=>reduced.matches||connection?.saveData;
     const timeline=gsap.timeline({paused:true,repeat:-1});
-    const present=index=>{gsap.set(layers,{opacity:0});if(index>0)gsap.set(sets[index-1],{opacity:1});};
+    const present=index=>{gsap.set(layers,{opacity:0,lazy:false});if(index>0)gsap.set(sets[index-1],{opacity:1,lazy:false});updateEdition(index-1);};
+    timeline.eventCallback('onUpdate',()=>updateEdition(Math.min(sets.length-1,Math.floor(timeline.time()/16))));
+    editionChoices.forEach(button=>button.addEventListener('click',()=>{
+      const index=sets.findIndex(set=>paletteFor(set)===button.dataset.venueSet);
+      if(index<0||!ready)return;
+      if(still()){step=index+1;present(step);}
+      else{timeline.seek(index*16+8);sync();}
+    }));
     function sync(){
       const running=ready&&visible&&!document.hidden&&!userPaused&&!still()&&!openingIsActive();
       if(still()){timeline.pause();if(!staticMode){step=1;present(step);}}
@@ -230,6 +247,8 @@
     const decodeSet=set=>Promise.all(set.map(layer=>$('img',layer).decode()));
     Promise.allSettled(sets.map(decodeSet)).then(results=>{
       sets=sets.filter((set,i)=>results[i].status==='fulfilled');
+      editionChoices.forEach(button=>{button.hidden=!sets.some(set=>paletteFor(set)===button.dataset.venueSet);});
+      currentEdition=-1;
       gsap.set(layers,{opacity:0});
       if(!sets.length){controls.hidden=true;return;}
       // Sequential fades avoid seeing two incompatible vases at the same location.
