@@ -368,6 +368,12 @@
       const flowMedia=gsap.matchMedia();
       flowMedia.add('(prefers-reduced-motion: no-preference)',()=>{
         const active=new Set();
+        const sways=new Map(flows.filter(section=>section.classList.contains('architectural-ribbon')).map(section=>[
+          section,gsap.fromTo($('svg',section),{y:-3,rotation:-.12},{y:3,rotation:.12,duration:6,ease:'sine.inOut',repeat:-1,yoyo:true,paused:true,transformOrigin:'50% 50%'})
+        ]));
+        const syncSways=()=>sways.forEach((tween,section)=>{
+          if(active.has(section)&&!document.hidden)tween.play();else tween.pause();
+        });
         let frame=0;
         const paint=()=>{
           frame=0;
@@ -383,13 +389,14 @@
           });
         };
         const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint);};
-        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>entry.isIntersecting?active.add(entry.target):active.delete(entry.target));schedule();},{rootMargin:'15% 0px 15%'});
+        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>entry.isIntersecting?active.add(entry.target):active.delete(entry.target));syncSways();schedule();});
         flows.forEach(section=>observer.observe(section));
         addEventListener('scroll',schedule,{passive:true});
         addEventListener('resize',schedule,{passive:true});
         document.addEventListener('visibilitychange',schedule);
+        document.addEventListener('visibilitychange',syncSways);
         schedule();
-        return ()=>{observer.disconnect();removeEventListener('scroll',schedule);removeEventListener('resize',schedule);document.removeEventListener('visibilitychange',schedule);if(frame)cancelAnimationFrame(frame);flows.forEach(section=>{const plane=$('[data-flow-plane]',section);if(plane)gsap.set(plane,{clearProps:'transform'});});};
+        return ()=>{observer.disconnect();removeEventListener('scroll',schedule);removeEventListener('resize',schedule);document.removeEventListener('visibilitychange',schedule);document.removeEventListener('visibilitychange',syncSways);sways.forEach(tween=>tween.kill());if(frame)cancelAnimationFrame(frame);flows.forEach(section=>{const plane=$('[data-flow-plane]',section);if(plane)gsap.set(plane,{clearProps:'transform'});});};
       });
     }
   }
