@@ -41,12 +41,11 @@ try{
   assert.equal(await page.locator('.venue-caption').count(),0,'homepage hero copy is removed');
   await context.close();
 
-  const skipContext=await browser.newContext({viewport:{width:768,height:900}});
-  await skipContext.addInitScript(allowCookies);
-  const skipPage=await skipContext.newPage();await skipPage.goto(base,{waitUntil:'networkidle'});
-  await skipPage.getByRole('button',{name:'Skip opening'}).click();await skipPage.waitForTimeout(650);
-  assert.equal(await skipPage.locator('[data-floral-opening]').isHidden(),true,'Skip opens the site');
-  await skipContext.close();
+  const openingContext=await browser.newContext({viewport:{width:768,height:900}});
+  await openingContext.addInitScript(allowCookies);
+  const openingPage=await openingContext.newPage();await openingPage.goto(base,{waitUntil:'networkidle'});
+  assert.equal(await openingPage.locator('[data-opening-skip]').count(),0,'floral opening skip control is removed');
+  await openingContext.close();
 
   const reduced=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});
   await reduced.addInitScript(allowCookies);
@@ -89,5 +88,5 @@ try{
   assert.equal(await staticPage.locator('.venue-scene').isVisible(),true,'no-JavaScript fallback exposes the venue');
   await nojs.close();
 
-  console.log('Spiral opening first visit, session, skip, reduced motion, touch and no-JavaScript checks passed.');
+  console.log('Spiral opening first visit, session, scroll, reduced motion, touch and no-JavaScript checks passed.');
 }finally{await browser.close();}

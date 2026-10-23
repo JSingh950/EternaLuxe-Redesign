@@ -110,7 +110,7 @@
   const opening=$('[data-floral-opening]');
   const openingIsActive=()=>pageRoot.classList.contains('floral-opening-active');
   if(opening){
-    const skip=$('[data-opening-skip]',opening),cue=$('[data-opening-cue]',opening);
+    const cue=$('[data-opening-cue]',opening);
     const surface=$('.floral-opening-surface',opening);
     const logo=$('.floral-opening-logo',opening);
     const layers={
@@ -156,10 +156,14 @@
       if(staticOpening){
         opening.classList.add('is-static');
         cue.firstChild.textContent='A floral study by Eternaluxe';
-        skip.textContent='Enter site';
+        cue.setAttribute('role','button');
+        cue.setAttribute('tabindex','0');
+        cue.setAttribute('aria-label','Enter site');
+        cue.addEventListener('click',()=>release({focusVenue:true}));
+        cue.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();release({focusVenue:true});}});
       }else{
         timeline=gsap.timeline({paused:true,defaults:{ease:'none'}})
-          .to([logo,cue,skip],{autoAlpha:0,y:-10,duration:.18},0)
+          .to([logo,cue],{autoAlpha:0,y:-10,duration:.18},0)
           .to(layers.edge,{xPercent:28,yPercent:-18,rotation:86,scale:1.18,autoAlpha:0,duration:.72},.06)
           .to(layers.outer,{xPercent:-24,yPercent:18,rotation:-64,scale:1.16,autoAlpha:0,duration:.7},.1)
           .to(layers.middle,{xPercent:18,yPercent:22,rotation:48,scale:1.13,autoAlpha:0,duration:.65},.17)
@@ -194,7 +198,6 @@
         addEventListener('touchend',()=>{touchY=null;},{passive:true});
         addEventListener('keydown',key);
       }
-      skip.addEventListener('click',()=>release({focusVenue:true}));
       $('.skip-link')?.addEventListener('click',()=>release({immediate:true}));
       opening.addEventListener('error',e=>{if(e.target.matches('.floral-spiral img'))opening.classList.add('has-asset-error');},true);
       document.addEventListener('visibilitychange',()=>{if(document.hidden)progressTween?.pause();else progressTween?.resume();});
