@@ -368,9 +368,12 @@
       const flowMedia=gsap.matchMedia();
       flowMedia.add('(prefers-reduced-motion: no-preference)',()=>{
         const active=new Set();
-        const sways=new Map(flows.filter(section=>section.classList.contains('architectural-ribbon')).map(section=>[
-          section,gsap.fromTo($('svg',section),{y:-3,rotation:-.12},{y:3,rotation:.12,duration:6,ease:'sine.inOut',repeat:-1,yoyo:true,paused:true,transformOrigin:'50% 50%'})
-        ]));
+        const sways=new Map(flows.filter(section=>section.classList.contains('architectural-ribbon')).map(section=>{
+          const motion=gsap.timeline({paused:true,repeat:-1,yoyo:true,defaults:{duration:3.4,ease:'sine.inOut'}})
+            .fromTo($('svg',section),{xPercent:-1,y:-5,rotation:-.2},{xPercent:1,y:5,rotation:.2,transformOrigin:'50% 50%'},0)
+            .fromTo($('.ribbon-plane-secondary',section),{y:-7,x:-12},{y:7,x:12},0);
+          return [section,motion];
+        }));
         const syncSways=()=>sways.forEach((tween,section)=>{
           if(active.has(section)&&!document.hidden)tween.play();else tween.pause();
         });
