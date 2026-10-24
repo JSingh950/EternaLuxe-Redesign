@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import {projectWall} from './project-wall.mjs';
 await fs.mkdir('dist/assets/brand',{recursive:true});
 await fs.mkdir('dist/assets/scene',{recursive:true});
-for(const number of [3,5])for(const width of [640,1040]){
+for(const number of [1,2,3,4,5,6])for(const width of [640,1040]){
  await sharp(`assets/brand/owner-arrangement-${number}.png`).trim({threshold:8})
   .resize({width,withoutEnlargement:true}).webp({quality:92,alphaQuality:100,smartSubsample:true})
   .toFile(`dist/assets/brand/campaign-arrangement-${number}-${width}.webp`);
