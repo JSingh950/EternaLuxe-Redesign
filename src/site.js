@@ -282,6 +282,24 @@
       ready=true;controls.hidden=false;timeline.seek(5.3);staticMode=false;sync();
     });
   }
+  // The compositions are fully visible without JS; only their entry gains depth.
+  if(window.gsap&&!navigator.connection?.saveData){
+    const campaignMedia=gsap.matchMedia();
+    campaignMedia.add('(prefers-reduced-motion: no-preference)',()=>{
+      const animations=[];
+      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        observer.unobserve(entry.target);
+        const object=$('[data-campaign-object]',entry.target),field=$('.campaign-color-field',entry.target);
+        const reveal=gsap.timeline({defaults:{duration:.95,ease:'power2.out'}})
+          .fromTo(field,{scale:.97},{scale:1,clearProps:'transform'},0)
+          .fromTo(object,{y:18,opacity:.85},{y:0,opacity:1,clearProps:'transform,opacity'},.08);
+        animations.push(reveal);
+      }),{threshold:.18});
+      $$('[data-campaign]').forEach(panel=>observer.observe(panel));
+      return ()=>{observer.disconnect();animations.forEach(animation=>animation.kill());};
+    });
+  }
   $$('[data-house-motion]').forEach(montage=>{
   if(window.gsap){
     const button=$('[data-motion-toggle]',montage),tracks=$$('.motion-track',montage);
