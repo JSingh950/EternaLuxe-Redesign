@@ -42,6 +42,7 @@ try{
   await menu.getByRole('link',{name:'The Floral Club',exact:true}).click();await page.waitForURL('**/floral-club.html');
   await page.locator('.site-header').screenshot({path:`tmp/navigation-review/header-${width}.png`});
   await page.locator('.site-footer').getByRole('link',{name:'All pages',exact:true}).click();
+  await page.waitForURL('**/site-map.html');await page.locator('.site-directory').waitFor({state:'visible'});
   const links=await page.locator('.site-directory a').evaluateAll(as=>as.map(a=>a.getAttribute('href')));
   for(const file of graph.keys())if(file!=='site-map.html')assert(links.includes(file),`${file} missing from directory`);
   assert(await page.getByRole('link',{name:'Email preferences',exact:true}).first().isVisible());
