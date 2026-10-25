@@ -11,9 +11,8 @@ try{
   const errors=[];page.on('pageerror',error=>errors.push(error.message));await page.addInitScript(setup);
   await page.goto(base+'/collections.html',{waitUntil:'networkidle'});
   const cards=page.locator('.collection-grid .collection-item');
-  assert.equal(await cards.count(),17);assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),17);
-  assert.equal(await cards.last().locator('h3').innerText(),'The Amber');
-  for(const name of ['Framed Moss Art','Modular Botanical Panels','Sculptural Floral Relief'])assert.equal(await cards.filter({hasText:name}).count(),0);
+  assert.equal(await cards.count(),13);assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),13);
+  for(const name of ['Framed Moss Art','Modular Botanical Panels','Sculptural Floral Relief','The Plum Study','The Branch Study','The Window Garden','The Amber'])assert.equal(await cards.filter({hasText:name}).count(),0);
   assert.equal(await page.locator('.filter-bar,.collection-categories,[data-reset-filters],[data-show-more]').count(),0);
   for(const card of await cards.all()){
    await card.scrollIntoViewIfNeeded();await card.locator('img').evaluate(i=>i.decode());
@@ -36,14 +35,14 @@ try{
   const area=await page.locator('.collection-grid').boundingBox();
   await page.screenshot({path:`tmp/collection-review/collections-${width}.png`,clip:{x:area.x,y:area.y,width:area.width,height:Math.min(area.height,950)},style:'.site-header,.site-header *,.skip-link{visibility:hidden!important}'});
   // Preserve both real-product navigation and concept enquiry handoff.
-  await cards.last().locator('.collection-photo').click();await page.waitForURL('**/product-amber.html');
+  await page.locator('.collection-grid .collection-photo[href="product-royal.html"]').click();await page.waitForURL('**/product-royal.html');
   await page.goto(base+'/collections.html?collection=wall&format=framed-moss&size=Small&style=blue');
-  assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),17);
+  assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),13);
   await page.locator('.collection-grid .collection-item').first().locator('.collection-photo').click();
   await page.waitForURL('**/enquiries.html?**');assert.match(await page.locator('[name=message]').inputValue(),/\(concept\)/);
   assert.deepEqual(errors,[]);await page.close();
  }
  const nojs=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});
- await nojs.goto(base+'/collections.html?collection=wall');assert.equal(await nojs.locator('.collection-grid .collection-item:visible').count(),17);await nojs.close();
- console.log('Collections verified at 375, 768, 1440 and 1920px: 17 complete photos, three removed wall concepts absent, The Amber last, identical 4:5 frames, legacy URLs, no-JS visibility and product/concept links.');
+ await nojs.goto(base+'/collections.html?collection=wall');assert.equal(await nojs.locator('.collection-grid .collection-item:visible').count(),13);await nojs.close();
+ console.log('Collections verified at 375, 768, 1440 and 1920px: 13 complete photos, requested removed cards absent, identical 4:5 frames, legacy URLs, no-JS visibility and product/concept links.');
 }finally{await browser.close();}
