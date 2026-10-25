@@ -22,6 +22,7 @@ await sharp('assets/brand/spiral-flower-master.png')
  .resize({width:860,height:860,fit:'inside',withoutEnlargement:true})
  .webp({quality:91,alphaQuality:100,smartSubsample:true})
  .toFile('dist/assets/brand/spiral-flower-mobile.webp');
+await fs.copyFile('node_modules/@fontsource/manrope/files/manrope-latin-700-normal.woff2','dist/assets/fonts/manrope-latin-700-normal.woff2');
 for(const weight of [400,600]) await fs.copyFile(`node_modules/@fontsource/nunito-sans/files/nunito-sans-latin-${weight}-normal.woff2`,`dist/assets/fonts/nunito-sans-latin-${weight}-normal.woff2`);
 await fs.copyFile('node_modules/@fontsource/nunito-sans/LICENSE','dist/assets/fonts/nunito-sans-LICENSE.txt');
 const source='assets/brand/venue-additions.png';
