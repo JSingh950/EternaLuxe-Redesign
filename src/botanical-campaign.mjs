@@ -28,7 +28,7 @@ export function botanicalCampaign(){
     <p class="eyebrow">Sculptural arrangements</p>
     <h2 id="campaign-blue-title"><span>A softer </span><span>kind of </span><span>statement.</span></h2>
     <p>Composed for the spaces you love.</p>
-    <a class="text-link" href="collections.html?collection=table">Explore the collection <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href="collections.html">Explore the collection <span aria-hidden="true">↗</span></a>
    </div>
    <figure class="campaign-stage" aria-label="Blue hydrangeas and white orchids, composed on a stone plinth">
     <div class="campaign-color-field" aria-hidden="true"></div>

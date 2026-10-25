@@ -91,29 +91,6 @@
   const enquiry=$('[data-form=enquiry]');
   if(enquiry)config.then(service=>{if(!service?.deliveryReady){$('button[type=submit]',enquiry).textContent='Continue to email';$('.form-status',enquiry).textContent='Opens a prepared message in your email app. Send it there to contact the atelier.';}});
   if(enquiry){if(query.get('project'))$('[name=project]',enquiry).value=query.get('project');if(query.get('composition'))$('[name=message]',enquiry).value=`I am interested in ${query.get('composition')}.`;}
-  const filters=$('.filter-bar');
-  if(filters){
-    const items=$$('.collection-grid .collection-item');
-    const collection=query.get('collection');
-    let activeCollection=['table','wall','floral-club','bespoke'].includes(collection)?collection:'';
-    for(const key of ['size','type','occasion','style','format']){
-      const field=filters.elements.namedItem(key),value=query.get(key);
-      if(field&&value&&[...field.options].some(o=>o.value===value))field.value=value;
-    }
-    const filter=()=>{
-      const vals=Object.fromEntries(new FormData(filters));
-      const matches=items.filter(item=>(!activeCollection||(item.dataset.collection||'').split(' ').includes(activeCollection))&&Object.entries(vals).every(([k,v])=>!v||(item.dataset[k]||'').split(' ').includes(v)));
-      items.forEach(item=>{item.hidden=true;});
-      matches.forEach(item=>{item.hidden=false;});
-      $('.collection-status').textContent=`${matches.length} ${matches.length===1?'composition':'compositions'}`;
-      $('.empty-state').hidden=matches.length!==0;
-      $$('[data-category]').forEach(a=>{if(a.dataset.category===activeCollection)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-    };
-    filters.addEventListener('change',filter);
-    filters.addEventListener('reset',()=>queueMicrotask(()=>{activeCollection='';history.replaceState(null,'',location.pathname);filter();}));
-    $('[data-reset-filters]')?.addEventListener('click',()=>filters.reset());
-    filter();
-  }
   const opening=$('[data-floral-opening]');
   const openingIsActive=()=>pageRoot.classList.contains('floral-opening-active');
   if(opening){

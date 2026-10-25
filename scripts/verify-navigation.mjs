@@ -31,12 +31,9 @@ try{
   const bounds=await page.locator(`${nav} a`).evaluateAll(links=>links.map(a=>{const r=a.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.height>=30;}));assert(bounds.every(Boolean),`Header fits at ${width}px`);
   const total=await page.locator('.collection-grid .collection-item').count();assert(total>8);
   assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),total,'No compositions hidden by pagination');
-  await page.getByRole('navigation',{name:'Browse collections'}).getByRole('link',{name:'Wall art',exact:true}).click();
-  await page.waitForFunction(()=>document.querySelector('[data-category="wall"]').getAttribute('aria-current')==='page');
-  assert((await page.locator('.collection-grid .collection-item:visible').count())<total);
-  await page.getByRole('button',{name:'Clear filters',exact:true}).click();
-  await page.waitForFunction(()=>!location.search);
-  assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),total,'Reset also clears category');
+  assert.equal(await page.locator('.filter-bar,.collection-categories,[data-reset-filters]').count(),0,'No collection filter controls');
+  await page.goto(`${base}/collections.html?collection=wall&size=Small&style=blue`,{waitUntil:'networkidle'});
+  assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),total,'Old filter URLs show the full collection');
   await page.getByRole('button',{name:'Open menu',exact:true}).click();
   const menu=page.getByRole('dialog',{name:'Navigation'});
   for(const name of ['Home','The House','Collections','The Floral Club','Atelier','Archive','About','Contact Us','Your bag','All pages'])assert(await menu.getByRole('link',{name,exact:true}).isVisible(),`${name} is directly available`);
@@ -51,5 +48,5 @@ try{
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await page.close();
  }
- console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, visible Floral Club header link, menu keyboard return, all compositions shown, and category reset at 320, 375, 768 and 1440px.`);
+ console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, visible Floral Club header link, menu keyboard return, and all compositions shown on current and legacy URLs at 320, 375, 768 and 1440px.`);
 }finally{await browser.close();}

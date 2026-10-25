@@ -19,7 +19,7 @@ for(const f of files){
  assert.ok(!/venue-gallery|hero-overlay|bouquet-3d/.test(html),`${f}: obsolete media`);
  assert.ok(!/search-dialog|newsletter-form|footer-wordmark|form-mode/.test(html),`${f}: removed interface is absent`);
  assert.ok(!/\bConcierge\b/.test(html),`${f}: Contact Us naming`);
- assert.ok(html.includes('class="menu-collections"'),`${f}: collection group in menu`);
+ assert.ok(html.includes('href="collections.html"'),`${f}: direct collection navigation`);
  assert.ok(html.includes('class="menu-privacy"'),`${f}: privacy policy in menu`);
 }
 const media=JSON.parse(await fs.readFile('src/media-manifest.json'));assert.equal(media.length,images.length+videos.length);

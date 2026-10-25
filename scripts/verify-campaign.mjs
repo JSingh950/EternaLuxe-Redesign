@@ -32,7 +32,7 @@ try{
    assert.equal(report.fit,'contain');
   }
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-  assert.equal(await page.getByRole('link',{name:'Explore the collection',exact:false}).getAttribute('href'),'collections.html?collection=table');
+  assert.equal(await page.getByRole('link',{name:'Explore the collection',exact:false}).getAttribute('href'),'collections.html');
   assert.equal(await page.getByRole('link',{name:'Discover the Atelier',exact:false}).getAttribute('href'),'atelier.html');
   await page.locator('.botanical-campaign').screenshot({path:`tmp/campaign-review/campaign-${width}.png`,style:'.site-header,.site-header *,.skip-link{visibility:hidden!important}'});
   assert.deepEqual(errors,[]);await page.close();
