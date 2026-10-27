@@ -1,0 +1,2 @@
+// Draw arrows as geometry, never as font glyphs that may become emoji on mobile.
+export const arrowIcon=(direction='diagonal')=>`<svg class="arrow-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="${direction==='left'?'M20 12H4m7-7-7 7 7 7':'M5 19 19 5M5 5h14v14'}"/></svg>`;

@@ -1,3 +1,4 @@
+import {arrowIcon} from './icons.mjs';
 // The owner's actual arrangements remain intact; backgrounds and plinths are layout.
 const dimensions={1:[862,1515],2:[1040,1258],3:[942,1398],4:[772,1407],5:[1040,1223],6:[1020,1281]};
 const arrangement=(number,alt)=>`<picture class="campaign-arrangement"><source media="(max-width:700px)" srcset="assets/brand/campaign-arrangement-${number}-640.webp"><img src="assets/brand/campaign-arrangement-${number}-1040.webp" width="${dimensions[number][0]}" height="${dimensions[number][1]}" alt="${alt}" loading="lazy" decoding="async"></picture>`;
@@ -15,7 +16,7 @@ export function editorialCampaign(key){
  return `<section class="editorial-campaign editorial-campaign--${story.tone} editorial-campaign--${key}" ${story.sectionId?`id="${story.sectionId}"`:''} aria-labelledby="${id}">
   <div class="editorial-curve" aria-hidden="true"><svg viewBox="0 0 1600 120" preserveAspectRatio="none" focusable="false"><path d="M0 70C380 160 1020-60 1600 60V120H0Z"/></svg></div>
   <article class="campaign-panel editorial-campaign-panel" data-campaign>
-   <div class="campaign-copy" data-content-safe><p class="eyebrow">${story.eyebrow}</p><h2 id="${id}">${story.lines.map(line=>`<span>${line}</span>`).join('')}</h2><p>${story.copy}</p><a class="text-link" href="${story.href}">${story.cta}<span aria-hidden="true">↗</span></a></div>
+   <div class="campaign-copy" data-content-safe><p class="eyebrow">${story.eyebrow}</p><h2 id="${id}">${story.lines.map(line=>`<span>${line}</span>`).join('')}</h2><p>${story.copy}</p><a class="text-link" href="${story.href}">${story.cta}${arrowIcon()}</a></div>
    <figure class="campaign-stage"><div class="campaign-color-field" aria-hidden="true"></div><div class="campaign-plinth" aria-hidden="true"></div><div class="campaign-object" data-campaign-object>${arrangement(story.number,story.alt)}</div></figure>
   </article>
  </section>`;
@@ -28,7 +29,7 @@ export function botanicalCampaign(){
     <p class="eyebrow">Sculptural arrangements</p>
     <h2 id="campaign-blue-title"><span>A softer </span><span>kind of </span><span>statement.</span></h2>
     <p>Composed for the spaces you love.</p>
-    <a class="text-link" href="collections.html">Explore the collection <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href="collections.html">Explore the collection ${arrowIcon()}</a>
    </div>
    <figure class="campaign-stage" aria-label="Blue hydrangeas and white orchids, composed on a stone plinth">
     <div class="campaign-color-field" aria-hidden="true"></div>
@@ -46,7 +47,7 @@ export function botanicalCampaign(){
    <div class="campaign-copy" data-content-safe>
     <p class="eyebrow">Composed by nature</p>
     <h2 id="campaign-blush-title"><span>Form. </span><span>Feeling. </span><span>Flowers.</span></h2>
-    <a class="text-link" href="atelier.html">Discover the Atelier <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href="atelier.html">Discover the Atelier ${arrowIcon()}</a>
    </div>
    <div class="campaign-detail" aria-hidden="true"><img src="assets/brand/campaign-arrangement-5-640.webp" alt="" width="640" height="753" loading="lazy" decoding="async"></div>
   </article>

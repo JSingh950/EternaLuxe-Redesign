@@ -1,6 +1,8 @@
 @font-face{font-family:Manrope;src:url('fonts/manrope-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}@font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}@font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-600-normal.woff2') format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:Manrope;src:url('fonts/manrope-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
 @font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+.arrow-icon{display:inline-block;width:1.25em;height:1.25em;flex:none;vertical-align:middle}
+.text-link .arrow-icon{width:24px;height:24px}
 /* Titles share one bold weight, including emphasized words and card headings. */
 :is(h1,h2,h3,h4,h5,h6){font-weight:700!important}
 :root{--paper:#f5f1e9;--ivory:#f2ebdd;--ink:#302c28;--muted:#676057;--rule:#d3cbbf;--olive:#9c947d;--champagne:#c6ad82;--serif:Manrope,Arial,sans-serif;--sans:"Nunito Sans",Arial,sans-serif;--gutter:clamp(24px,5.5vw,106px)}
