@@ -66,6 +66,7 @@
     form.addEventListener('submit',async e=>{
       e.preventDefault();if(!form.reportValidity())return;
       const button=$('button[type=submit]',form),status=$('.form-status',form);
+      if(!navigator.onLine){status.textContent='You are offline. Please reconnect to send this form. Your entries have not been sent.';return;}
       button.disabled=true;status.removeAttribute('data-error');status.textContent='Sending…';
       const values=Object.fromEntries(new FormData(form));
       requestId ||= crypto.randomUUID();

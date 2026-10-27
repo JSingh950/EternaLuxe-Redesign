@@ -2,6 +2,8 @@
 @font-face{font-family:Manrope;src:url('fonts/manrope-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
 @font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
 .arrow-icon{display:inline-block;width:1.25em;height:1.25em;flex:none;vertical-align:middle}
+.offline-tools{padding:20px 0 30px;border-top:1px solid var(--rule)}
+.offline-tools p{max-width:70ch}
 .text-link .arrow-icon{width:24px;height:24px}
 /* Titles share one bold weight, including emphasized words and card headings. */
 :is(h1,h2,h3,h4,h5,h6){font-weight:700!important}
