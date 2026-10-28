@@ -72,11 +72,11 @@ try{
       target.dispatchEvent(new TouchEvent(type,{touches:type==='touchend'?[]:[point],changedTouches:[point],bubbles:true,cancelable:true}));
     };
     send('touchstart',y);
-    for(let i=0;i<7;i++){y-=95;send('touchmove',y);}
+    for(let i=0;i<4;i++){y-=24;send('touchmove',y);}
     send('touchend',y);
   });
   await touchPage.waitForTimeout(1100);
-  assert.equal(await touchPage.locator('[data-floral-opening]').isHidden(),true,'touch swipes complete the mobile opening');
+  assert.equal(await touchPage.locator('[data-floral-opening]').isHidden(),true,'one short 96px swipe completes the mobile opening');
   assert.equal(await touchPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile opening has no horizontal overflow');
   const mobileHero=await touchPage.locator('.venue-hero').boundingBox();
   const mobileScene=await touchPage.locator('.venue-table').boundingBox();

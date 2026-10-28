@@ -158,7 +158,9 @@
           .to(opening,{autoAlpha:0,duration:.22},.78);
         const advance=delta=>{
           if(finished||finishing||document.hidden)return;
-          const distance=mobile.matches?720:Math.max(980,innerHeight*1.2);
+          // Touch has no wheel momentum: finish after ~74px of upward finger
+          // travel (160 * .76 / 1.65), instead of requiring several swipes.
+          const distance=mobile.matches?160:Math.max(980,innerHeight*1.2);
           target=gsap.utils.clamp(0,1,target+delta/distance);
           progressTween?.kill();
           if(target>=.76){
