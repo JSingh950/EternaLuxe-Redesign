@@ -4,8 +4,8 @@ const feet={
  table:[1287,477,43,7],console:[950,364,29,3],pedestal:[1652,375,23,3],
  'coral-table':[1291,475,39,6],'coral-console':[932,366,22,3],'coral-pedestal':[1646,375,17,3],
  'jewel-table':[1281,474,49,7],'jewel-console':[939,364,29,3],'jewel-pedestal':[1644,373,17,3],
- 'signature-table':[1070,651,39,5],'signature-console':[285,455,15,3],'signature-pedestal':[1632,450,28,3],
- 'garden-table':[1070,651,30,5],'garden-console':[285,455,27,3],'garden-pedestal':[1632,450,15,3]
+ 'signature-table':[1287,477,52,5],'signature-console':[950,364,20,3],'signature-pedestal':[1652,375,32,3],
+ 'garden-table':[1287,477,33,5],'garden-console':[950,364,38,3],'garden-pedestal':[1652,375,15,3]
 };
 
 export function venueLighting(name){
@@ -29,10 +29,10 @@ export function venueLighting(name){
  const flatten=part==='table'?.12:.035;
  const shear=part==='table'?.55:.48;
  const surface=part==='table'
-  ? '<ellipse cx="1060" cy="650" rx="415" ry="32"/>'
+  ? '<ellipse cx="1282" cy="469" rx="297" ry="32"/>'
   :part==='console'
-   ? '<ellipse cx="265" cy="457" rx="205" ry="10"/>'
-   : '<ellipse cx="1632" cy="450" rx="80" ry="8"/>';
+   ? '<path d="M780 366L1175 353L1205 360L816 378Z"/>'
+   : '<ellipse cx="1654" cy="369" rx="80" ry="8"/>';
  return `<svg class="venue-lighting" viewBox="0 0 1774 887" aria-hidden="true" focusable="false"><defs>
  <clipPath id="${id}-surface">${surface}</clipPath>
  <filter id="${id}-cast" x="-40%" y="-70%" width="180%" height="240%" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .12 0 0 0 0 .095 0 0 0 0 .065 0 0 0 .4 0"/><feGaussianBlur stdDeviation="2.5"/></filter>

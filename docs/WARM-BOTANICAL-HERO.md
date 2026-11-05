@@ -1,5 +1,8 @@
 # Warm botanical hero — asset provenance
 
+The generated room is retained as an unused concept. The live hero was restored
+to the pre-warm-botanical room at the owner's request; the site-wide warm palette remains.
+
 Generated with the built-in image generation tool on 2026-11-05 at the owner's request. These are concept interiors, not photographs of completed Eternaluxe commissions. Owner-supplied arrangements 1–6, moss wall and garden oval wall remain the product assets. The supplied fourth reference informs architecture and atmosphere only.
 
 ## Assets and placement

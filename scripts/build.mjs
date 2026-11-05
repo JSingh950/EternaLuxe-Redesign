@@ -15,7 +15,7 @@ const manifest=JSON.parse(await fs.readFile('src/media-manifest.json','utf8'));
 const assetHasher=createHash('sha256');
 for(const file of ['src/site.js','src/opening-state.js','src/styles.css','src/venue-lighting.mjs','scripts/prepare-brand.mjs','dist/assets/scene/venue-extended-desktop.webp','dist/assets/scene/venue-extended-mobile.webp','dist/assets/brand/spiral-flower.webp','dist/assets/media/house-film.mp4','dist/assets/media/house-film.webm','dist/assets/media/house-film-poster.jpg'])assetHasher.update(await fs.readFile(file));
 for(const file of ['scripts/prepare-orchid-film.mjs','dist/assets/media/orchid-film.mp4','dist/assets/media/orchid-film.webm'])assetHasher.update(await fs.readFile(file));
-for(const file of ['src/bag.js','src/contact.mjs','src/botanical-campaign.mjs','src/offline.js','scripts/prepare-warm-venue.mjs'])assetHasher.update(await fs.readFile(file));
+for(const file of ['src/bag.js','src/contact.mjs','src/botanical-campaign.mjs','src/offline.js'])assetHasher.update(await fs.readFile(file));
 const assetVersion=assetHasher.digest('hex').slice(0,12);
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
 const link=(url,text,cls='text-link')=>`<a class="${cls}" href="${url}">${text}</a>`;
