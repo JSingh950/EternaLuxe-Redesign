@@ -9,7 +9,7 @@ for(const number of [1,2,3,4,5,6])for(const width of [640,1040]){
   .toFile(`dist/assets/brand/campaign-arrangement-${number}-${width}.webp`);
 }
 for(const variant of ['desktop','mobile']){
- await sharp(`assets/brand/venue-extended-${variant}.png`).webp({quality:93,smartSubsample:true}).toFile(`dist/assets/scene/venue-extended-${variant}.webp`);
+ await sharp('assets/brand/venue-gallery-v3.png').resize(1079,1457,{fit:'fill'}).webp({quality:93,smartSubsample:true}).toFile(`dist/assets/scene/venue-extended-${variant}.webp`);
 }
 for(const tone of ['white','champagne']) await sharp(`assets/brand/logo-${tone}.png`).trim().png().toFile(`dist/assets/brand/logo-${tone}.png`);
 await sharp('assets/brand/ceo-acero.jpeg').resize({width:900,withoutEnlargement:true}).webp({quality:92}).toFile('dist/assets/brand/ceo-acero.webp');
