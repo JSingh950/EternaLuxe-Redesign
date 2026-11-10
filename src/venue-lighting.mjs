@@ -13,12 +13,12 @@ export function venueLighting(name){
   const id=`mount-${name}`;
   return `<svg class="venue-lighting venue-wall-lighting" viewBox="0 0 1774 887" aria-hidden="true" focusable="false"><defs>
   <filter id="${id}" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
-   <feGaussianBlur in="SourceAlpha" stdDeviation="1.1"/><feOffset dx="-1.4" dy="2.4" result="contact"/>
-   <feFlood flood-color="#302317" flood-opacity=".64"/><feComposite in2="contact" operator="in" result="contactShade"/>
-   <feGaussianBlur in="SourceAlpha" stdDeviation="4"/><feOffset dx="-5" dy="7" result="cast"/>
-   <feFlood flood-color="#493520" flood-opacity=".32"/><feComposite in2="cast" operator="in" result="castShade"/>
-   <feGaussianBlur in="SourceAlpha" stdDeviation="8"/><feOffset dx="-9" dy="11" result="ambient"/>
-   <feFlood flood-color="#503f2b" flood-opacity=".15"/><feComposite in2="ambient" operator="in" result="ambientShade"/>
+   <feGaussianBlur in="SourceAlpha" stdDeviation=".8"/><feOffset dx="-1.1" dy="1.5" result="contact"/>
+   <feFlood flood-color="#302317" flood-opacity=".48"/><feComposite in2="contact" operator="in" result="contactShade"/>
+   <feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="-5" dy="5" result="cast"/>
+   <feFlood flood-color="#392b1c" flood-opacity=".30"/><feComposite in2="cast" operator="in" result="castShade"/>
+   <feGaussianBlur in="SourceAlpha" stdDeviation="7"/><feOffset dx="-8" dy="8" result="ambient"/>
+   <feFlood flood-color="#503f2b" flood-opacity=".12"/><feComposite in2="ambient" operator="in" result="ambientShade"/>
    <feMerge><feMergeNode in="ambientShade"/><feMergeNode in="castShade"/><feMergeNode in="contactShade"/></feMerge>
   </filter></defs><image href="assets/scene/${name}.webp" width="1774" height="887" filter="url(#${id})"/></svg>`;
  }

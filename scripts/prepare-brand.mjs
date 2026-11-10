@@ -127,7 +127,7 @@ for(const [palette,parts] of Object.entries({
  }
  const wallArtwork=await sharp(`assets/brand/venue-${palette}-wall-art.png`).trim({threshold:8}).png().toBuffer();
  layers[`${palette}-wall`]=await projectWall(wallArtwork,{
-  left:140,right:584,topLeft:124,topRight:106,bottomLeft:402,bottomRight:384
+  left:140,right:584,topLeft:96,topRight:125,bottomLeft:400,bottomRight:393
  });
 }
 for(const [name,buffer]of Object.entries(layers)) {
