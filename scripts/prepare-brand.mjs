@@ -28,8 +28,13 @@ await fs.copyFile('node_modules/@fontsource/nunito-sans/LICENSE','dist/assets/fo
 const source='assets/brand/venue-additions.png';
 // Owner's moss-wall design, isolated from the supplied installation photograph.
 // Follow the wall's converging edges instead of tilting both edges with a shear.
-const mossCutout=await sharp('assets/brand/venue-owner-moss-wall-v2.png').trim({threshold:10}).png().toBuffer();
-const moss=await projectWall(mossCutout);
+// The ragged extraction was being stretched into the panel's outer boundary.
+// Mount the inner moss field on a clean, shallow rectangular support instead.
+const mossCutout=await sharp('assets/brand/venue-owner-moss-wall-v2.png')
+ .extract({left:90,top:80,width:1260,height:940}).flatten({background:'#3e4930'}).png().toBuffer();
+const mossFace=await projectWall(mossCutout,{left:134,right:568,topLeft:104,topRight:116,bottomLeft:398,bottomRight:394});
+const mossRim=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><path d="M132 102L570 114V396L132 400Z" fill="#786644"/><path d="M132 102L570 114" fill="none" stroke="#b49b6a" stroke-width="1.5"/><path d="M132 102V400L570 396" fill="none" stroke="#443c29" stroke-width="2"/></svg>');
+const moss=await sharp(mossRim).composite([{input:mossFace}]).png().toBuffer();
 const table=await sharp(source).extract({left:850,top:90,width:924,height:797}).png().toBuffer();
 const blank={create:{width:1774,height:887,channels:4,background:'#00000000'}};
 // The supplied cutouts carry a bright red chroma-key fringe around a few
