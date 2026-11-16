@@ -14,7 +14,6 @@ export function editorialCampaign(key){
  const story=stories[key];if(!story)throw Error(`Unknown campaign: ${key}`);
  const id=`${key}-campaign-title`;
  return `<section class="editorial-campaign editorial-campaign--${story.tone} editorial-campaign--${key}" ${story.sectionId?`id="${story.sectionId}"`:''} aria-labelledby="${id}">
-  <div class="editorial-curve" aria-hidden="true"><svg viewBox="0 0 1600 120" preserveAspectRatio="none" focusable="false"><path d="M0 70C380 160 1020-60 1600 60V120H0Z"/></svg></div>
   <article class="campaign-panel editorial-campaign-panel" data-campaign>
    <div class="campaign-copy" data-content-safe><p class="eyebrow">${story.eyebrow}</p><h2 id="${id}">${story.lines.map(line=>`<span>${line}</span>`).join('')}</h2><p>${story.copy}</p><a class="text-link" href="${story.href}">${story.cta}${arrowIcon()}</a></div>
    <figure class="campaign-stage"><div class="campaign-color-field" aria-hidden="true"></div><div class="campaign-plinth" aria-hidden="true"></div><div class="campaign-object" data-campaign-object>${arrangement(story.number,story.alt)}</div></figure>
@@ -37,7 +36,6 @@ export function botanicalCampaign(){
     <div class="campaign-object" data-campaign-object>${arrangement(3,'Blue hydrangeas and white orchids with an arching green stem in an Eternaluxe ceramic vessel')}</div>
    </figure>
   </article>
-  <div class="campaign-seam" aria-hidden="true"><svg viewBox="0 0 1600 220" preserveAspectRatio="none" focusable="false"><path d="M0 20C480 230 1130 20 1600 210V220H0Z"/></svg></div>
   <article class="campaign-panel campaign-panel--blush" data-campaign aria-labelledby="campaign-blush-title">
    <figure class="campaign-stage" aria-label="Pink flowers and sculptural foliage in a pebble-filled glass vase">
     <div class="campaign-color-field" aria-hidden="true"></div>
@@ -49,7 +47,6 @@ export function botanicalCampaign(){
     <h2 id="campaign-blush-title"><span>Form. </span><span>Feeling. </span><span>Flowers.</span></h2>
     <a class="text-link" href="collections.html#commissions">Explore private commissions ${arrowIcon()}</a>
    </div>
-   <div class="campaign-detail" aria-hidden="true"><img src="assets/brand/campaign-arrangement-5-640.webp" alt="" width="640" height="753" loading="lazy" decoding="async"></div>
   </article>
  </section>`;
 }
