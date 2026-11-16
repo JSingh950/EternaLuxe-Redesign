@@ -15,5 +15,5 @@ export const products=[
  {id:'window-garden',name:'The Window Garden',subtitle:'An immersive garden for interiors',image:'window-garden',size:'Bespoke',type:'commission',price:null,occasion:'interiors',style:'green amber mixed',format:'window-garden',path:'window-garden'}
 ];
 export const policies=[['terms','Terms & Conditions'],['privacy','Privacy Policy'],['cookies','Cookie Policy'],['shipping','Shipping & Delivery'],['refunds','Refunds & Subscriptions'],['accessibility','Accessibility']];
-export const policyVersion='2026-10-16';
-export const nav=[['house','The House'],['collections','Collections'],['floral-club','The Floral Club'],['atelier','Atelier'],['archive','Archive'],['about','About']];
+export const policyVersion='2026-11-16';
+export const nav=[['house','The House'],['collections','Collections'],['floral-club','The Floral Club'],['about','About']];

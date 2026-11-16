@@ -25,10 +25,10 @@ try{
    localStorage.setItem('eternaluxe-privacy-v1',JSON.stringify({necessary:true,expiresAt:Date.now()+86400000}));
   });
   await page.goto(`${base}/collections.html`,{waitUntil:'networkidle'});
-  const controls=page.locator('.site-header .menu-toggle,.site-header .contact-link,.site-header .bag-button');
+  const controls=page.locator('.site-header .menu-toggle,.site-header .contact-link,.site-header .club-header-link');
   assert.equal(await controls.count(),3);
   const bounds=await controls.evaluateAll(links=>links.map(a=>{const r=a.getBoundingClientRect(),s=getComputedStyle(a);return r.left>=0&&r.right<=innerWidth&&r.height>=44&&parseFloat(s.fontSize)>=14&&s.display!=='none';}));assert(bounds.every(Boolean),`Larger header controls fit at ${width}px`);
-  for(const label of ['Menu','Bag'])assert(await page.locator('.site-header').getByText(label,{exact:true}).isVisible());
+  for(const label of ['Menu','The Floral Club'])assert(await page.locator('.site-header').getByText(label,{exact:true}).isVisible());
   const total=await page.locator('.collection-grid .collection-item').count();assert(total>8);
   assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),total,'No compositions hidden by pagination');
   assert.equal(await page.locator('.filter-bar,.collection-categories,[data-reset-filters]').count(),0,'No collection filter controls');
@@ -36,7 +36,7 @@ try{
   assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),total,'Old filter URLs show the full collection');
   await page.getByRole('button',{name:'Open menu',exact:true}).click();
   const menu=page.getByRole('dialog',{name:'Navigation'});
-  for(const name of ['Home','The House','Collections','The Floral Club','Atelier','Archive','About','Contact Us','Your bag','All pages'])assert(await menu.getByRole('link',{name,exact:true}).isVisible(),`${name} is directly available`);
+  for(const name of ['Home','The House','Collections','The Floral Club','About','Contact Us','All pages'])assert(await menu.getByRole('link',{name,exact:true}).isVisible(),`${name} is directly available`);
   await page.keyboard.press('Escape');assert(await page.getByRole('button',{name:'Open menu',exact:true}).evaluate(e=>e===document.activeElement));
   await page.getByRole('button',{name:'Open menu',exact:true}).click();
   await menu.getByRole('link',{name:'The Floral Club',exact:true}).click();await page.waitForURL('**/floral-club.html');
@@ -49,5 +49,5 @@ try{
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await page.close();
  }
- console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, removed navigation row, larger visible Menu/Contact/Bag controls, Floral Club through Menu, keyboard return, and full Collections on current and legacy URLs at 320, 375, 768 and 1440px.`);
+ console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, removed navigation row, larger visible Menu/Contact/Floral Club controls, Floral Club through Menu, keyboard return, and full Collections on current and legacy URLs at 320, 375, 768 and 1440px.`);
 }finally{await browser.close();}

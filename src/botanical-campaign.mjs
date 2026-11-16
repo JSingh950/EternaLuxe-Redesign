@@ -47,7 +47,7 @@ export function botanicalCampaign(){
    <div class="campaign-copy" data-content-safe>
     <p class="eyebrow">Composed by nature</p>
     <h2 id="campaign-blush-title"><span>Form. </span><span>Feeling. </span><span>Flowers.</span></h2>
-    <a class="text-link" href="atelier.html">Discover the Atelier ${arrowIcon()}</a>
+    <a class="text-link" href="collections.html#commissions">Explore private commissions ${arrowIcon()}</a>
    </div>
    <div class="campaign-detail" aria-hidden="true"><img src="assets/brand/campaign-arrangement-5-640.webp" alt="" width="640" height="753" loading="lazy" decoding="async"></div>
   </article>

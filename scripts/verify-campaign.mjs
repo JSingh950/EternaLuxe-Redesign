@@ -33,13 +33,13 @@ try{
   }
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   assert.equal(await page.getByRole('link',{name:'Explore the collection',exact:false}).getAttribute('href'),'collections.html');
-  assert.equal(await page.getByRole('link',{name:'Discover the Atelier',exact:false}).getAttribute('href'),'atelier.html');
+  assert.equal(await page.getByRole('link',{name:'Explore private commissions',exact:false}).first().getAttribute('href'),'collections.html#commissions');
   await page.locator('.botanical-campaign').screenshot({path:`tmp/campaign-review/campaign-${width}.png`,style:'.site-header,.site-header *,.skip-link{visibility:hidden!important}'});
   assert.deepEqual(errors,[]);await page.close();
  }
  const noScript=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});
  await noScript.goto(base);assert(await noScript.locator('.campaign-arrangement').first().isVisible());
- assert(await noScript.getByRole('heading',{name:'A softer kind of statement.'}).isVisible());await noScript.close();
+ assert(await noScript.getByRole('heading',{name:'A softer kind of statement'}).isVisible());await noScript.close();
  const animated=await browser.newPage({viewport:{width:1440,height:1000}});await animated.addInitScript(setup);
  await animated.goto(base,{waitUntil:'networkidle'});
  await animated.locator('[data-campaign]').first().scrollIntoViewIfNeeded();

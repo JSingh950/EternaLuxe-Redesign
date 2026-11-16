@@ -21,7 +21,7 @@ try{
   await context.setOffline(true);
   // Explicitly model the device connection indicator as well as blocking network.
   await context.addInitScript(()=>Object.defineProperty(navigator,'onLine',{get:()=>false}));
-  const routes=(await fs.readdir('dist')).filter(f=>f.endsWith('.html')&&!['ikebana.html','arrangements.html','bespoke-events.html','accesibility.html'].includes(f));
+  const routes=(await fs.readdir('dist')).filter(f=>f.endsWith('.html')&&!['atelier.html','archive.html','bag.html','ikebana.html','arrangements.html','bespoke-events.html','accesibility.html'].includes(f));
   let imageCount=0;
   for(const route of routes){
     await page.goto(`${base}/${route}?offline-test=1`);
@@ -40,10 +40,10 @@ try{
   await page.waitForFunction(()=>document.querySelector('video').readyState>=1,{},{timeout:20000});
   const range=await page.evaluate(async()=>{const source=document.querySelector('video source');const response=await fetch(source.src,{headers:{Range:'bytes=0-1023'}});return {status:response.status,length:(await response.arrayBuffer()).byteLength};});
   assert.deepEqual(range,{status:206,length:1024});
-  await page.goto(base+'/product-royal.html');await page.locator('[data-bag-add]').click();
-  await page.goto(base+'/bag.html');await page.getByText('The Royal',{exact:true}).first().waitFor();
-  assert((await page.locator('main').innerText()).includes('Royal'),'Offline Bag selection missing');
+  await page.goto(base+'/product-royal.html');
+  assert(await page.getByRole('link',{name:'Enquire about this piece',exact:true}).isVisible());
+  assert.equal(await page.locator('[data-bag-add]').count(),0);
   await page.goto(base+'/enquiries.html');
   await page.waitForFunction(()=>document.querySelector('[data-offline-status]').textContent.startsWith('You are offline'));
-  console.log(`Offline verified: ${routes.length} routes, ${imageCount} decoded images, ${saved} cached resources, video metadata and byte ranges, persisted Bag, and offline messaging.`);
+  console.log(`Offline verified: ${routes.length} routes, ${imageCount} decoded images, ${saved} cached resources, video metadata and byte ranges, direct enquiry links, and offline messaging.`);
 }finally{server.kill();await context.close();await browser.close();}
