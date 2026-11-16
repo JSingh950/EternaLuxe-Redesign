@@ -15,7 +15,7 @@
   const config=fetch(`${apiBase}/api/config`,{cache:'no-store',credentials:'include'}).then(r=>{if(!r.ok)throw Error();return r.json()}).catch(()=>null);
   const header=$('.site-header');
   const overlayHeader=['index','archive'].includes(pageRoot.dataset.page);
-  const syncHeader=()=>header?.classList.toggle('is-scrolled',!overlayHeader||scrollY>24);
+  const syncHeader=()=>{header?.classList.toggle('is-scrolled',!overlayHeader||scrollY>24);if(pageRoot.dataset.page==='index')header?.style.setProperty('--header-opacity',String(.42+.56*Math.min(Math.max(scrollY,0)/220,1)));};
   addEventListener('scroll',syncHeader,{passive:true});syncHeader();
   const openers=new WeakMap();
   $('.menu-toggle')?.setAttribute('aria-label','Open menu');

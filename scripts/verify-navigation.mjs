@@ -25,10 +25,10 @@ try{
    localStorage.setItem('eternaluxe-privacy-v1',JSON.stringify({necessary:true,expiresAt:Date.now()+86400000}));
   });
   await page.goto(`${base}/collections.html`,{waitUntil:'networkidle'});
-  const controls=page.locator('.site-header .menu-toggle,.site-header .contact-link,.site-header .club-header-link');
-  assert.equal(await controls.count(),3);
+  const controls=page.locator('.site-header .menu-toggle,.site-header .contact-link');
+  assert.equal(await controls.count(),2);
   const bounds=await controls.evaluateAll(links=>links.map(a=>{const r=a.getBoundingClientRect(),s=getComputedStyle(a);return r.left>=0&&r.right<=innerWidth&&r.height>=44&&parseFloat(s.fontSize)>=14&&s.display!=='none';}));assert(bounds.every(Boolean),`Larger header controls fit at ${width}px`);
-  for(const label of ['Menu','The Floral Club'])assert(await page.locator('.site-header').getByText(label,{exact:true}).isVisible());
+  for(const label of ['Menu','Contact Us'])assert(await page.locator('.site-header').getByText(label,{exact:true}).isVisible());
   const total=await page.locator('.collection-grid .collection-item').count();assert(total>8);
   assert.equal(await page.locator('.collection-grid .collection-item:visible').count(),total,'No compositions hidden by pagination');
   assert.equal(await page.locator('.filter-bar,.collection-categories,[data-reset-filters]').count(),0,'No collection filter controls');
@@ -49,5 +49,5 @@ try{
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await page.close();
  }
- console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, removed navigation row, larger visible Menu/Contact/Floral Club controls, Floral Club through Menu, keyboard return, and full Collections on current and legacy URLs at 320, 375, 768 and 1440px.`);
+ console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, removed navigation row, larger visible Menu/Contact controls, Floral Club through Menu, keyboard return, and full Collections on current and legacy URLs at 320, 375, 768 and 1440px.`);
 }finally{await browser.close();}
