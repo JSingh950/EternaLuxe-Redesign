@@ -47,6 +47,15 @@ try{
   for(const file of graph.keys())if(file!=='site-map.html')assert(links.includes(file),`${file} missing from directory`);
   assert(await page.getByRole('link',{name:'Email preferences',exact:true}).first().isVisible());
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  await page.goto(base+'/',{waitUntil:'networkidle'});
+  const alphas=[];
+  for(const y of [0,110,260]){
+   await page.evaluate(y=>scrollTo(0,y),y);await page.waitForTimeout(100);
+   const color=await page.locator('.site-header').evaluate(e=>getComputedStyle(e).backgroundColor);
+   alphas.push(Number(color.match(/,\s*([.\d]+)\)$/)?.[1]||1));
+  }
+  assert(Math.abs(alphas[0]-.42)<.02&&alphas[1]>alphas[0]&&alphas[2]>.95,'Homepage header becomes progressively solid');
+  assert.equal(await page.locator('.header-utilities a').count(),1,'Contact Us is the sole right-hand action');
   await page.close();
  }
  console.log(`Navigation verified: ${graph.size} public routes reachable, complete page directory, removed navigation row, larger visible Menu/Contact controls, Floral Club through Menu, keyboard return, and full Collections on current and legacy URLs at 320, 375, 768 and 1440px.`);
