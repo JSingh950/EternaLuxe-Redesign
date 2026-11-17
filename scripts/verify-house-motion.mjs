@@ -1,25 +1,13 @@
-import {chromium} from 'playwright';
+import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const browser=await chromium.launch();const page=await browser.newPage();const errors=[];
-page.on('pageerror',e=>errors.push(e.message));
-const base=process.env.TEST_URL||'http://localhost:4173';
-for(const width of [375,768,1440,1920]){
- await page.setViewportSize({width,height:1000});await page.goto(base+'/house.html');
- if(await page.locator('.cookie-banner').isVisible())await page.locator('.cookie-banner [data-cookie=reject]').click();
- await page.locator('.house-motion').scrollIntoViewIfNeeded();await page.waitForTimeout(500);
- assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
- assert.equal(await page.locator('.motion-group:not([aria-hidden]) figure').count(),19);
- const a=await page.locator('.motion-track').first().evaluate(e=>getComputedStyle(e).transform);
- await page.waitForTimeout(350);assert.notEqual(await page.locator('.motion-track').first().evaluate(e=>getComputedStyle(e).transform),a);
- await page.locator('[data-motion-toggle]').click();await page.waitForTimeout(100);
- const frozen=await page.locator('.motion-track').first().evaluate(e=>getComputedStyle(e).transform);
- await page.waitForTimeout(200);assert.equal(await page.locator('.motion-track').first().evaluate(e=>getComputedStyle(e).transform),frozen);
- assert.equal(await page.locator('[data-motion-video]').evaluateAll(v=>v.every(x=>x.paused)),true);
- await page.locator('.house-motion').screenshot({path:`/tmp/house-motion-${width}.png`});
-}
-await page.emulateMedia({reducedMotion:'reduce'});await page.waitForTimeout(150);assert.equal(await page.locator('.motion-canvas').evaluate(e=>e.classList.contains('is-static')),true);
-await page.emulateMedia({reducedMotion:'no-preference'});await page.locator('[data-motion-toggle]').click();
-await page.locator('.site-footer').scrollIntoViewIfNeeded();await page.waitForTimeout(300);
-assert.equal(await page.locator('[data-motion-video]').evaluateAll(v=>v.every(x=>x.paused)),true);
-const context=await browser.newContext({javaScriptEnabled:false});const fallback=await context.newPage();await fallback.goto(base+'/house.html');assert.equal(await fallback.locator('.motion-canvas.is-static').count(),1);await context.close();
-assert.deepEqual(errors,[]);await browser.close();console.log('House motion: responsive layouts, 19 sources, drift, pause, reduced motion, offscreen films and no-JS passed.');
+import {chromium} from 'playwright';
+const files=(await fs.readdir('dist')).filter(f=>f.endsWith('.html'));
+for(const file of files){const html=await fs.readFile('dist/'+file,'utf8');assert(!/data-house-motion|motion-track|motion-lane|data-flow-scroll|data-flow-plane|architectural-ribbon|Composed for your world/.test(html),`${file}: removed decorative animation`);}
+const js=await fs.readFile('dist/assets/site.js','utf8');assert(!/data-flow-scroll|ribbon-plane|data-house-motion/.test(js));
+const browser=await chromium.launch();try{
+ const base=process.env.TEST_URL||'http://localhost:4173';
+ for(const width of [375,1440]){const page=await browser.newPage({viewport:{width,height:900}});await page.addInitScript(()=>sessionStorage.setItem('eternaluxe-opening-v1','complete'));
+ for(const route of ['index','house','collections','floral-club','about']){await page.goto(`${base}/${route}.html`,{waitUntil:'networkidle'});assert.equal(await page.locator('[data-house-motion],[data-flow-scroll],.motion-track,.architectural-ribbon').count(),0);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
+ await page.close();}
+}finally{await browser.close();}
+console.log(`Removed slideshows and moving decorative lines verified across ${files.length} routes and desktop/mobile pages.`);

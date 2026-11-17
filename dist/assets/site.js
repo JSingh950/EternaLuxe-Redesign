@@ -331,53 +331,6 @@
       return ()=>observer.disconnect();
     });
   }
-  if(window.gsap){
-    const flows=$$('[data-flow-scroll]');
-    const connection=navigator.connection;
-    if(flows.length&&!connection?.saveData){
-      const flowMedia=gsap.matchMedia();
-      flowMedia.add('(prefers-reduced-motion: no-preference)',()=>{
-        const active=new Set();
-        const sways=new Map(flows.filter(section=>section.classList.contains('architectural-ribbon')).map(section=>{
-          const motion=gsap.timeline({paused:true,repeat:-1,yoyo:true,defaults:{duration:3,ease:'sine.inOut'}})
-            .fromTo($('svg',section),{xPercent:-2.5,y:-4},{xPercent:2.5,y:4},0)
-            .fromTo($('.ribbon-plane-primary',section),
-              {attr:{d:'M -80 148 C 240 34 500 36 798 119 s 544 100 882 -54'}},
-              {attr:{d:'M -80 78 C 240 190 500 184 798 103 s 544 -76 882 48'}},0)
-            .fromTo($('.ribbon-plane-secondary',section),
-              {attr:{d:'M -80 171 C 238 61 497 62 793 141 s 548 91 887 -62'},y:-4},
-              {attr:{d:'M -80 101 C 238 204 497 197 793 125 s 548 -67 887 42'},y:4},0);
-          return [section,motion];
-        }));
-        const syncSways=()=>sways.forEach((tween,section)=>{
-          if(active.has(section)&&!document.hidden)tween.play();else tween.pause();
-        });
-        let frame=0;
-        const paint=()=>{
-          frame=0;
-          if(document.hidden)return;
-          const viewport=innerHeight||1;
-          active.forEach(section=>{
-            const plane=$('[data-flow-plane]',section);
-            if(!plane)return;
-            const rect=section.getBoundingClientRect();
-            const progress=gsap.utils.clamp(0,1,(viewport-rect.top)/(viewport+rect.height));
-            const range=section.classList.contains('architectural-ribbon')?5:2.5;
-            gsap.set(plane,{xPercent:(progress-.5)*range,force3D:true});
-          });
-        };
-        const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint);};
-        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>entry.isIntersecting?active.add(entry.target):active.delete(entry.target));syncSways();schedule();});
-        flows.forEach(section=>observer.observe(section));
-        addEventListener('scroll',schedule,{passive:true});
-        addEventListener('resize',schedule,{passive:true});
-        document.addEventListener('visibilitychange',schedule);
-        document.addEventListener('visibilitychange',syncSways);
-        schedule();
-        return ()=>{observer.disconnect();removeEventListener('scroll',schedule);removeEventListener('resize',schedule);document.removeEventListener('visibilitychange',schedule);document.removeEventListener('visibilitychange',syncSways);sways.forEach(tween=>tween.kill());if(frame)cancelAnimationFrame(frame);flows.forEach(section=>{const plane=$('[data-flow-plane]',section);if(plane)gsap.set(plane,{clearProps:'transform'});});};
-      });
-    }
-  }
   async function track(event,detail={}){
     if(!choices?.analytics||navigator.globalPrivacyControl||!receipt)return;
     try{await api('/api/events',{event,detail,receipt,page:pageRoot.dataset.page});}catch{/* Analytics cannot interrupt a visit. */}

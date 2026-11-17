@@ -811,5 +811,5 @@ body:not([data-page="index"]) main{padding-top:96px}
 .site-header .menu-toggle>span:last-child{display:inline}
 body[data-page="index"] .discovery-pair article:before{content:none}
 body[data-page="collections"] .collection-introduction:before,body[data-page="collections"] .collection-introduction:after{content:none}
-.house-motion-philosophy{display:block!important;max-width:900px;margin:auto}.house-motion-philosophy .house-philosophy-copy{max-width:650px;margin:auto}body[data-page="house"] .house-motion-philosophy{position:relative;z-index:2;background:var(--paper);padding-top:clamp(74px,7vw,110px);padding-bottom:clamp(78px,7vw,116px)}
-@media(max-width:700px){body[data-page="house"] .house-motion-philosophy{padding-top:64px;padding-bottom:68px}}
+.house-philosophy-section{display:block!important;max-width:900px;margin:auto}.house-philosophy-section .house-philosophy-copy{max-width:650px;margin:auto}body[data-page="house"] .house-philosophy-section{position:relative;z-index:2;background:var(--paper);padding-top:clamp(74px,7vw,110px);padding-bottom:clamp(78px,7vw,116px)}
+@media(max-width:700px){body[data-page="house"] .house-philosophy-section{padding-top:64px;padding-bottom:68px}}
