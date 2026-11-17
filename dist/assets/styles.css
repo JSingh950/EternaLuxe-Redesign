@@ -784,3 +784,9 @@ body[data-page="house"] .house-cinema-screen{background:linear-gradient(180deg,t
 body[data-page="house"] .film-editorial{background:linear-gradient(180deg,var(--paper),var(--page-tint) var(--tonal-fade),var(--page-tint) calc(100% - var(--tonal-fade)),var(--paper))}
 body[data-page="floral-club"] .membership{--section-tone:var(--page-tint)}
 body[data-page="house"] main .text-link,body[data-page="floral-club"] main .text-link{color:var(--page-accent)}
+
+/* The Club introduction and film inhabit one atmosphere, with no media masking. */
+body[data-page="floral-club"] .club-intro{background:linear-gradient(180deg,var(--paper),var(--page-tint) var(--tonal-fade),var(--page-tint) calc(100% - var(--tonal-fade)),var(--paper));padding-top:var(--tonal-fade);padding-bottom:var(--tonal-fade);align-items:center;gap:clamp(32px,6vw,90px)}
+body[data-page="floral-club"] .club-intro .film{border-radius:12px;overflow:hidden}
+body[data-page="floral-club"] .club-intro video{object-fit:contain}
+@media(max-width:700px){body[data-page="floral-club"] .club-intro{grid-template-columns:1fr;gap:32px}body[data-page="floral-club"] .club-intro .film{grid-row:1}}
