@@ -32,3 +32,12 @@ Run `npm run build`, `npm run check`, `npm test`, `node scripts/verify-focused-f
 `verify-focused-floral.mjs` compares original links/media/page paths against the rollback tag and checks complete organic 4:5 frames, scene decoding, venue layers, the Club price and no-JavaScript visibility at 375/768/1440/1920 widths.
 
 The review screenshot generator uses the unchanged baseline server at `BASELINE_URL` (default localhost:4181) and current draft at `DRAFT_URL` (default localhost:4173). It annotates before screenshots and applies proposal-only CSS in fresh browser pages for after screenshots. It does not delete content from repository source.
+
+## Review-build results
+
+- Build and route/reference checks passed (34 HTML routes including aliases; 30 public pages).
+- All 14 existing tests passed.
+- Focused floral verification passed at 375, 768, 1440 and 1920px, including full photographs, 4:5 frames, existing links/media, venue layers, Club pricing and no-JavaScript visibility.
+- Full layout suite passed for all 30 public pages at four viewports.
+- Production homepage was checked against the frozen Part 2 baseline and remains unchanged.
+- Three feature commits and this review commit are saved locally on main. They are not pushed or deployed while the required deletion review is pending.
