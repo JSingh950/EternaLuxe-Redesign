@@ -23,7 +23,7 @@ try{
   await page.close();
  }
  const page=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});
- for(const route of ['index','house','collections']){await page.goto(`${base}/${route}.html`);assert(await page.locator('main img').first().isVisible());}
+ for(const route of ['index','house','collections']){await page.goto(`${base}/${route}.html`);assert(await page.locator(route==='index'?'.venue-base img':'main img').first().isVisible());}
  await page.close();
  console.log('Part 2 presentation and retained owner changes verified at five viewports, with enquiry prefill and no-JavaScript content.');
 }finally{await browser.close();}
