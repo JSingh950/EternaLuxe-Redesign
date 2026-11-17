@@ -175,7 +175,7 @@ button,input,select,textarea{font-family:var(--sans)}
 .site-header .masthead{background:transparent}
 .site-header .wordmark img{filter:drop-shadow(0 1px 8px rgba(20,16,12,.3))}
 .site-header.is-scrolled,body:not([data-page="index"]):not([data-page="archive"]) .site-header{background:rgba(48,44,40,.84);border-bottom-color:rgba(255,255,255,.14);box-shadow:0 8px 30px rgba(22,18,15,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:130px}
+body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:88px}
 .desktop-nav{gap:clamp(24px,3vw,48px)}
 
 .eyebrow,.intro-copy,.caption,figcaption,.house-film-colophon,.house-chapter-label,.house-film-credit,.motion-heading>p,.wall-intro,.collection-note,.three-notes article>span{display:none}
@@ -753,3 +753,7 @@ body[data-page="index"] .editorial-collection.matched-photo-selection .collectio
 /* Approved Home-only removal: retain both discovery articles and clickable links. */
 body[data-page="index"] .discovery-pair article{border-top:0}
 body[data-page="index"] .discovery-pair .text-link{border-bottom:0;text-decoration:none}
+
+/* The remaining masthead keeps Contact Us accessible after Bag removal. */
+.site-header .contact-link{display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:700px){.site-header .wordmark{width:160px}.site-header .wordmark img{width:100%;height:auto}.site-header .contact-link{font-size:11px;white-space:nowrap}}

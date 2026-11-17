@@ -22,7 +22,7 @@
   function openDialog(id,trigger){const d=document.getElementById(id);if(!d)return;const parent=trigger.closest('dialog');if(parent){trigger=openers.get(parent)||trigger;parent.close();}openers.set(d,trigger);if(id==='cookie-dialog')for(const k of ['analytics','preferences','advertising'])$(`[name="${k}"]`,d).checked=!!choices?.[k];d.showModal();}
   $$('[data-open]').forEach(b=>b.addEventListener('click',()=>openDialog(b.dataset.open,b)));
   $$('dialog').forEach(d=>{
-    d.setAttribute('aria-label',({'menu-dialog':'Navigation','bag-dialog':'Your bag','cookie-dialog':'Your privacy choices'})[d.id]||'Dialog');
+    d.setAttribute('aria-label',({'menu-dialog':'Navigation','cookie-dialog':'Your privacy choices'})[d.id]||'Dialog');
     $('[data-close]',d)?.addEventListener('click',()=>d.close());
     d.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();d.close();}});
     d.addEventListener('close',()=>openers.get(d)?.focus());

@@ -83,3 +83,11 @@ Applied scope:
 House gallery and House ribbons remain pending, as do CTA underlines outside this pictured Home section. Filled architectural curves, films, venue rotation, restored neutral floral scenes and the rounded Club feature are preserved. No original media files were deleted. Rollback tag: `rollback/before-home-removals-2026-11-17`.
 
 These Home-only removals were published on 17 November via deployment `dpl_AAj7p2DP469yaMytqXiTMt6SDzDy` after desktop/mobile staged verification. The dedicated Collections page retains all 20 cards; House retains its own gallery and two ribbons pending separate selection. The two restored floral scenes and both Home discovery articles/links were verified present.
+
+## Approved navigation-row and Bag removal — 17 November 2026
+
+The owner clarified “home bar” means only the secondary horizontal navigation row beneath the logo, not the masthead. That row is removed globally; Menu, logo and Contact Us remain. Mobile Contact Us remains visible, and non-home content spacing follows the remaining masthead height.
+
+Bag is removed as a feature: no page content, drawer, button, product add controls, client script or catalogue request. Existing direct product enquiry links remain and prefill the Contact form. Old `/bag` and `/bag.html` bookmarks redirect to Contact Us. The active sitemap no longer lists Bag. The outdated Bag-storage sentence was removed from the cookie policy; the policy set is versioned 2026-11-17 and earlier snapshots remain intact. No legal terms or verified contact details were otherwise changed.
+
+`verify-header-enquiry.mjs` checks masthead visibility and spacing, navigation access, enquiry prefill and the old Bag redirect at four widths. The focused floral suite and all 14 existing tests pass. Rollback: `rollback/before-bag-nav-removal-2026-11-17`.

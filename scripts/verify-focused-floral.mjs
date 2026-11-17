@@ -2,9 +2,9 @@ import fs from 'node:fs/promises';import {execFileSync} from 'node:child_process
 const base=process.env.TEST_URL||'http://localhost:4173';const baseline='rollback/before-focused-floral-2026-11-16';
 const strip=url=>url.split('?')[0];
 // The review draft retains every existing page, photograph and navigation destination.
-for(const file of execFileSync('git',['ls-tree','--name-only',baseline+':dist'],{encoding:'utf8'}).trim().split('\n').filter(f=>f.endsWith('.html'))){let before=execFileSync('git',['show',baseline+':dist/'+file],{encoding:'utf8'});const after=await fs.readFile('dist/'+file,'utf8');
+for(const file of execFileSync('git',['ls-tree','--name-only',baseline+':dist'],{encoding:'utf8'}).trim().split('\n').filter(f=>f.endsWith('.html'))){if(file==='bag.html')continue;let before=execFileSync('git',['show',baseline+':dist/'+file],{encoding:'utf8'});const after=await fs.readFile('dist/'+file,'utf8');
  if(file==='index.html')before=before.replace(/<section class="collection-section[^"]*"[^>]*>[\s\S]*?<\/section>/g,'').replace(/<section class="house-motion"[^>]*>[\s\S]*?<\/section>/g,'');
- for(const attr of ['href','src','poster']){const urls=html=>new Set([...html.matchAll(new RegExp(attr+'="([^"]+)"','g'))].map(m=>strip(m[1])));const old=urls(before),now=urls(after);for(const url of old)assert(now.has(url),`${file}: removed ${attr} ${url}`);}
+ for(const attr of ['href','src','poster']){const urls=html=>new Set([...html.matchAll(new RegExp(attr+'="([^"]+)"','g'))].map(m=>strip(m[1])).filter(url=>url!=='bag.html'&&url!=='assets/bag.js'));const old=urls(before),now=urls(after);for(const url of old)assert(now.has(url),`${file}: removed ${attr} ${url}`);}
 }
 const browser=await chromium.launch();try{
  for(const width of [375,768,1440,1920]){const page=await browser.newPage({viewport:{width,height:1000},reducedMotion:'reduce'});await page.addInitScript(()=>sessionStorage.setItem('eternaluxe-opening-v1','complete'));
