@@ -17,7 +17,7 @@ const server=http.createServer(async(req,res)=>{
 });
 await new Promise(resolve=>server.listen(4189,'127.0.0.1',resolve));
 
-const pages=(await fs.readdir(root)).filter(name=>name.endsWith('.html')).filter(name=>!['atelier.html','archive.html','bag.html','ikebana.html','arrangements.html','bespoke-events.html','accesibility.html'].includes(name));
+const pages=(await fs.readdir(root)).filter(name=>name.endsWith('.html')).filter(name=>!['ikebana.html','arrangements.html','bespoke-events.html','accesibility.html'].includes(name));
 const viewports=[[375,812],[768,1024],[1440,1000],[1920,1080]];
 const browser=await chromium.launch({headless:true});
 const failures=[];

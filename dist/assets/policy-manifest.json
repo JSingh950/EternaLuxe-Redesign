@@ -1,32 +1,32 @@
 {
   "terms": {
-    "version": "2026-11-16",
+    "version": "2026-10-16",
     "sha256": "b563b2d7b78b1ef310c3df820fa10263e80c5f15a200d7e3317f7f4016ba997c",
-    "snapshot": "policies/terms-2026-11-16-b563b2d7b78b1ef310c3df820fa10263e80c5f15a200d7e3317f7f4016ba997c.html"
+    "snapshot": "policies/terms-2026-10-16-b563b2d7b78b1ef310c3df820fa10263e80c5f15a200d7e3317f7f4016ba997c.html"
   },
   "privacy": {
-    "version": "2026-11-16",
+    "version": "2026-10-16",
     "sha256": "da494621b7e687c2d95c1781f38fb4a93d09b62c7ca29211b0309dcbdd7330be",
-    "snapshot": "policies/privacy-2026-11-16-da494621b7e687c2d95c1781f38fb4a93d09b62c7ca29211b0309dcbdd7330be.html"
+    "snapshot": "policies/privacy-2026-10-16-da494621b7e687c2d95c1781f38fb4a93d09b62c7ca29211b0309dcbdd7330be.html"
   },
   "cookies": {
-    "version": "2026-11-16",
-    "sha256": "ee33ce96fc6448593e69ec127700445390eeacc564d5eb3ddb68ac9c5364346e",
-    "snapshot": "policies/cookies-2026-11-16-ee33ce96fc6448593e69ec127700445390eeacc564d5eb3ddb68ac9c5364346e.html"
+    "version": "2026-10-16",
+    "sha256": "c59f9db3fe125a045d63f2782afb80e8624c61f683ade87f38c774f33ce88882",
+    "snapshot": "policies/cookies-2026-10-16-c59f9db3fe125a045d63f2782afb80e8624c61f683ade87f38c774f33ce88882.html"
   },
   "shipping": {
-    "version": "2026-11-16",
+    "version": "2026-10-16",
     "sha256": "4d13cc1b54a45b394de9c0d93a080f07eaeda442c0a62b5a7dffb05024489104",
-    "snapshot": "policies/shipping-2026-11-16-4d13cc1b54a45b394de9c0d93a080f07eaeda442c0a62b5a7dffb05024489104.html"
+    "snapshot": "policies/shipping-2026-10-16-4d13cc1b54a45b394de9c0d93a080f07eaeda442c0a62b5a7dffb05024489104.html"
   },
   "refunds": {
-    "version": "2026-11-16",
+    "version": "2026-10-16",
     "sha256": "d45a009fd1e4cbe7e831c6af2191cecefda90ea744abd8f602a7b7fcf8616432",
-    "snapshot": "policies/refunds-2026-11-16-d45a009fd1e4cbe7e831c6af2191cecefda90ea744abd8f602a7b7fcf8616432.html"
+    "snapshot": "policies/refunds-2026-10-16-d45a009fd1e4cbe7e831c6af2191cecefda90ea744abd8f602a7b7fcf8616432.html"
   },
   "accessibility": {
-    "version": "2026-11-16",
+    "version": "2026-10-16",
     "sha256": "cb03a6b0f74fbcfd1b9c25fbf0b47e7cb3638b06f6d8f93a758d96f16764681f",
-    "snapshot": "policies/accessibility-2026-11-16-cb03a6b0f74fbcfd1b9c25fbf0b47e7cb3638b06f6d8f93a758d96f16764681f.html"
+    "snapshot": "policies/accessibility-2026-10-16-cb03a6b0f74fbcfd1b9c25fbf0b47e7cb3638b06f6d8f93a758d96f16764681f.html"
   }
 }

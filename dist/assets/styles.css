@@ -56,14 +56,23 @@ body .house-cinema-film .film-toggle,body .house-composition-screen .film-toggle
 @media(max-width:1050px){.filter-bar{display:grid;grid-template-columns:repeat(4,1fr)}.filter-bar .quiet-button{justify-self:start}.filter-count{justify-self:end;margin-left:0}}
 @media(max-width:700px){.collection-grid .collection-item:nth-child(5n+4){width:auto;margin-left:15%}.filter-bar{grid-template-columns:1fr 1fr}.filter-count{justify-self:start}}
 /* Floating photographic collection: two identical groups create a seamless cycle. */
+.house-motion{padding:60px 0 100px;background:var(--ivory)}
+.house-motion-philosophy{display:block!important;max-width:900px;margin:auto}.house-motion-philosophy .house-philosophy-copy{max-width:650px;margin:auto}
 .motion-heading{padding:0 var(--gutter) 45px;display:flex;justify-content:space-between;align-items:end;gap:30px}
 .motion-heading .eyebrow{margin-bottom:14px}.motion-heading>p{font-size:12px;color:var(--muted)}
 .motion-canvas{position:relative;overflow:hidden;padding:30px 0 60px;isolation:isolate}
+.motion-lane{height:clamp(190px,22vw,310px);margin-bottom:28px;overflow:hidden}
+.motion-track{display:flex;width:max-content;height:100%;align-items:center}
 .motion-group{display:flex;align-items:center;gap:clamp(24px,4vw,76px);padding-right:clamp(24px,4vw,76px);height:100%;flex-shrink:0}
+.motion-frame{width:auto;height:88%;flex-shrink:0;overflow:hidden;background:#ddd5c7}
+.motion-frame-1{height:100%}.motion-frame-2{height:78%}
+.motion-frame picture,.motion-frame video{width:100%;height:100%;display:block}.motion-frame img{object-fit:cover}
+.motion-lane:nth-child(2) .motion-frame{height:90%}.motion-lane:nth-child(3){margin-bottom:0}
 .motion-canvas>.film-toggle{right:30px;bottom:17px}
+.motion-canvas.is-static .motion-lane{height:auto;overflow:visible;margin:0}.motion-canvas.is-static .motion-track{width:100%;height:auto;transform:none!important}
 .motion-canvas.is-static .motion-group{display:grid;grid-template-columns:repeat(3,1fr);width:100%;height:auto;padding:0 24px;gap:24px;margin-bottom:24px}
-.motion-canvas.is-static .motion-group[aria-hidden]{display:none}
-@media(max-width:700px){.motion-heading{display:block;padding-bottom:22px}.motion-heading>p{margin-top:18px}.motion-group{gap:20px;padding-right:20px}.motion-canvas.is-static .motion-group{grid-template-columns:repeat(2,1fr);gap:16px}}
+.motion-canvas.is-static .motion-group[aria-hidden]{display:none}.motion-canvas.is-static .motion-frame{width:100%;height:auto;aspect-ratio:4/5}
+@media(max-width:700px){.house-motion{padding:35px 0 45px}.motion-heading{display:block;padding-bottom:22px}.motion-heading>p{margin-top:18px}.motion-lane{height:230px;margin-bottom:18px}.motion-group{gap:20px;padding-right:20px}.motion-canvas.is-static .motion-group{grid-template-columns:repeat(2,1fr);gap:16px}}
 /* Authentic House branding and registered, stationary scene layers. */
 h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.18;letter-spacing:-.02em}
 h1{font-size:clamp(42px,5.5vw,88px)}h2{font-size:clamp(30px,3.6vw,58px)}h3{font-size:25px}
@@ -75,16 +84,31 @@ button,input,select,textarea{font-family:var(--sans)}
 .footer-wordmark{display:block;padding:35px 0 10px;font-size:inherit;line-height:1;max-width:1100px;margin:auto}
 .menu-logo{width:190px}.menu-drawer nav>a{font-size:clamp(25px,4vw,36px)}.menu-drawer nav>a:hover{font-style:normal;text-decoration:underline}
 .house-cinema-title h1{font-size:clamp(55px,7vw,110px)}.house-film-statement h2{font-size:clamp(42px,5vw,78px)}
+.venue-hero{position:relative}.venue-scene{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:1774/887;background:#ded2bb}
+.venue-scene picture{display:block;width:100%;height:100%}.venue-scene img{display:block;width:100%;height:100%;object-fit:fill}
+.venue-layer{position:absolute;inset:0;pointer-events:none}
+.venue-caption{display:flex;justify-content:space-between;align-items:end;gap:25px;padding:32px var(--gutter) 40px}
+.venue-caption h1{font-size:clamp(32px,4.1vw,65px);margin-top:10px}
+.venue-controls{position:absolute;top:0;left:0;width:100%;aspect-ratio:1774/887;pointer-events:none}
+.venue-controls button{pointer-events:auto}.venue-controls .film-toggle{bottom:24px;right:24px}
+.venue-manual{position:absolute;bottom:18px;left:24px;display:flex;gap:12px}
+.venue-manual button{background:var(--paper);padding:10px 14px;font-size:12px}
+.venue-manual[hidden],.venue-controls[hidden]{display:none}
 .archive-film{max-height:650px;overflow:hidden}.archive-film video{width:100%;max-height:650px;object-fit:cover}
 #ikebana{scroll-margin-top:35px}.text-link{gap:0}
-@media(max-width:700px){.wordmark{width:156px}.footer-wordmark{padding-top:30px}.house-cinema-title h1{font-size:56px}}
+@media(max-width:700px){.venue-scene,.venue-controls{aspect-ratio:1560/820}.venue-caption{display:block;padding:24px 24px 35px}.venue-caption .text-link{margin-top:20px}.venue-controls .film-toggle{bottom:14px;right:14px}.venue-manual{bottom:10px;left:14px}.venue-manual button{font-size:10px;padding:6px 10px}.wordmark{width:156px}.footer-wordmark{padding-top:30px}.house-cinema-title h1{font-size:56px}}
 /* Concise editorial pacing: space around the work, not between repeated chapters. */
 :root{--paper:#f2ebdd}
 .house-statement{margin:48px auto 56px}.house-statement h2{font-size:clamp(30px,3.3vw,48px)}
 .collection-section{padding-bottom:55px}.editorial-collection{gap:7%;grid-template-columns:1fr 1fr}
 .editorial-collection .collection-item:nth-child(2){padding-top:45px}
-.editorial-collection .collection-photo picture{aspect-ratio:5/4}.motion-heading{padding-bottom:20px}.motion-canvas{padding:12px 0 45px}
+.editorial-collection .collection-photo picture{aspect-ratio:5/4}
+.house-motion{padding:40px 0 35px}.motion-heading{padding-bottom:20px}.motion-canvas{padding:12px 0 45px}
+.motion-lane{height:clamp(170px,18vw,250px);margin-bottom:18px}
+.motion-canvas.is-static .motion-lane{height:clamp(170px,18vw,250px);overflow-x:auto;margin-bottom:18px}
+.motion-canvas.is-static .motion-track{width:max-content;height:100%}
 .motion-canvas.is-static .motion-group{display:flex;width:auto;height:100%;padding:0 24px;gap:24px;margin:0}
+.motion-canvas.is-static .motion-frame{width:auto;height:88%;flex-shrink:0}
 .discovery-pair{display:grid;grid-template-columns:1fr 1fr;gap:8%;padding:45px var(--gutter)}
 .discovery-pair article{border-top:1px solid var(--rule);padding-top:24px}
 .discovery-pair h2{font-size:clamp(25px,2.6vw,38px);margin:12px 0}.discovery-pair p{font-size:12px}
@@ -105,10 +129,12 @@ button,input,select,textarea{font-family:var(--sans)}
 .site-footer{padding-top:35px}.footer-wordmark{max-width:520px;padding-top:25px}
 .related-grid{grid-template-columns:1fr 1fr}.related-grid picture{max-height:330px}
 @media(max-width:700px){
+ .venue-scene,.venue-controls{aspect-ratio:1774/820}
  .house-statement{margin:32px auto}.house-statement h2{font-size:30px}
  .editorial-collection{gap:16px}.editorial-collection .collection-item:nth-child(2){padding:24px 0 0}
  .editorial-collection .collection-photo picture{aspect-ratio:3/4}.item-caption h3{font-size:20px}
- .section-top h2{font-size:30px}.motion-heading>p{display:none}
+ .section-top h2{font-size:30px}.house-motion{padding:28px 0 20px}.motion-heading>p{display:none}
+ .motion-lane,.motion-canvas.is-static .motion-lane{height:185px}
  .discovery-pair{gap:28px;padding:30px 24px;grid-template-columns:1fr}.discovery-pair h2{font-size:27px}
  .club-image{height:240px}.club-image picture{height:100%;aspect-ratio:auto}.club-copy{padding:30px 24px}.club-copy h2{font-size:30px}
  .house-cinema-film{max-height:340px}.house-cinema-screen{gap:24px}.house-cinema-title h1{font-size:45px}
@@ -141,6 +167,7 @@ button,input,select,textarea{font-family:var(--sans)}
  .wall-showcase .section-top{display:block}.wall-showcase .section-top .text-link{margin-top:12px}
 }
 /* Alternate floral sets are hidden in the no-script fallback. */
+.venue-variant{opacity:0}
 
 /* 2026 editorial refinement: transparent masthead, concise navigation and varied framing. */
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
@@ -148,7 +175,7 @@ button,input,select,textarea{font-family:var(--sans)}
 .site-header .masthead{background:transparent}
 .site-header .wordmark img{filter:drop-shadow(0 1px 8px rgba(20,16,12,.3))}
 .site-header.is-scrolled,body:not([data-page="index"]):not([data-page="archive"]) .site-header{background:rgba(48,44,40,.84);border-bottom-color:rgba(255,255,255,.14);box-shadow:0 8px 30px rgba(22,18,15,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:96px}
+body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:130px}
 .desktop-nav{gap:clamp(24px,3vw,48px)}
 
 .eyebrow,.intro-copy,.caption,figcaption,.house-film-colophon,.house-chapter-label,.house-film-credit,.motion-heading>p,.wall-intro,.collection-note,.three-notes article>span{display:none}
@@ -173,13 +200,13 @@ body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:96px}
 .collection-grid .collection-item:nth-child(6n+5) .collection-photo picture{aspect-ratio:6/5}
 .collection-grid .collection-item:nth-child(6n) .collection-photo{border-radius:44% 44% 0 0 / 14% 14% 0 0}.collection-grid .collection-item:nth-child(6n) .collection-photo picture{aspect-ratio:5/6}
 .editorial-collection .collection-item:nth-child(2) .collection-photo{border-radius:999px}.editorial-collection .collection-item:nth-child(2) .collection-photo picture{aspect-ratio:4/5}
-.wall-options .collection-item:nth-child(odd) .collection-photo{border-radius:48% 48% 0 0 / 16% 16% 0 0}.wall-options .collection-item:nth-child(even) .collection-photo{border-radius:999px}.archive-grid figure:nth-child(3n+1) picture{border-radius:48% 48% 0 0 / 16% 16% 0 0}.archive-grid figure:nth-child(3n+2) picture{border-radius:999px}
+.wall-options .collection-item:nth-child(odd) .collection-photo{border-radius:48% 48% 0 0 / 16% 16% 0 0}.wall-options .collection-item:nth-child(even) .collection-photo{border-radius:999px}.archive-grid figure:nth-child(3n+1) picture{border-radius:48% 48% 0 0 / 16% 16% 0 0}.archive-grid figure:nth-child(3n+2) picture{border-radius:999px}.motion-frame:nth-child(3n+1){border-radius:46% 46% 0 0 / 18% 18% 0 0}.motion-frame:nth-child(3n+2){border-radius:999px}
 
 .about-hero{display:grid;grid-template-columns:.82fr 1.05fr;gap:10%;align-items:center;padding:58px 12% 76px}.about-title h1{font-size:clamp(54px,7.5vw,118px);line-height:1.02}.about-portrait{width:min(100%,560px);justify-self:end}.about-portrait picture{aspect-ratio:4/5}.about-portrait img{object-position:50% 35%}.about-story{display:grid;grid-template-columns:1.05fr .7fr;gap:12%;padding:78px 12% 96px;background:#e8e0d2}.about-story h2{font-size:clamp(30px,3.7vw,56px);max-width:18ch}.about-story p{font-size:14px;line-height:1.85;margin-bottom:18px}.about-story .text-link{margin-top:14px}
 
 @media(max-width:1050px){.compact-footer{grid-template-columns:repeat(3,1fr)}.about-hero,.about-story{padding-left:8%;padding-right:8%}}
 @media(max-width:700px){
- body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:116px}.contact-link,.bag-button>span,.menu-toggle>span:last-child,.desktop-nav{display:none}
+ body:not([data-page="index"]):not([data-page="archive"]) main{padding-top:76px}.contact-link,.bag-button>span,.menu-toggle>span:last-child,.desktop-nav{display:none}
  .site-header.is-scrolled,body:not([data-page="index"]):not([data-page="archive"]) .site-header{background:rgba(48,44,40,.9)}
  .page-intro{padding-top:42px;padding-bottom:34px}.page-intro h1{font-size:clamp(42px,14vw,62px)}
  .compact-footer{grid-template-columns:1fr 1fr}.compact-footer>div:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;column-gap:18px}.compact-footer>div:last-child h3{grid-column:1/-1}.site-footer{padding-top:38px}.footer-bottom{margin-top:30px}
@@ -265,6 +292,16 @@ main :is(h1,h2,h3,p,a,button,label,summary,table){position:relative;z-index:2}
 .home-wave{display:none}
 .archive-wave{height:clamp(70px,7vw,110px);background:#211e1b;color:var(--paper)}
 .about-wave,.atelier-wave{height:clamp(58px,6vw,96px);background:var(--paper)}
+
+.architectural-ribbon{
+ position:relative;z-index:1;height:clamp(66px,6vw,92px);margin:0;
+ overflow:hidden;pointer-events:none;background:var(--paper)
+}
+.architectural-ribbon svg{display:block;width:104%;height:100%;margin-left:-2%;overflow:visible}
+.ribbon-plane{display:block;fill:none;stroke-linecap:round;transform-origin:center;will-change:transform}
+.ribbon-plane-primary{stroke:rgba(48,44,40,.88);stroke-width:12}
+.ribbon-plane-secondary{stroke:var(--champagne);stroke-width:4;opacity:.72}
+.house-ikebana-ribbon{transform:scaleY(-1)}
 .bag-page{max-width:900px;margin:auto;padding:0 var(--gutter) 80px}
 .bag-items{list-style:none;margin:0;padding:0}.bag-item{display:grid;grid-template-columns:90px 1fr;gap:22px;padding:24px 0;border-bottom:1px solid var(--rule)}
 .bag-item img{width:90px;height:110px;object-fit:cover;border-radius:12px}.bag-item p,.bag-note{font-size:12px;color:var(--muted)}
@@ -282,11 +319,13 @@ main :is(h1,h2,h3,p,a,button,label,summary,table){position:relative;z-index:2}
 .architectural-field>*:not(.architectural-wave),.diagonal-sweep>*{position:relative;z-index:1}
 
 /* Images carry the editorial rhythm; words always remain outside the crop. */
+.collection-photo,.editorial-image picture,.about-portrait picture,.wall-options .collection-photo,.motion-frame{border-radius:0!important}
 .collection-grid .collection-item:nth-child(n){margin:0!important;padding:0!important;width:auto!important;min-width:0}
 .collection-grid .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5}
 .editorial-collection .collection-item:nth-child(n) .collection-photo{border-radius:0!important}
 .editorial-collection .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:5/4}
 .editorial-collection .collection-item:nth-child(2){padding-top:clamp(24px,3vw,48px)}
+.wall-options .collection-item:nth-child(n) .collection-photo,.motion-frame:nth-child(n){border-radius:0!important}
 .collection-photo picture,.archive-grid picture,.wall-options picture{background:#ded6c9}
 .item-caption{min-width:0}.item-caption>div{min-width:0}.item-caption h3{overflow-wrap:anywhere}
 
@@ -309,6 +348,9 @@ body[data-page="collections"] .collection-grid{align-items:start}
 }
 
 /* Homepage: the hero title and every CTA sit in quiet, dedicated bands. */
+body[data-page="index"] .venue-hero{position:relative;z-index:2;background:var(--paper)}
+body[data-page="index"] .venue-caption{position:relative;z-index:4;min-height:clamp(118px,11vw,166px);padding-top:clamp(28px,3vw,44px);padding-bottom:clamp(34px,4vw,58px)}
+body[data-page="index"] .venue-caption h1{max-width:14ch;line-height:1.08;overflow:visible}
 body[data-page="index"] .house-statement{z-index:1;margin:0;padding-top:clamp(56px,5vw,80px);padding-bottom:40px}
 body[data-page="index"] .house-statement:before{content:none}
 body[data-page="index"] .collection-section{padding-top:clamp(72px,7vw,112px);padding-bottom:clamp(74px,7vw,116px)}
@@ -326,6 +368,9 @@ body[data-page="house"] .house-cinema:after{content:none}
 body[data-page="house"] .house-cinema-screen{position:relative;background:linear-gradient(112deg,var(--paper) 0 55%,#e6dfd2 55%)}
 body[data-page="house"] .house-cinema-screen:before{content:none}
 body[data-page="house"] .house-cinema-title,.house-philosophy-copy,body[data-page="house"] #ikebana .page-intro,body[data-page="house"] .film-editorial>div{position:relative;z-index:3}
+body[data-page="house"] .house-motion{position:relative;z-index:1;background:#e8e0d2}
+body[data-page="house"] .architectural-ribbon{z-index:1}
+body[data-page="house"] .house-motion-philosophy{position:relative;z-index:2;background:var(--paper);padding-top:clamp(74px,7vw,110px);padding-bottom:clamp(78px,7vw,116px)}
 body[data-page="house"] #ikebana{position:relative;z-index:2;background:var(--paper);padding-top:clamp(58px,6vw,92px)}
 body[data-page="house"] .film-editorial{position:relative;overflow:visible;clip-path:none;background:#e8e0d2;padding-top:clamp(70px,7vw,108px);padding-bottom:clamp(72px,7vw,112px)}
 
@@ -360,16 +405,21 @@ body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bott
 .cookie-banner h2{font-size:24px}.cookie-actions{justify-content:flex-start}
 
 @media(max-width:1100px){
+ .architectural-ribbon{height:74px}
  body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 22px}
 }
 @media(max-width:700px){
  .architectural-wave{height:54px}.archive-wave{height:58px}.about-wave,.atelier-wave{height:46px}
+ .architectural-ribbon{height:52px}
+ .ribbon-plane-primary{stroke-width:9}.ribbon-plane-secondary{stroke-width:3}
  .architectural-field:before,.diagonal-sweep:before{display:none}
  .collection-grid .collection-item:nth-child(n){margin:0!important}
  .collection-grid .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5!important}
  body[data-page="collections"] .page-intro{padding-top:46px;padding-bottom:58px;background:linear-gradient(177deg,var(--paper) 0 80%,#e8e0d2 80% 100%)}
  body[data-page="collections"] .collections-shell{padding-top:30px}
  body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 14px}
+ body[data-page="index"] .venue-caption{display:block;min-height:0;padding:24px 24px 38px}
+ body[data-page="index"] .venue-caption h1{font-size:clamp(32px,10vw,44px);line-height:1.12}
  body[data-page="index"] .editorial-collection{grid-template-columns:1fr 1fr;gap:14px}
  body[data-page="index"] .editorial-collection .collection-item:nth-child(2){padding-top:18px}
  body[data-page="index"] .editorial-collection .collection-photo picture{aspect-ratio:3/4}
@@ -382,6 +432,7 @@ body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bott
  body[data-page="index"] .discovery-pair{padding-top:56px;padding-bottom:60px}
  body[data-page="index"] .club-feature:before{content:none}
  body[data-page="house"] .house-cinema-screen{background:linear-gradient(164deg,var(--paper) 0 66%,#e6dfd2 66%)}
+ body[data-page="house"] .house-motion-philosophy{padding-top:64px;padding-bottom:68px}
  body[data-page="house"] #ikebana{padding-top:48px}
  body[data-page="house"] .film-editorial{padding-top:62px;padding-bottom:66px}
  body[data-page="about"] .about-hero{padding-top:56px;padding-bottom:68px}
@@ -394,148 +445,8 @@ body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bott
  .cookie-banner{left:12px;right:12px;width:auto;bottom:12px;padding:17px 18px}.cookie-banner h2{font-size:22px}
 }
 
-/* A first-visit floral overture. It is fixed above the existing venue, so it
-   never changes document flow or moves the room beneath the reveal. */
-
-/* A full-screen room with additional architecture above/below the unchanged
-   2:1 camera plane. Only the extension is cropped; every floral layer fits. */
-body[data-page="index"] [data-scene-piece$="pedestal"]{margin-top:-.45vw}
-body[data-page="index"] [data-scene-piece$="console"]{margin-top:-.2vw}
-/* Directional mounting shadows share the photograph's camera coordinates. */
-
-.about-leadership{padding:clamp(70px,9vw,140px) var(--gutter);background:var(--ivory)}
-.leadership-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,5vw,72px);max-width:1180px;margin:0 auto}
-.leader-card{display:grid;grid-template-columns:minmax(140px,.72fr) minmax(0,1fr);gap:clamp(18px,3vw,38px);align-items:center}
-.leader-card figure{margin:0;aspect-ratio:3/4;overflow:hidden;border-radius:48% 48% 0 0 / 18% 18% 0 0;background:#d9d0c2}
-.leader-card img{width:100%;height:100%;object-fit:cover;display:block}
-.leader-card h3{font:500 clamp(18px,2vw,26px)/1.15 var(--heading);margin:0 0 10px}
-.leader-name{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 18px;color:var(--muted)}
-.leader-card blockquote{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
-.wall-options .collection-item .collection-photo picture{aspect-ratio:4/5!important}
-.wall-options .collection-item .collection-photo img{object-fit:cover}
-@media(max-width:700px){.about-leadership{padding-block:64px}.leadership-grid{grid-template-columns:1fr;gap:48px}.leader-card{grid-template-columns:35% 1fr;gap:18px}.leader-card blockquote{font-size:12px;line-height:1.55}}
-
-/* A functional campaign index gives the photograph an understated folio. */
-
-/* A coordinated photo vocabulary. Crops never include captions or controls. */
-/* This installation must be seen complete, including its lower foliage edge. */
-body[data-page] picture.botanical-wall-photo,
-body[data-page] .collection-item:nth-child(n) picture.botanical-wall-photo{
- aspect-ratio:3392/5056!important;width:100%;height:auto!important;max-height:none!important;overflow:hidden;
- border-radius:clamp(16px,3vw,40px)!important;
-}
-body[data-page] picture.botanical-wall-photo img{height:auto!important;object-fit:contain!important}
-body[data-page="atelier"] .atelier-opening>.editorial-image{width:min(100%,480px);justify-self:center}
-body[data-page] .collection-item[data-image-shape] .collection-photo{
- overflow:hidden;isolation:isolate;border-radius:var(--photo-shape,28px)!important;
-}
-.collection-item[data-image-shape="arch"]{--photo-shape:50% 50% 24px 24px / 30% 30% 24px 24px}
-.collection-item[data-image-shape="oval"]{--photo-shape:50%}
-.collection-item[data-image-shape="circle"]{--photo-shape:50%}
-.collection-item[data-image-shape="soft"]{--photo-shape:clamp(18px,3vw,44px)}
-body[data-page="collections"] .collection-item:nth-child(n){grid-column:auto}
-body[data-page="collections"] .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5}
-body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo{
- /* Keep the same image slot and caption baseline as the portrait frames. */
- border-radius:0!important;background:none;overflow:visible;
- aspect-ratio:4/5;display:flex;align-items:center;
-}
-body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo picture{
- aspect-ratio:1!important;height:auto;width:100%;border-radius:50%;overflow:hidden;
-}
-body[data-page="index"] .editorial-collection{
- align-items:center;max-width:1040px;margin-inline:auto;
- grid-template-columns:repeat(2,minmax(0,1fr));
-}
-body[data-page="index"] .editorial-collection .collection-item:nth-child(n){
- padding:0;width:100%;max-width:clamp(180px,calc((100svh - 340px)*.8),440px);justify-self:center;
-}
-body[data-page="index"] .editorial-collection .item-caption{display:block;padding:18px 0 0}
-body[data-page="index"] .editorial-collection .item-caption h3{font-size:clamp(17px,2vw,26px);line-height:1.2}
-body[data-page="index"] .editorial-collection .price{display:block;padding-top:8px;white-space:normal}
-body[data-page="index"] .editorial-collection .collection-item[data-image-shape="circle"] picture{aspect-ratio:1!important}
-body[data-page="index"] .editorial-collection .collection-item[data-image-shape="arch"] picture{aspect-ratio:4/5!important}
-.about-portrait picture{border-radius:50% 50% 24px 24px / 28% 28% 24px 24px!important;overflow:hidden}
-body[data-page="archive"] .archive-grid picture{border-radius:24px!important;overflow:hidden}
-body[data-page="archive"] .archive-grid>figure:nth-child(3n+1) picture{border-radius:50% 50% 24px 24px / 25% 25% 24px 24px!important}
-body[data-page="archive"] .archive-grid>figure:nth-child(3n+2) picture{border-radius:50%!important}
-/* Size the outer frame, then fill it regardless of each photograph's ratio. */
-body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collection-photo{aspect-ratio:4/5;width:100%}
-body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:auto!important;width:100%;height:100%!important;border-radius:0!important}
-body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collection-photo img{width:100%;height:100%!important;object-fit:cover!important}
-@media(max-width:700px){
- .collection-item[data-image-shape="arch"]{--photo-shape:50% 50% 14px 14px / 24% 24% 14px 14px}
- body[data-page="archive"] .archive-grid picture{border-radius:16px!important}
-}
-
-
-
-
-
-/* Preserve the approved venue and one-swipe opening. */
-/* A single viewport-aware opening on Collections. */
-/* Titles share one bold weight, including emphasized words and card headings. */
-
-/* House: a portrait campaign and a moving editorial. */
-
-/* Unified discreet media control — visually small, with a 44px invisible hit area. */
-
-/* Collections: a fuller, editorial catalogue rather than a uniform product grid. */
-/* Floating photographic collection: two identical groups create a seamless cycle. */
-/* Authentic House branding and registered, stationary scene layers. */
-.venue-hero{position:relative}.venue-scene{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:1774/887;background:#ded2bb}
-.venue-scene picture{display:block;width:100%;height:100%}.venue-scene img{display:block;width:100%;height:100%;object-fit:fill}
-.venue-layer{position:absolute;inset:0;pointer-events:none}
-.venue-caption{display:flex;justify-content:space-between;align-items:end;gap:25px;padding:32px var(--gutter) 40px}
-.venue-caption h1{font-size:clamp(32px,4.1vw,65px);margin-top:10px}
-.venue-controls{position:absolute;top:0;left:0;width:100%;aspect-ratio:1774/887;pointer-events:none}
-.venue-controls button{pointer-events:auto}.venue-controls .film-toggle{bottom:24px;right:24px}
-.venue-manual{position:absolute;bottom:18px;left:24px;display:flex;gap:12px}
-.venue-manual button{background:var(--paper);padding:10px 14px;font-size:12px}
-.venue-manual[hidden],.venue-controls[hidden]{display:none}
-@media(max-width:700px){.venue-scene,.venue-controls{aspect-ratio:1560/820}.venue-caption{display:block;padding:24px 24px 35px}.venue-caption .text-link{margin-top:20px}.venue-controls .film-toggle{bottom:14px;right:14px}.venue-manual{bottom:10px;left:14px}.venue-manual button{font-size:10px;padding:6px 10px}}
-/* Concise editorial pacing: space around the work, not between repeated chapters. */
-@media(max-width:700px){
- .venue-scene,.venue-controls{aspect-ratio:1774/820}
-}
-/* Explicit inline size prevents an intrinsic-free video collapsing in the grid. */
-/* Color-led browsing and a compact wall-design edit. */
-/* Alternate floral sets are hidden in the no-script fallback. */
-.venue-variant{opacity:0}
-
-/* 2026 editorial refinement: transparent masthead, concise navigation and varied framing. */
-
-/* Fixed navigation must never obscure sticky product or policy controls. */
-
-/* Archive campaign film: preserve the complete 16:9 composition at every width. */
-
-/* Archive lookbook: one disciplined crop system, with no accidental voids. */
-
-/* Sculptural-safe architectural system: every decorative plane owns layout space. */
-
-/* Broad tonal fields stay behind the composition and never clip content. */
-
-/* Images carry the editorial rhythm; words always remain outside the crop. */
-
-/* Complete, balanced collection rows with no staggered voids. */
-
-/* Homepage: the hero title and every CTA sit in quiet, dedicated bands. */
-body[data-page="index"] .venue-hero{position:relative;z-index:2;background:var(--paper)}
-body[data-page="index"] .venue-caption{position:relative;z-index:4;min-height:clamp(118px,11vw,166px);padding-top:clamp(28px,3vw,44px);padding-bottom:clamp(34px,4vw,58px)}
-body[data-page="index"] .venue-caption h1{max-width:14ch;line-height:1.08;overflow:visible}
-
-/* House: ribbons are reserved separators, never overlays. */
-
-/* About and Atelier keep sculptural backgrounds without intersecting copy. */
-
-/* Archive title receives its own quiet field below the film transition. */
-
-/* Functional pages use a quiet rule; their content remains conventionally structured. */
-
-/* A smaller consent card cannot obscure page titles or an entire product row. */
-@media(max-width:700px){
- body[data-page="index"] .venue-caption{display:block;min-height:0;padding:24px 24px 38px}
- body[data-page="index"] .venue-caption h1{font-size:clamp(32px,10vw,44px);line-height:1.12}
+@media(prefers-reduced-motion:reduce){
+ .architectural-wave path,.ribbon-plane{will-change:auto;transform:none!important}
 }
 
 /* A first-visit floral overture. It is fixed above the existing venue, so it
@@ -621,6 +532,8 @@ body[data-page="index"] .venue-scene img{
  width:100%;height:100%;object-fit:contain;object-position:50% 50%;
 }
 body[data-page="index"] .venue-base img{object-fit:cover}
+body[data-page="index"] [data-scene-piece$="pedestal"]{margin-top:-.45vw}
+body[data-page="index"] [data-scene-piece$="console"]{margin-top:-.2vw}
 body[data-page="index"] .venue-controls{
  position:absolute;z-index:7;top:0;left:50%;
  width:100%;height:100%;
@@ -629,7 +542,19 @@ body[data-page="index"] .venue-controls{
 .venue-layer>picture{position:absolute;inset:0}
 .venue-lighting{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 /* Directional mounting shadows share the photograph's camera coordinates. */
-.venue-moss>picture,[data-scene-piece$="-wall"]>picture{filter:brightness(.88) saturate(.86) sepia(.12)}
+.venue-moss>picture,[data-scene-piece$="-wall"]>picture{filter:none}
+
+.about-leadership{padding:clamp(70px,9vw,140px) var(--gutter);background:var(--ivory)}
+.leadership-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,5vw,72px);max-width:1180px;margin:0 auto}
+.leader-card{display:grid;grid-template-columns:minmax(140px,.72fr) minmax(0,1fr);gap:clamp(18px,3vw,38px);align-items:center}
+.leader-card figure{margin:0;aspect-ratio:3/4;overflow:hidden;border-radius:48% 48% 0 0 / 18% 18% 0 0;background:#d9d0c2}
+.leader-card img{width:100%;height:100%;object-fit:cover;display:block}
+.leader-card h3{font:500 clamp(18px,2vw,26px)/1.15 var(--heading);margin:0 0 10px}
+.leader-name{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 18px;color:var(--muted)}
+.leader-card blockquote{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
+.wall-options .collection-item .collection-photo picture{aspect-ratio:4/5!important}
+.wall-options .collection-item .collection-photo img{object-fit:cover}
+@media(max-width:700px){.about-leadership{padding-block:64px}.leadership-grid{grid-template-columns:1fr;gap:48px}.leader-card{grid-template-columns:35% 1fr;gap:18px}.leader-card blockquote{font-size:12px;line-height:1.55}}
 
 /* A functional campaign index gives the photograph an understated folio. */
 .venue-edition{position:absolute;left:clamp(24px,3.4vw,64px);bottom:20px;display:flex;align-items:center;gap:16px;color:#302c28;pointer-events:auto}
@@ -656,160 +581,59 @@ body[data-page="index"] .venue-manual button:hover{text-decoration:underline}
 
 /* A coordinated photo vocabulary. Crops never include captions or controls. */
 /* This installation must be seen complete, including its lower foliage edge. */
+body[data-page] picture.botanical-wall-photo,
+body[data-page] .collection-item:nth-child(n) picture.botanical-wall-photo{
+ aspect-ratio:3392/5056!important;width:100%;height:auto!important;max-height:none!important;overflow:hidden;
+ border-radius:clamp(16px,3vw,40px)!important;
+}
+body[data-page] picture.botanical-wall-photo img{height:auto!important;object-fit:contain!important}
+body[data-page="atelier"] .atelier-opening>.editorial-image{width:min(100%,480px);justify-self:center}
+body[data-page] .collection-item[data-image-shape] .collection-photo{
+ overflow:hidden;isolation:isolate;border-radius:var(--photo-shape,28px)!important;
+}
+.collection-item[data-image-shape="arch"]{--photo-shape:50% 50% 24px 24px / 30% 30% 24px 24px}
+.collection-item[data-image-shape="oval"]{--photo-shape:50%}
+.collection-item[data-image-shape="circle"]{--photo-shape:50%}
+.collection-item[data-image-shape="soft"]{--photo-shape:clamp(18px,3vw,44px)}
+body[data-page="collections"] .collection-item:nth-child(n){grid-column:auto}
+body[data-page="collections"] .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5}
+body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo{
+ /* Keep the same image slot and caption baseline as the portrait frames. */
+ border-radius:0!important;background:none;overflow:visible;
+ aspect-ratio:4/5;display:flex;align-items:center;
+}
+body[data-page="collections"] .collection-item[data-image-shape="circle"] .collection-photo picture{
+ aspect-ratio:1!important;height:auto;width:100%;border-radius:50%;overflow:hidden;
+}
+body[data-page="index"] .editorial-collection{
+ align-items:center;max-width:1040px;margin-inline:auto;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+}
+body[data-page="index"] .editorial-collection .collection-item:nth-child(n){
+ padding:0;width:100%;max-width:clamp(180px,calc((100svh - 340px)*.8),440px);justify-self:center;
+}
+body[data-page="index"] .editorial-collection .item-caption{display:block;padding:18px 0 0}
+body[data-page="index"] .editorial-collection .item-caption h3{font-size:clamp(17px,2vw,26px);line-height:1.2}
+body[data-page="index"] .editorial-collection .price{display:block;padding-top:8px;white-space:normal}
+body[data-page="index"] .editorial-collection .collection-item[data-image-shape="circle"] picture{aspect-ratio:1!important}
+body[data-page="index"] .editorial-collection .collection-item[data-image-shape="arch"] picture{aspect-ratio:4/5!important}
+.about-portrait picture{border-radius:50% 50% 24px 24px / 28% 28% 24px 24px!important;overflow:hidden}
+.motion-frame:nth-child(3n+1){border-radius:50% 50% 20px 20px / 24% 24% 20px 20px!important}
+.motion-frame:nth-child(3n+2){border-radius:50%!important}
+.motion-frame:nth-child(3n){border-radius:24px!important}
+body[data-page="archive"] .archive-grid picture{border-radius:24px!important;overflow:hidden}
+body[data-page="archive"] .archive-grid>figure:nth-child(3n+1) picture{border-radius:50% 50% 24px 24px / 25% 25% 24px 24px!important}
+body[data-page="archive"] .archive-grid>figure:nth-child(3n+2) picture{border-radius:50%!important}
 /* Size the outer frame, then fill it regardless of each photograph's ratio. */
-
-/* Botanical campaign: real, complete arrangements in connected editorial scenes. */
-
-/* Editorial campaign system: shared across every public route. */
-/* One masthead with clear, generously sized navigation controls. */
-/* Collections: identical outer frames; every supplied photo remains complete. */
-/* Keep the complete white-vase film between the two introduction texts. */
-/* The image and caption own separate rows; image height never consumes caption space. */
-/* Interior campaign scenes share the homepage's object, surface and light system. */
-/* Warm botanical palette: keep readable ink independent of decorative accents. */
-
-
-
-
-
-/* Refined botanical gallery — shared layout and component source of truth. */
-
-@font-face{font-family:Manrope;src:url('fonts/manrope-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}@font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}@font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-600-normal.woff2') format('woff2');font-weight:600;font-display:swap}
-@font-face{font-family:Manrope;src:url('fonts/manrope-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
-@font-face{font-family:"Nunito Sans";src:url('fonts/nunito-sans-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
-.arrow-icon{display:inline-block;width:1.25em;height:1.25em;flex:none;vertical-align:middle}
-.offline-tools{padding:20px 0 30px;border-top:1px solid var(--rule)}
-.offline-tools p{max-width:70ch}
-
-/* A single viewport-aware opening on Collections. */
-body[data-page="collections"] .collection-opening{height:calc(100svh - 96px);min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--ivory)}
-body[data-page="collections"] .collection-opening .page-intro{padding:18px var(--gutter) 10px;background:transparent}
-body[data-page="collections"] .collection-opening .page-intro .eyebrow{margin-bottom:6px;font-size:9px}
-body[data-page="collections"] .collection-opening .page-intro h1{font-size:clamp(38px,4.6vw,70px);line-height:1.08}
-body[data-page="collections"] .collection-opening .collection-introduction{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);min-height:0;padding:12px var(--gutter) 24px;gap:clamp(24px,5vw,96px);align-content:center;background:transparent}
-body[data-page="collections"] .collection-opening .collection-introduction-copy{align-self:center;padding:0}
-body[data-page="collections"] .collection-opening .collection-introduction-film{height:auto;width:min(calc((100svh - 260px)*.5625),292.5px,25vw);max-width:100%;aspect-ratio:9/16;min-height:0}
-body[data-page="collections"] .collection-opening .collection-introduction h2{font-size:clamp(28px,min(4vw,6svh),68px);line-height:1.04;min-width:0}
+body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collection-photo{aspect-ratio:4/5;width:100%}
+body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:auto!important;width:100%;height:100%!important;border-radius:0!important}
+body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collection-photo img{width:100%;height:100%!important;object-fit:cover!important}
 @media(max-width:700px){
- body[data-page="collections"] .collection-opening{height:auto;min-height:calc(100svh - 124px);display:block}
- body[data-page="collections"] .collection-opening .page-intro{padding:18px 24px 16px}
- body[data-page="collections"] .collection-opening .page-intro h1{font-size:clamp(36px,10vw,52px)}
- body[data-page="collections"] .collection-opening .collection-introduction{display:flex;flex-direction:column;gap:22px;padding:0 24px 36px;align-items:center}
- body[data-page="collections"] .collection-opening .collection-introduction-film{order:0;width:min(100%,240px);height:auto;max-height:none}
- body[data-page="collections"] .collection-opening .collection-introduction h2{order:1;font-size:clamp(32px,9vw,44px);max-width:15ch;align-self:center}
- body[data-page="collections"] .collection-opening .collection-introduction-copy{order:2;align-self:center;width:100%;max-width:36ch}
+ .collection-item[data-image-shape="arch"]{--photo-shape:50% 50% 14px 14px / 24% 24% 14px 14px}
+ .motion-frame:nth-child(3n){border-radius:16px!important}
+ body[data-page="archive"] .archive-grid picture{border-radius:16px!important}
 }
 
-/* A single viewport-aware opening on Collections. */
-/* Titles share one bold weight, including emphasized words and card headings. */
-
-/* House: a portrait campaign and a moving editorial. */
-
-/* Unified discreet media control — visually small, with a 44px invisible hit area. */
-
-/* Collections: a fuller, editorial catalogue rather than a uniform product grid. */
-/* Floating photographic collection: two identical groups create a seamless cycle. */
-/* Authentic House branding and registered, stationary scene layers. */
-/* Concise editorial pacing: space around the work, not between repeated chapters. */
-/* Explicit inline size prevents an intrinsic-free video collapsing in the grid. */
-/* Color-led browsing and a compact wall-design edit. */
-/* Alternate floral sets are hidden in the no-script fallback. */
-
-/* 2026 editorial refinement: transparent masthead, concise navigation and varied framing. */
-
-/* Fixed navigation must never obscure sticky product or policy controls. */
-
-/* Archive campaign film: preserve the complete 16:9 composition at every width. */
-
-/* Archive lookbook: one disciplined crop system, with no accidental voids. */
-
-/* Sculptural-safe architectural system: every decorative plane owns layout space. */
-
-/* Broad tonal fields stay behind the composition and never clip content. */
-
-/* Images carry the editorial rhythm; words always remain outside the crop. */
-
-/* Complete, balanced collection rows with no staggered voids. */
-body[data-page="collections"] .collection-grid{align-items:start}
-@media(min-width:1101px){
- body[data-page="collections"] .collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(42px,4.5vw,72px) clamp(22px,2.4vw,40px)}
-}
-
-/* Homepage: the hero title and every CTA sit in quiet, dedicated bands. */
-
-/* House: ribbons are reserved separators, never overlays. */
-
-/* About and Atelier keep sculptural backgrounds without intersecting copy. */
-
-/* Archive title receives its own quiet field below the film transition. */
-
-/* Functional pages use a quiet rule; their content remains conventionally structured. */
-
-/* A smaller consent card cannot obscure page titles or an entire product row. */
-
-@media(max-width:1100px){
- body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 22px}
-}
-@media(max-width:700px){
- body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 14px}
-}
-
-/* A first-visit floral overture. It is fixed above the existing venue, so it
-   never changes document flow or moves the room beneath the reveal. */
-
-/* A full-screen room with additional architecture above/below the unchanged
-   2:1 camera plane. Only the extension is cropped; every floral layer fits. */
-/* Directional mounting shadows share the photograph's camera coordinates. */
-
-/* A functional campaign index gives the photograph an understated folio. */
-
-/* A coordinated photo vocabulary. Crops never include captions or controls. */
-/* This installation must be seen complete, including its lower foliage edge. */
-/* Size the outer frame, then fill it regardless of each photograph's ratio. */
-
-/* Botanical campaign: real, complete arrangements in connected editorial scenes. */
-
-/* Editorial campaign system: shared across every public route. */
-/* One masthead with clear, generously sized navigation controls. */
-/* Collections: identical outer frames; every supplied photo remains complete. */
-body[data-page="collections"] .collection-grid .collection-item[data-image-shape="uniform"]{--photo-shape:20px;min-width:0}
-body[data-page="collections"] .collection-grid .collection-item[data-image-shape="uniform"] .collection-photo{display:block;aspect-ratio:4/5;width:100%;padding:12px;background:#e9e1d5;border-radius:20px!important;overflow:hidden}
-body[data-page="collections"] .collection-grid .collection-item[data-image-shape="uniform"] .collection-photo picture{display:block;aspect-ratio:auto!important;width:100%;height:100%!important;max-height:none!important;background:transparent;border-radius:0!important;overflow:visible}
-body[data-page="collections"] .collection-grid .collection-item[data-image-shape="uniform"] .collection-photo img{display:block;width:100%;height:100%!important;object-fit:contain!important;object-position:center;transform:none!important;transition:none}
-body[data-page="collections"] .collection-grid .item-caption{display:block;padding:18px 0 0}
-body[data-page="collections"] .collection-grid .item-caption h3{font-size:clamp(18px,2vw,28px);line-height:1.25;overflow-wrap:anywhere}
-body[data-page="collections"] .collection-grid .price{display:block;padding:10px 0 0;white-space:normal}
-body[data-page="collections"] .collection-grid .price small{text-align:left}
-@media(max-width:700px){body[data-page="collections"] .collection-grid .collection-item[data-image-shape="uniform"] .collection-photo{padding:8px;border-radius:14px!important}body[data-page="collections"] .collection-grid .item-caption{padding-top:14px}}
-/* Keep the complete white-vase film between the two introduction texts. */
-/* The image and caption own separate rows; image height never consumes caption space. */
-/* Interior campaign scenes share the homepage's object, surface and light system. */
-/* Warm botanical palette: keep readable ink independent of decorative accents. */
 
 
 
-
-
-/* Refined botanical gallery — shared layout and component source of truth. */
-
-
-/* Requested changes retained on the frozen Part 2 visual baseline. */
-:root{--paper:#f2ebdd;--ivory:#f2ebdd;--walnut:#5a3e2b}
-:is(h1,h2,h3,h4,h5,h6){font-weight:700!important}
-.architectural-wave,.flow-ribbon,.house-motion{display:none!important}
-.discovery-pair article{border-top:0}.discovery-pair article:before{content:none}
-body[data-page] .site-header{color:#fff9f0}
-body[data-page="index"] .site-header:not(.is-scrolled),body[data-page="index"] .site-header.is-scrolled{background:rgba(38,63,82,var(--header-opacity,.42));backdrop-filter:blur(14px)}body[data-page="index"]:has(#menu-dialog[open]) .site-header{background:#263f52}
-.site-header .masthead{min-height:96px;padding:18px 3.4vw}.site-header .menu-toggle,.site-header .contact-link{font-size:15px;min-height:46px;display:inline-flex;align-items:center}.site-header .wordmark{width:240px}.site-header .header-utilities{justify-content:flex-end}
-body:not([data-page="index"]) main{padding-top:96px}
-.house-statement{padding-top:100px;padding-bottom:100px}.house-cinema-film{box-shadow:none}
-.migrated-editorial{padding:90px var(--gutter);scroll-margin-top:130px}.migrated-editorial h2{margin:18px 0 30px}.selected-work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin:40px 0}.selected-work-grid img{height:auto;object-fit:contain}.selected-work-grid figcaption{margin-top:14px}.commission-layout{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.commission-layout img{height:auto;object-fit:contain}.commission-steps{padding-left:20px}.commission-steps li{margin:24px 0}.commission-steps h3{font-size:24px}.commission-layout .button{margin-top:24px}
-.collection-introduction{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:5vw}.collection-introduction-film{position:relative;overflow:hidden;aspect-ratio:9/16}.collection-introduction-film video{width:100%;height:100%;object-fit:contain}.collection-introduction-film .film-toggle{position:absolute;right:12px;bottom:12px}.collection-introduction h2{margin:0}.collection-opening .page-intro{text-align:center}
-.related-grid .collection-photo picture{border-radius:12px!important;aspect-ratio:4/5!important}.related-grid .collection-photo img{object-fit:contain!important;transform:none!important}
-@media(max-width:700px){.site-header .masthead{display:grid;grid-template-columns:1fr 1fr 1fr;min-height:116px;padding:12px 24px;gap:4px 12px}.site-header .wordmark{grid-column:1/-1;grid-row:1;justify-self:center;width:176px}.site-header .menu-toggle{grid-column:1;grid-row:2;justify-self:start}.site-header .header-utilities{display:contents}.site-header .contact-link{grid-column:3;grid-row:2;justify-self:end;white-space:nowrap}.site-header .menu-toggle,.site-header .contact-link{font-size:14px;min-height:44px}body:not([data-page="index"]) main{padding-top:116px}.house-statement{padding:80px 24px}.selected-work-grid,.commission-layout{grid-template-columns:1fr;gap:32px}.migrated-editorial{padding:60px 24px}.selected-work-grid{margin:32px 0}.commission-steps h3{font-size:23px}.related-grid .item-caption{display:block}.related-grid .price{display:block;padding-top:10px}.related-grid h3{overflow-wrap:normal}}
-/* Keep requested labels and removed decorative rules consistent with Part 2. */
-.site-header .menu-toggle>span:last-child{display:inline}
-body[data-page="index"] .discovery-pair article:before{content:none}
-body[data-page="collections"] .collection-introduction:before,body[data-page="collections"] .collection-introduction:after{content:none}
-.house-philosophy-section{display:block!important;max-width:900px;margin:auto}.house-philosophy-section .house-philosophy-copy{max-width:650px;margin:auto}body[data-page="house"] .house-philosophy-section{position:relative;z-index:2;background:var(--paper);padding-top:clamp(74px,7vw,110px);padding-bottom:clamp(78px,7vw,116px)}
-@media(max-width:700px){body[data-page="house"] .house-philosophy-section{padding-top:64px;padding-bottom:68px}}

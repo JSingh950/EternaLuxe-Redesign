@@ -3,13 +3,8 @@ import sharp from 'sharp';
 import {projectWall} from './project-wall.mjs';
 await fs.mkdir('dist/assets/brand',{recursive:true});
 await fs.mkdir('dist/assets/scene',{recursive:true});
-for(const number of [1,2,3,4,5,6])for(const width of [640,1040]){
- await sharp(`assets/brand/owner-arrangement-${number}.png`).trim({threshold:8})
-  .resize({width,withoutEnlargement:true}).webp({quality:92,alphaQuality:100,smartSubsample:true})
-  .toFile(`dist/assets/brand/campaign-arrangement-${number}-${width}.webp`);
-}
 for(const variant of ['desktop','mobile']){
- await sharp('assets/brand/venue-gallery-v3.png').resize(1079,1457,{fit:'fill'}).webp({quality:93,smartSubsample:true}).toFile(`dist/assets/scene/venue-extended-${variant}.webp`);
+ await sharp(`assets/brand/venue-extended-${variant}.png`).webp({quality:93,smartSubsample:true}).toFile(`dist/assets/scene/venue-extended-${variant}.webp`);
 }
 for(const tone of ['white','champagne']) await sharp(`assets/brand/logo-${tone}.png`).trim().png().toFile(`dist/assets/brand/logo-${tone}.png`);
 await sharp('assets/brand/ceo-acero.jpeg').resize({width:900,withoutEnlargement:true}).webp({quality:92}).toFile('dist/assets/brand/ceo-acero.webp');
@@ -22,19 +17,13 @@ await sharp('assets/brand/spiral-flower-master.png')
  .resize({width:860,height:860,fit:'inside',withoutEnlargement:true})
  .webp({quality:91,alphaQuality:100,smartSubsample:true})
  .toFile('dist/assets/brand/spiral-flower-mobile.webp');
-await fs.copyFile('node_modules/@fontsource/manrope/files/manrope-latin-700-normal.woff2','dist/assets/fonts/manrope-latin-700-normal.woff2');
-for(const weight of [400,600,700]) await fs.copyFile(`node_modules/@fontsource/nunito-sans/files/nunito-sans-latin-${weight}-normal.woff2`,`dist/assets/fonts/nunito-sans-latin-${weight}-normal.woff2`);
+for(const weight of [400,600]) await fs.copyFile(`node_modules/@fontsource/nunito-sans/files/nunito-sans-latin-${weight}-normal.woff2`,`dist/assets/fonts/nunito-sans-latin-${weight}-normal.woff2`);
 await fs.copyFile('node_modules/@fontsource/nunito-sans/LICENSE','dist/assets/fonts/nunito-sans-LICENSE.txt');
 const source='assets/brand/venue-additions.png';
 // Owner's moss-wall design, isolated from the supplied installation photograph.
 // Follow the wall's converging edges instead of tilting both edges with a shear.
-// The ragged extraction was being stretched into the panel's outer boundary.
-// Mount the inner moss field on a clean, shallow rectangular support instead.
-const mossCutout=await sharp('assets/brand/venue-owner-moss-wall-v2.png')
- .extract({left:90,top:80,width:1260,height:940}).flatten({background:'#3e4930'}).png().toBuffer();
-const mossFace=await projectWall(mossCutout,{left:134,right:568,topLeft:104,topRight:116,bottomLeft:398,bottomRight:394});
-const mossRim=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="1774" height="887"><path d="M132 102L570 114V396L132 400Z" fill="#786644"/><path d="M132 102L570 114" fill="none" stroke="#b49b6a" stroke-width="1.5"/><path d="M132 102V400L570 396" fill="none" stroke="#443c29" stroke-width="2"/></svg>');
-const moss=await sharp(mossRim).composite([{input:mossFace}]).png().toBuffer();
+const mossCutout=await sharp('assets/brand/venue-owner-moss-wall-v2.png').trim({threshold:10}).png().toBuffer();
+const moss=await projectWall(mossCutout);
 const table=await sharp(source).extract({left:850,top:90,width:924,height:797}).png().toBuffer();
 const blank={create:{width:1774,height:887,channels:4,background:'#00000000'}};
 // The supplied cutouts carry a bright red chroma-key fringe around a few
@@ -132,7 +121,7 @@ for(const [palette,parts] of Object.entries({
  }
  const wallArtwork=await sharp(`assets/brand/venue-${palette}-wall-art.png`).trim({threshold:8}).png().toBuffer();
  layers[`${palette}-wall`]=await projectWall(wallArtwork,{
-  left:140,right:584,topLeft:96,topRight:125,bottomLeft:400,bottomRight:393
+  left:140,right:584,topLeft:124,topRight:106,bottomLeft:402,bottomRight:384
  });
 }
 for(const [name,buffer]of Object.entries(layers)) {

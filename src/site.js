@@ -15,14 +15,14 @@
   const config=fetch(`${apiBase}/api/config`,{cache:'no-store',credentials:'include'}).then(r=>{if(!r.ok)throw Error();return r.json()}).catch(()=>null);
   const header=$('.site-header');
   const overlayHeader=['index','archive'].includes(pageRoot.dataset.page);
-  const syncHeader=()=>{header?.classList.toggle('is-scrolled',!overlayHeader||scrollY>24);if(pageRoot.dataset.page==='index')header?.style.setProperty('--header-opacity',String(.42+.56*Math.min(Math.max(scrollY,0)/220,1)));};
+  const syncHeader=()=>header?.classList.toggle('is-scrolled',!overlayHeader||scrollY>24);
   addEventListener('scroll',syncHeader,{passive:true});syncHeader();
   const openers=new WeakMap();
   $('.menu-toggle')?.setAttribute('aria-label','Open menu');
   function openDialog(id,trigger){const d=document.getElementById(id);if(!d)return;const parent=trigger.closest('dialog');if(parent){trigger=openers.get(parent)||trigger;parent.close();}openers.set(d,trigger);if(id==='cookie-dialog')for(const k of ['analytics','preferences','advertising'])$(`[name="${k}"]`,d).checked=!!choices?.[k];d.showModal();}
   $$('[data-open]').forEach(b=>b.addEventListener('click',()=>openDialog(b.dataset.open,b)));
   $$('dialog').forEach(d=>{
-    d.setAttribute('aria-label',({'menu-dialog':'Navigation','cookie-dialog':'Your privacy choices'})[d.id]||'Dialog');
+    d.setAttribute('aria-label',({'menu-dialog':'Navigation','bag-dialog':'Your bag','cookie-dialog':'Your privacy choices'})[d.id]||'Dialog');
     $('[data-close]',d)?.addEventListener('click',()=>d.close());
     d.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();d.close();}});
     d.addEventListener('close',()=>openers.get(d)?.focus());
@@ -66,7 +66,6 @@
     form.addEventListener('submit',async e=>{
       e.preventDefault();if(!form.reportValidity())return;
       const button=$('button[type=submit]',form),status=$('.form-status',form);
-      if(!navigator.onLine){status.textContent='You are offline. Please reconnect to send this form. Your entries have not been sent.';return;}
       button.disabled=true;status.removeAttribute('data-error');status.textContent='Sending…';
       const values=Object.fromEntries(new FormData(form));
       requestId ||= crypto.randomUUID();
@@ -92,6 +91,31 @@
   const enquiry=$('[data-form=enquiry]');
   if(enquiry)config.then(service=>{if(!service?.deliveryReady){$('button[type=submit]',enquiry).textContent='Continue to email';$('.form-status',enquiry).textContent='Opens a prepared message in your email app. Send it there to contact the atelier.';}});
   if(enquiry){if(query.get('project'))$('[name=project]',enquiry).value=query.get('project');if(query.get('composition'))$('[name=message]',enquiry).value=`I am interested in ${query.get('composition')}.`;}
+  const filters=$('.filter-bar');
+  if(filters){
+    const items=$$('.collection-grid .collection-item'),more=$('[data-show-more]');
+    let limit=8;
+    const collection=query.get('collection');
+    const activeCollection=['table','wall','floral-club','bespoke'].includes(collection)?collection:'';
+    for(const key of ['size','type','occasion','style','format']){
+      const field=filters.elements.namedItem(key),value=query.get(key);
+      if(field&&value&&[...field.options].some(o=>o.value===value))field.value=value;
+    }
+    const filter=()=>{
+      const vals=Object.fromEntries(new FormData(filters));
+      const matches=items.filter(item=>(!activeCollection||(item.dataset.collection||'').split(' ').includes(activeCollection))&&Object.entries(vals).every(([k,v])=>!v||(item.dataset[k]||'').split(' ').includes(v)));
+      items.forEach(item=>{item.hidden=true;});
+      matches.slice(0,limit).forEach(item=>{item.hidden=false;});
+      $('.collection-status').textContent=`Showing ${Math.min(limit,matches.length)} of ${matches.length} compositions`;
+      $('.empty-state').hidden=matches.length!==0;more.hidden=matches.length<=limit;
+      more.textContent=`Show more compositions (${Math.max(0,matches.length-limit)} remaining)`;
+    };
+    filters.addEventListener('change',()=>{limit=8;filter();});
+    filters.addEventListener('reset',()=>queueMicrotask(()=>{limit=8;filter();}));
+    more.addEventListener('click',()=>{limit+=8;filter();});
+    $('[data-reset-filters]')?.addEventListener('click',()=>filters.reset());
+    filter();
+  }
   const opening=$('[data-floral-opening]');
   const openingIsActive=()=>pageRoot.classList.contains('floral-opening-active');
   if(opening){
@@ -158,9 +182,7 @@
           .to(opening,{autoAlpha:0,duration:.22},.78);
         const advance=delta=>{
           if(finished||finishing||document.hidden)return;
-          // Touch has no wheel momentum: finish after ~74px of upward finger
-          // travel (160 * .76 / 1.65), instead of requiring several swipes.
-          const distance=mobile.matches?160:Math.max(980,innerHeight*1.2);
+          const distance=mobile.matches?720:Math.max(980,innerHeight*1.2);
           target=gsap.utils.clamp(0,1,target+delta/distance);
           progressTween?.kill();
           if(target>=.76){
@@ -260,24 +282,41 @@
       ready=true;controls.hidden=false;timeline.seek(5.3);staticMode=false;sync();
     });
   }
-  // The compositions are fully visible without JS; only their entry gains depth.
-  if(window.gsap&&!navigator.connection?.saveData){
-    const campaignMedia=gsap.matchMedia();
-    campaignMedia.add('(prefers-reduced-motion: no-preference)',()=>{
-      const animations=[];
-      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-        if(!entry.isIntersecting)return;
-        observer.unobserve(entry.target);
-        const object=$('[data-campaign-object]',entry.target),field=$('.campaign-color-field',entry.target);
-        const reveal=gsap.timeline({defaults:{duration:.95,ease:'power2.out'}})
-          .fromTo(field,{scale:.97},{scale:1,clearProps:'transform'},0)
-          .fromTo(object,{y:18,opacity:.85},{y:0,opacity:1,clearProps:'transform,opacity'},.08);
-        animations.push(reveal);
-      }),{threshold:.18});
-      $$('[data-campaign]').forEach(panel=>observer.observe(panel));
-      return ()=>{observer.disconnect();animations.forEach(animation=>animation.kill());};
-    });
+  $$('[data-house-motion]').forEach(montage=>{
+  if(window.gsap){
+    const button=$('[data-motion-toggle]',montage),tracks=$$('.motion-track',montage);
+    const films=$$('video[data-motion-video]',montage).map(video=>({video,visible:false,loaded:false}));
+    const connection=navigator.connection;
+    let visible=false,paused=false,tweens=[];
+    const staticView=()=>reduced.matches||connection?.saveData;
+    function sync(){
+      const moving=visible&&!paused&&!document.hidden&&!staticView();
+      tweens.forEach(t=>moving?t.play():t.pause());
+      button.setAttribute('aria-label',paused?'Play moving collection':'Pause moving collection');
+      button.setAttribute('aria-pressed',String(!paused));button.querySelector('span').textContent=paused?'▷':'Ⅱ';
+      films.forEach(item=>{
+        if(!moving||!item.visible){item.video.pause();return;}
+        if(!item.loaded){item.loaded=true;item.video.src=`assets/media/${item.video.dataset.motionVideo}.mp4?v=${assetVersion}`;}
+        item.video.play().catch(()=>{});
+      });
+    }
+    function configure(){
+      tweens.forEach(t=>t.kill());tweens=[];gsap.set(tracks,{clearProps:'transform'});
+      montage.classList.toggle('is-static',!!staticView());button.hidden=!!staticView();
+      if(!staticView())tracks.forEach((track,i)=>{
+        const right=track.dataset.direction==='1';
+        tweens.push(gsap.fromTo(track,{xPercent:right?-50:0},{xPercent:right?0:-50,duration:Math.max(100,track.scrollWidth/2/24),ease:'none',repeat:-1,paused:true}));
+      });
+      sync();
+    }
+    button.addEventListener('click',()=>{paused=!paused;sync();});
+    new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.05}).observe(montage);
+    const filmObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{const item=films.find(f=>f.video===e.target);item.visible=e.isIntersecting;});sync();},{threshold:.15});
+    films.forEach(f=>filmObserver.observe(f.video));
+    document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',configure);connection?.addEventListener('change',configure);
+    configure();
   }
+  });
   const players=[];
   function player(video,button,isHero=false){
     const state={video,button,visible:false,userPaused:false,loaded:false,id:null,manual:false};players.push(state);
@@ -330,6 +369,53 @@
       });
       return ()=>observer.disconnect();
     });
+  }
+  if(window.gsap){
+    const flows=$$('[data-flow-scroll]');
+    const connection=navigator.connection;
+    if(flows.length&&!connection?.saveData){
+      const flowMedia=gsap.matchMedia();
+      flowMedia.add('(prefers-reduced-motion: no-preference)',()=>{
+        const active=new Set();
+        const sways=new Map(flows.filter(section=>section.classList.contains('architectural-ribbon')).map(section=>{
+          const motion=gsap.timeline({paused:true,repeat:-1,yoyo:true,defaults:{duration:3,ease:'sine.inOut'}})
+            .fromTo($('svg',section),{xPercent:-2.5,y:-4},{xPercent:2.5,y:4},0)
+            .fromTo($('.ribbon-plane-primary',section),
+              {attr:{d:'M -80 148 C 240 34 500 36 798 119 s 544 100 882 -54'}},
+              {attr:{d:'M -80 78 C 240 190 500 184 798 103 s 544 -76 882 48'}},0)
+            .fromTo($('.ribbon-plane-secondary',section),
+              {attr:{d:'M -80 171 C 238 61 497 62 793 141 s 548 91 887 -62'},y:-4},
+              {attr:{d:'M -80 101 C 238 204 497 197 793 125 s 548 -67 887 42'},y:4},0);
+          return [section,motion];
+        }));
+        const syncSways=()=>sways.forEach((tween,section)=>{
+          if(active.has(section)&&!document.hidden)tween.play();else tween.pause();
+        });
+        let frame=0;
+        const paint=()=>{
+          frame=0;
+          if(document.hidden)return;
+          const viewport=innerHeight||1;
+          active.forEach(section=>{
+            const plane=$('[data-flow-plane]',section);
+            if(!plane)return;
+            const rect=section.getBoundingClientRect();
+            const progress=gsap.utils.clamp(0,1,(viewport-rect.top)/(viewport+rect.height));
+            const range=section.classList.contains('architectural-ribbon')?5:2.5;
+            gsap.set(plane,{xPercent:(progress-.5)*range,force3D:true});
+          });
+        };
+        const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint);};
+        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>entry.isIntersecting?active.add(entry.target):active.delete(entry.target));syncSways();schedule();});
+        flows.forEach(section=>observer.observe(section));
+        addEventListener('scroll',schedule,{passive:true});
+        addEventListener('resize',schedule,{passive:true});
+        document.addEventListener('visibilitychange',schedule);
+        document.addEventListener('visibilitychange',syncSways);
+        schedule();
+        return ()=>{observer.disconnect();removeEventListener('scroll',schedule);removeEventListener('resize',schedule);document.removeEventListener('visibilitychange',schedule);document.removeEventListener('visibilitychange',syncSways);sways.forEach(tween=>tween.kill());if(frame)cancelAnimationFrame(frame);flows.forEach(section=>{const plane=$('[data-flow-plane]',section);if(plane)gsap.set(plane,{clearProps:'transform'});});};
+      });
+    }
   }
   async function track(event,detail={}){
     if(!choices?.analytics||navigator.globalPrivacyControl||!receipt)return;
