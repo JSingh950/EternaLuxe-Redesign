@@ -639,7 +639,7 @@ body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collectio
 
 
 /* Restored botanical scenes from 3d56066; existing Part 2 sections retain their layout. */
-.botanical-campaign{--campaign-blue:#bbd0de;--campaign-blush:#eed8cf;position:relative;overflow:clip;background:var(--paper)}
+.botanical-campaign{--campaign-blue:#e5dccb;--campaign-blush:#eee5d7;position:relative;overflow:clip;background:var(--paper)}
 .campaign-panel{position:relative;isolation:isolate;display:grid;grid-template-columns:42% 58%;align-items:center;padding:16px var(--gutter) 0}
 .campaign-copy{position:relative;z-index:4;padding:38px 0;min-width:0}
 .campaign-copy .eyebrow{display:block;font-size:10px;letter-spacing:.18em;margin-bottom:26px}
@@ -648,7 +648,7 @@ body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collectio
 .campaign-copy>p:not(.eyebrow){font-size:clamp(14px,1.35vw,19px);line-height:1.7;margin-bottom:20px;max-width:28ch}
 .campaign-copy .text-link{font-size:12px;letter-spacing:0;padding-bottom:5px;gap:26px}
 .campaign-stage{--plinth-height:130px;position:relative;height:clamp(600px,55vw,800px);width:100%;min-width:0;z-index:2}
-.campaign-color-field{position:absolute;z-index:0;inset:2% -18% 0 -10%;border-radius:58% 0 0 48%;background:radial-gradient(ellipse at 10% 15%,#d0e0e9,transparent 70%),var(--campaign-blue)}
+.campaign-color-field{position:absolute;z-index:0;inset:2% -18% 0 -10%;border-radius:58% 0 0 48%;background:radial-gradient(ellipse at 10% 15%,#f4eddf,transparent 70%),var(--campaign-blue)}
 .campaign-color-field:after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(140deg,transparent 58%,rgba(255,255,255,.24) 59%,transparent 68%);opacity:.65}
 .campaign-plinth{position:absolute;z-index:1;left:1%;right:1%;bottom:0;height:var(--plinth-height);border-radius:0 0 3px 3px;background:linear-gradient(100deg,rgba(238,228,211,.92),rgba(246,241,231,.9) 48%,rgba(221,207,186,.94)),url('scene/room.webp') center 95% / 190% auto;box-shadow:inset 12px 0 30px rgba(255,255,255,.24)}
 .campaign-plinth:before{content:"";position:absolute;inset:-30px 0 auto;height:60px;border-radius:50%;background:linear-gradient(110deg,rgba(244,237,223,.8),rgba(251,248,240,.82)),url('scene/room.webp') center 95% / 160% auto;box-shadow:0 3px 3px rgba(117,94,63,.08)}
@@ -660,13 +660,13 @@ body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collectio
 .campaign-seam svg{width:100%;height:100%;display:block;fill:var(--campaign-blush)}
 .campaign-panel--blush{grid-template-columns:58% 42%;background:var(--campaign-blush);padding-top:0;padding-bottom:24px}
 .campaign-panel--blush .campaign-stage{--plinth-height:90px;height:clamp(570px,51vw,750px);margin-top:-25px}
-.campaign-panel--blush .campaign-color-field{inset:3% 5% 8% -25%;border-radius:50%;background:radial-gradient(ellipse at 65% 30%,#f5e4db,transparent 65%);opacity:.75}
+.campaign-panel--blush .campaign-color-field{inset:3% 5% 8% -25%;border-radius:50%;background:radial-gradient(ellipse at 65% 30%,#f5efe3,transparent 65%);opacity:.75}
 .campaign-panel--blush .campaign-plinth{left:-30%;right:-8%;border-radius:0;background:linear-gradient(100deg,rgba(238,224,203,.88),rgba(247,238,224,.84)),url('scene/room.webp') center 95% / 160% auto}
 .campaign-panel--blush .campaign-plinth:before{height:90px;top:-45px;background:linear-gradient(110deg,rgba(247,239,225,.8),rgba(255,250,240,.86)),url('scene/room.webp') center 95% / 150% auto}
 .campaign-panel--blush .campaign-object{width:94%;left:0;height:calc(100% - var(--plinth-height) - 12px)}
 .campaign-panel--blush .campaign-object:after{left:32%;width:30%;height:17px}
 .campaign-panel--blush .campaign-copy{padding-left:10%;padding-right:5%;align-self:start;margin-top:12%}
-.campaign-detail{position:absolute;z-index:1;right:-1%;bottom:0;width:15%;height:29%;border-radius:100% 0 0 0;background:#efd5c9;overflow:hidden;opacity:.65;pointer-events:none}
+.campaign-detail{position:absolute;z-index:1;right:-1%;bottom:0;width:15%;height:29%;border-radius:100% 0 0 0;background:#e9decc;overflow:hidden;opacity:.65;pointer-events:none}
 .campaign-detail img{position:absolute;width:380%;height:380%;max-width:none;object-fit:contain;left:-220%;top:-194%;filter:saturate(.7)}
 @media(min-width:1800px){.campaign-panel{padding-left:max(var(--gutter),calc((100vw - 1680px)/2));padding-right:max(var(--gutter),calc((100vw - 1680px)/2))}}
 @media(max-width:1000px) and (min-width:701px){.campaign-copy h2{font-size:clamp(54px,6.8vw,72px)}.campaign-stage{--plinth-height:105px;height:560px}.campaign-panel--blush .campaign-stage{height:540px}.campaign-copy .eyebrow{font-size:8px}.campaign-copy>p:not(.eyebrow){font-size:14px}.campaign-detail{width:12%;height:20%}}
