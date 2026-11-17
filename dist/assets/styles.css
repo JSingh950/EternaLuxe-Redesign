@@ -365,14 +365,14 @@ body[data-page="index"] .club-copy{position:relative;z-index:2;background:#e4ded
 /* House: ribbons are reserved separators, never overlays. */
 body[data-page="house"] .house-cinema{position:relative;isolation:isolate;overflow:visible}
 body[data-page="house"] .house-cinema:after{content:none}
-body[data-page="house"] .house-cinema-screen{position:relative;background:linear-gradient(112deg,var(--paper) 0 55%,#e6dfd2 55%)}
+body[data-page="house"] .house-cinema-screen{position:relative;background:linear-gradient(180deg,transparent 65%,var(--paper) 100%),linear-gradient(112deg,var(--paper) 20%,#e6dfd2 85%)}
 body[data-page="house"] .house-cinema-screen:before{content:none}
 body[data-page="house"] .house-cinema-title,.house-philosophy-copy,body[data-page="house"] #ikebana .page-intro,body[data-page="house"] .film-editorial>div{position:relative;z-index:3}
 body[data-page="house"] .house-motion{position:relative;z-index:1;background:#e8e0d2}
 body[data-page="house"] .architectural-ribbon{z-index:1}
 body[data-page="house"] .house-motion-philosophy{position:relative;z-index:2;background:var(--paper);padding-top:clamp(74px,7vw,110px);padding-bottom:clamp(78px,7vw,116px)}
 body[data-page="house"] #ikebana{position:relative;z-index:2;background:var(--paper);padding-top:clamp(58px,6vw,92px)}
-body[data-page="house"] .film-editorial{position:relative;overflow:visible;clip-path:none;background:#e8e0d2;padding-top:clamp(70px,7vw,108px);padding-bottom:clamp(72px,7vw,112px)}
+body[data-page="house"] .film-editorial{position:relative;overflow:visible;clip-path:none;background:linear-gradient(180deg,var(--paper),#e8e0d2 clamp(70px,7vw,108px),#e8e0d2 calc(100% - clamp(72px,7vw,112px)),var(--paper));padding-top:clamp(70px,7vw,108px);padding-bottom:clamp(72px,7vw,112px)}
 
 /* About and Atelier keep sculptural backgrounds without intersecting copy. */
 body[data-page="about"] .about-hero{overflow:visible;padding-top:clamp(74px,7vw,112px);padding-bottom:clamp(82px,8vw,126px)}
@@ -431,7 +431,7 @@ body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bott
  body[data-page="index"] .collection-section{padding-top:58px;padding-bottom:68px}
  body[data-page="index"] .discovery-pair{padding-top:56px;padding-bottom:60px}
  body[data-page="index"] .club-feature:before{content:none}
- body[data-page="house"] .house-cinema-screen{background:linear-gradient(164deg,var(--paper) 0 66%,#e6dfd2 66%)}
+ body[data-page="house"] .house-cinema-screen{background:linear-gradient(180deg,transparent 65%,var(--paper) 100%),linear-gradient(164deg,var(--paper) 20%,#e6dfd2 85%)}
  body[data-page="house"] .house-motion-philosophy{padding-top:64px;padding-bottom:68px}
  body[data-page="house"] #ikebana{padding-top:48px}
  body[data-page="house"] .film-editorial{padding-top:62px;padding-bottom:66px}
@@ -756,3 +756,6 @@ body[data-page="index"] .discovery-pair .text-link{border-bottom:0;text-decorati
 /* The remaining masthead keeps Contact Us accessible after Bag removal. */
 .site-header .contact-link{display:inline-flex;align-items:center;min-height:44px}
 @media(max-width:700px){.site-header .wordmark{width:160px}.site-header .wordmark img{width:100%;height:auto}.site-header .contact-link{font-size:11px;white-space:nowrap}}
+
+/* Keep the House section joins continuous with their shared ivory surface. */
+body[data-page="house"] .house-film-colophon,body[data-page="house"] .invitation{border:0}
