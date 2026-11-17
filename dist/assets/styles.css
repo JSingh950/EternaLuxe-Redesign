@@ -558,7 +558,6 @@ body[data-page="index"] .venue-controls{
 
 /* A functional campaign index gives the photograph an understated folio. */
 .venue-edition{position:absolute;left:clamp(24px,3.4vw,64px);bottom:20px;display:flex;align-items:center;gap:16px;color:#302c28;pointer-events:auto}
-.venue-edition-number{font-size:10px;font-weight:600;line-height:1;letter-spacing:.14em;font-variant-numeric:tabular-nums}
 .venue-edition-choices{display:flex;gap:8px}
 .venue-edition-choices button{display:grid;place-items:center;width:30px;height:44px;padding:0}
 .venue-edition-choices button span{display:block;width:100%;height:1px;background:currentColor;opacity:.3;transition:opacity .3s,transform .3s;transform:scaleX(.8)}
@@ -568,11 +567,11 @@ body[data-page="index"] .venue-manual button{padding:0;min-height:44px;backgroun
 body[data-page="index"] .venue-manual button:hover{text-decoration:underline}
 
 @media(max-width:700px){
+ body[data-page="index"] .venue-hero{height:min(100svh,100vw)}
  body[data-page="index"] .venue-scene{background-image:url('scene/venue-extended-mobile.webp')}
  body[data-page="index"] .venue-layer{top:calc(50% - 22.2vw)}
  body[data-page="index"] .venue-controls .film-toggle{right:14px;bottom:14px}
  .venue-edition{left:20px;bottom:6px;gap:12px}
- .venue-edition-number{font-size:9px}
  .venue-edition-choices{gap:4px}
  .venue-edition-choices button{width:24px}
  body[data-page="index"] .venue-manual{right:18px;bottom:6px;gap:12px}

@@ -220,13 +220,12 @@
     const connection=navigator.connection;
     let ready=false,visible=false,userPaused=false,step=1,staticMode=false;
     let currentEdition=-1;
-    const editionNumber=$('[data-venue-edition]'),editionChoices=$$('[data-venue-set]');
+    const editionChoices=$$('[data-venue-set]');
     const paletteFor=set=>set[0].dataset.scenePiece.replace('-table','').replace('table','ivory');
     function updateEdition(index){
       if(index===currentEdition)return;
       currentEdition=index;
       const palette=sets[index]?paletteFor(sets[index]):null;
-      if(editionNumber)editionNumber.textContent=`${String(index+1).padStart(2,'0')} / ${String(sets.length).padStart(2,'0')}`;
       editionChoices.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.venueSet===palette)));
     }
     const still=()=>reduced.matches||connection?.saveData;
