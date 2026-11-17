@@ -716,16 +716,19 @@ body[data-page] main .collection-item .price{display:block;padding-top:8px;white
 body[data-page] main .collection-item .price small{text-align:left}
 body[data-page="archive"] .archive-grid>.editorial-image:nth-child(n){padding-top:0;margin-top:0;min-width:0}
 
-/* Floral Club: existing content, softened setting and the same complete organic photograph. */
+/* Floral Club: lightly rounded media itself, no decorative backing. */
 body[data-page="index"] .club-feature{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px);align-items:center;padding:clamp(60px,7vw,104px) var(--gutter);background:var(--paper);overflow:visible;isolation:isolate}
-body[data-page="index"] .club-feature:before{content:"";position:absolute;z-index:-1;inset:6% 2% 3% 8%;width:auto;height:auto;border-radius:46% 35% 42% 27%;background:radial-gradient(ellipse at 42% 50%,rgba(224,213,191,.48),transparent 72%);pointer-events:none}
-body[data-page="index"] .club-feature .club-image[data-organic-frame]{width:100%;height:auto;max-height:none;aspect-ratio:4/5;padding:12%;box-sizing:border-box;background:var(--organic-photo-mat);border-radius:var(--organic-photo-shape);overflow:hidden}
-body[data-page="index"] .club-feature .club-image[data-organic-frame] picture{width:100%;height:100%;aspect-ratio:auto;overflow:visible;border-radius:0}
-body[data-page="index"] .club-feature .club-image[data-organic-frame] img{width:100%;height:100%;object-fit:contain;transform:none}
+body[data-page="index"] .club-feature:before{content:none}
+body[data-page="index"] .club-feature .club-image[data-soft-media]{width:100%;height:auto;max-height:none;aspect-ratio:auto;padding:0;box-sizing:border-box;background:transparent;border-radius:12px;overflow:hidden}
+body[data-page="index"] .club-feature .club-image[data-soft-media] picture{width:100%;height:auto;aspect-ratio:auto;overflow:hidden;border-radius:12px}
+body[data-page="index"] .club-feature .club-image[data-soft-media] img{width:100%;height:auto;object-fit:contain;transform:none;border-radius:12px}
 body[data-page="index"] .club-feature .club-copy{padding:0;background:transparent;max-width:500px}
 body[data-page="index"] .club-feature .club-copy h2{font-size:clamp(36px,4.6vw,68px);line-height:1.12}
 body[data-page="index"] .club-feature .club-copy>p:not(.eyebrow){font-size:clamp(14px,1.15vw,17px);line-height:1.85}
-@media(max-width:700px){body[data-page="index"] .club-feature{grid-template-columns:1fr;padding:56px 24px;gap:32px}body[data-page="index"] .club-feature .club-image[data-organic-frame]{width:100%;max-width:440px;justify-self:center}body[data-page="index"] .club-feature .club-copy{padding:0}body[data-page="index"] .club-feature .club-copy h2{font-size:36px}body[data-page="archive"] .archive-grid>.editorial-image:nth-child(n){margin-left:0}}
+@media(max-width:700px){body[data-page="index"] .club-feature{grid-template-columns:1fr;padding:56px 24px;gap:32px}body[data-page="index"] .club-feature .club-image[data-soft-media]{width:100%;max-width:440px;justify-self:center}body[data-page="index"] .club-feature .club-copy{padding:0}body[data-page="index"] .club-feature .club-copy h2{font-size:36px}body[data-page="archive"] .archive-grid>.editorial-image:nth-child(n){margin-left:0}}
+
+/* Rounded edges belong to the existing Club video, not a surrounding oval. */
+body[data-page="floral-club"] .club-intro .film,body[data-page="floral-club"] .club-intro video{border-radius:12px;overflow:hidden}
 
 /* Match actual photographs by compatible native proportions; no mats or framing shapes. */
 body[data-page="collections"] .collection-grid{display:block}
