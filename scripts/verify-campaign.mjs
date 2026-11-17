@@ -1,49 +1,29 @@
 import assert from 'node:assert/strict';
-import fs from 'node:fs/promises';
 import {chromium} from 'playwright';
-
+// Part 2 replaces the later campaign design; preserve subsequent owner edits.
 const base=process.env.TEST_URL||'http://localhost:4173';
 const browser=await chromium.launch();
-const setup=()=>{
- sessionStorage.setItem('eternaluxe-opening-v1','complete');
- localStorage.setItem('eternaluxe-privacy-v1',JSON.stringify({necessary:true,expiresAt:Date.now()+86400000}));
-};
 try{
- await fs.mkdir('tmp/campaign-review',{recursive:true});
- for(const [width,height]of [[375,812],[768,1024],[1440,1000],[1920,1080]]){
+ for(const [width,height] of [[375,812],[768,1024],[1440,900],[1920,1080],[1366,600]]){
   const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
-  const errors=[];page.on('pageerror',error=>errors.push(error.message));
-  await page.addInitScript(setup);await page.goto(base,{waitUntil:'networkidle'});
-  assert.equal(await page.locator('[data-campaign]').count(),2);
-  assert.equal(await page.locator('[data-venue] .venue-layer').count(),8);
-  for(const panel of await page.locator('[data-campaign]').all()){
-   await panel.scrollIntoViewIfNeeded();
-   await panel.locator('.campaign-arrangement img').evaluate(image=>image.decode());
-   const report=await panel.evaluate(element=>{
-    const image=element.querySelector('.campaign-arrangement img'),rect=image.getBoundingClientRect();
-    const title=element.querySelector('h2').getBoundingClientRect();
-    const stage=element.querySelector('.campaign-stage').getBoundingClientRect();
-    return {complete:image.complete&&image.naturalWidth>0,fit:getComputedStyle(image).objectFit,
-     productFits:rect.left>=-.5&&rect.right<=innerWidth+.5&&rect.top>=stage.top-1&&rect.bottom<=stage.bottom+1,
-     titleFits:title.left>=0&&title.right<=innerWidth+1,
-     overlap:Math.min(title.right,rect.right)>Math.max(title.left,rect.left)+1&&Math.min(title.bottom,rect.bottom)>Math.max(title.top,rect.top)+1};
-   });
-   assert(report.complete&&report.productFits&&report.titleFits&&!report.overlap,JSON.stringify({width,report}));
-   assert.equal(report.fit,'contain');
+  await page.addInitScript(()=>{sessionStorage.setItem('eternaluxe-opening-v1','complete');localStorage.setItem('eternaluxe-privacy-v1',JSON.stringify({necessary:true,expiresAt:Date.now()+86400000}));});
+  for(const route of ['index','house','collections','floral-club','about','enquiries']){
+   await page.goto(`${base}/${route}.html`,{waitUntil:'networkidle'});
+   assert.equal(await page.locator('[data-campaign],[data-house-motion],.flow-ribbon,#bag-dialog,.filter-bar').count(),0);
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${route}: overflow at ${width}`);
+   if(route==='index')assert.equal(await page.locator('[data-venue] .venue-layer').count(),8);
+   if(route==='house'){assert(await page.getByRole('heading',{name:'Form becomes feeling'}).isVisible());assert.equal(await page.locator('[data-video="orchid-film"]').count(),1);}
+   if(route==='collections'){
+    const frames=await page.locator('.collection-grid .collection-photo').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return r.width/r.height;}));
+    assert(frames.length>8&&frames.every(r=>Math.abs(r-.8)<.01));
+    if(width>700){const r=await page.locator('.collection-opening').boundingBox();assert(r.y+r.height<=height+2,'Complete collection opening fits');}
+   }
   }
-  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-  assert.equal(await page.getByRole('link',{name:'Explore the collection',exact:false}).getAttribute('href'),'collections.html');
-  assert.equal(await page.getByRole('link',{name:'Explore private commissions',exact:false}).first().getAttribute('href'),'collections.html#commissions');
-  await page.locator('.botanical-campaign').screenshot({path:`tmp/campaign-review/campaign-${width}.png`,style:'.site-header,.site-header *,.skip-link{visibility:hidden!important}'});
-  assert.deepEqual(errors,[]);await page.close();
+  await page.goto(`${base}/product-royal.html`);await page.getByRole('link',{name:'Enquire about this piece',exact:true}).click();assert((await page.locator('[name=message]').inputValue()).includes('Royal'));
+  await page.close();
  }
- const noScript=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});
- await noScript.goto(base);assert(await noScript.locator('.campaign-arrangement').first().isVisible());
- assert(await noScript.getByRole('heading',{name:'A softer kind of statement'}).isVisible());await noScript.close();
- const animated=await browser.newPage({viewport:{width:1440,height:1000}});await animated.addInitScript(setup);
- await animated.goto(base,{waitUntil:'networkidle'});
- await animated.locator('[data-campaign]').first().scrollIntoViewIfNeeded();
- await animated.waitForFunction(()=>{const e=document.querySelector('[data-campaign-object]');return getComputedStyle(e).transform==='none'&&getComputedStyle(e).opacity==='1';});
- await animated.close();
- console.log('Campaign verified at 375, 768, 1440 and 1920px: full products, readable copy, working links, reduced motion, no-JS and completed reveals.');
+ const page=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});
+ for(const route of ['index','house','collections']){await page.goto(`${base}/${route}.html`);assert(await page.locator('main img').first().isVisible());}
+ await page.close();
+ console.log('Part 2 presentation and retained owner changes verified at five viewports, with enquiry prefill and no-JavaScript content.');
 }finally{await browser.close();}
