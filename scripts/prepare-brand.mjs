@@ -131,3 +131,6 @@ for(const [name,buffer]of Object.entries(layers)) {
 }
 for(const palette of ['coral','jewel','signature','garden'])await sharp(layers.room).composite(['wall','console','pedestal','table'].map(part=>({input:layers[`${palette}-${part}`]}))).jpeg({quality:92}).toFile(`dist/assets/scene/composed-${palette}.jpg`);
 await sharp(layers.room).composite([{input:layers.console},{input:layers.pedestal},{input:layers.table},{input:layers.moss}]).jpeg({quality:92}).toFile('dist/assets/scene/composed.jpg');
+
+// Restored owner-supplied arrangements; source provenance in docs/FOCUSED-FLORAL-REVIEW.md.
+for(const n of [3,5])for(const w of [640,1040])await fs.copyFile(`assets/brand/campaign-arrangement-${n}-${w}.webp`,`dist/assets/brand/campaign-arrangement-${n}-${w}.webp`);
