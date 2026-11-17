@@ -81,7 +81,7 @@ try{
   const mobileHero=await touchPage.locator('.venue-hero').boundingBox();
   const mobileScene=await touchPage.locator('.venue-table').boundingBox();
   assert.equal(Math.abs(mobileScene.width/mobileScene.height-2)<.01,true,'mobile venue preserves the full room without cropping');
-  assert.equal(Math.abs(mobileHero.height-812)<2,true,'mobile venue fills the viewport');
+  assert.equal(Math.abs(mobileHero.height-375)<2,true,'mobile venue uses the approved tighter framing');
   assert.equal(await touchPage.locator('.venue-caption').count(),0,'mobile homepage hero copy is removed');
   await touch.close();
 

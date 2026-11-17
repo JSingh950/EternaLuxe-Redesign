@@ -26,7 +26,7 @@ export function botanicalCampaign(){
    <div class="campaign-copy" data-content-safe>
     <p class="eyebrow">Composed by nature</p>
     <h2 id="campaign-blush-title"><span>Form. </span><span>Feeling. </span><span>Flowers.</span></h2>
-    <a class="text-link" href="atelier.html">Discover the Atelier <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    <a class="text-link" href="collections.html#commissions">Discover the Atelier <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
    </div>
   </article>
  </section>`;

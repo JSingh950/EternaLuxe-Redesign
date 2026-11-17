@@ -16,4 +16,4 @@ export const products=[
 ];
 export const policies=[['terms','Terms & Conditions'],['privacy','Privacy Policy'],['cookies','Cookie Policy'],['shipping','Shipping & Delivery'],['refunds','Refunds & Subscriptions'],['accessibility','Accessibility']];
 export const policyVersion='2026-11-17';
-export const nav=[['house','The House'],['collections','Collections'],['about','About'],['archive','Archive'],['atelier','Atelier']];
+export const nav=[['index','Home'],['house','The House'],['collections','Collections'],['floral-club','Floral Club'],['about','About']];

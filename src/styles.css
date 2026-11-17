@@ -790,3 +790,17 @@ body[data-page="floral-club"] .club-intro{background:linear-gradient(180deg,var(
 body[data-page="floral-club"] .club-intro .film{border-radius:12px;overflow:hidden}
 body[data-page="floral-club"] .club-intro video{object-fit:contain}
 @media(max-width:700px){body[data-page="floral-club"] .club-intro{grid-template-columns:1fr;gap:32px}body[data-page="floral-club"] .club-intro .film{grid-row:1}}
+
+.private-commissions,.selected-work{padding:clamp(64px,7vw,104px) var(--gutter);scroll-margin-top:110px}
+.private-commissions{background:linear-gradient(180deg,var(--paper),#ded2be var(--tonal-fade),#ded2be calc(100% - var(--tonal-fade)),var(--paper))}
+.commission-introduction{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px);align-items:center}
+.commission-introduction picture{aspect-ratio:4/5;border-radius:12px;overflow:hidden}
+.commission-introduction p{margin-bottom:20px}.commission-introduction nav{display:flex;flex-wrap:wrap;gap:12px 24px}
+.commission-process{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}.commission-process h3{font-size:26px;margin:12px 0}
+.selected-work{background:linear-gradient(180deg,var(--paper),var(--page-tint) var(--tonal-fade),var(--page-tint) calc(100% - var(--tonal-fade)),var(--paper))}
+.selected-work .archive-grid{padding:0;gap:40px;align-items:start}.selected-work .archive-grid>figure:nth-child(n){padding-top:0;margin:0}.selected-work .archive-grid picture{aspect-ratio:auto;border-radius:12px}.selected-work .archive-grid img{height:auto;object-fit:contain}.selected-work .archive-film{background:transparent;height:auto;max-width:500px;margin:0 auto 64px;aspect-ratio:9/16}.selected-work .archive-film video{object-fit:contain}
+@media(max-width:700px){.commission-introduction,.commission-process{grid-template-columns:1fr}.commission-process{gap:32px;margin-top:40px}.selected-work .archive-grid{grid-template-columns:1fr}}
+.selected-work-film{max-width:760px;margin:0 auto 64px;aspect-ratio:16/9;height:auto;background:transparent}.selected-work-film video{object-fit:contain}
+.selected-work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 32px;align-items:start}.selected-work-grid picture{border-radius:12px}.selected-work-grid img{height:auto;object-fit:contain}.selected-work-grid figcaption{margin-top:14px}
+@media(max-width:700px){.selected-work-grid{grid-template-columns:1fr}}
+.selected-work-grid figcaption,.selected-work .collection-note,.commission-introduction .caption{display:block}

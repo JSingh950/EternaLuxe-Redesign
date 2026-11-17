@@ -31,11 +31,6 @@
       "permanent": true
     },
     {
-      "source": "/bespoke-events",
-      "destination": "/atelier.html",
-      "permanent": true
-    },
-    {
       "source": "/bag",
       "destination": "/enquiries.html",
       "permanent": true
@@ -43,6 +38,36 @@
     {
       "source": "/bag.html",
       "destination": "/enquiries.html",
+      "permanent": true
+    },
+    {
+      "source": "/atelier",
+      "destination": "/collections.html#commissions",
+      "permanent": true
+    },
+    {
+      "source": "/atelier.html",
+      "destination": "/collections.html#commissions",
+      "permanent": true
+    },
+    {
+      "source": "/archive",
+      "destination": "/house.html#selected-work",
+      "permanent": true
+    },
+    {
+      "source": "/archive.html",
+      "destination": "/house.html#selected-work",
+      "permanent": true
+    },
+    {
+      "source": "/bespoke-events",
+      "destination": "/collections.html#commissions",
+      "permanent": true
+    },
+    {
+      "source": "/bespoke-events.html",
+      "destination": "/collections.html#commissions",
       "permanent": true
     }
   ],
