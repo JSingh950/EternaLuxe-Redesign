@@ -726,3 +726,23 @@ body[data-page="index"] .club-feature .club-copy{padding:0;background:transparen
 body[data-page="index"] .club-feature .club-copy h2{font-size:clamp(36px,4.6vw,68px);line-height:1.12}
 body[data-page="index"] .club-feature .club-copy>p:not(.eyebrow){font-size:clamp(14px,1.15vw,17px);line-height:1.85}
 @media(max-width:700px){body[data-page="index"] .club-feature{grid-template-columns:1fr;padding:56px 24px;gap:32px}body[data-page="index"] .club-feature .club-image[data-organic-frame]{width:100%;max-width:440px;justify-self:center}body[data-page="index"] .club-feature .club-copy{padding:0}body[data-page="index"] .club-feature .club-copy h2{font-size:36px}body[data-page="archive"] .archive-grid>.editorial-image:nth-child(n){margin-left:0}}
+
+/* Match actual photographs by compatible native proportions; no mats or framing shapes. */
+body[data-page="collections"] .collection-grid{display:block}
+.collection-photo-group{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 30px;margin-bottom:48px;--matched-photo-ratio:4/5}
+.collection-photo-group[data-photo-layout="portrait"]{--matched-photo-ratio:2/3}
+.collection-photo-group[data-photo-layout="landscape"]{--matched-photo-ratio:4/3}
+.collection-photo-group:not(:has(.collection-item:not([hidden]))){display:none}
+body[data-page="index"] .matched-photo-selection .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame],
+body[data-page="collections"] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame]{display:block!important;width:100%!important;height:auto!important;aspect-ratio:var(--matched-photo-ratio)!important;padding:0!important;background:transparent!important;border-radius:12px!important;overflow:hidden!important}
+body[data-page="index"] .matched-photo-selection .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame]>picture,
+body[data-page="collections"] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame]>picture{display:block;width:100%!important;height:100%!important;aspect-ratio:auto!important;border-radius:12px!important;overflow:hidden!important;background:transparent!important}
+body[data-page="index"] .matched-photo-selection .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame] img,
+body[data-page="collections"] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame] img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;transform:none!important;border-radius:12px!important}
+@media(max-width:1000px) and (min-width:701px){.collection-photo-group{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.collection-photo-group{grid-template-columns:1fr;gap:32px;margin-bottom:40px}}
+
+body[data-page="index"] .editorial-collection.matched-photo-selection{display:block;max-width:1040px;margin-inline:auto}
+body[data-page="index"] .matched-photo-selection .collection-photo-group{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;margin-bottom:48px}
+body[data-page="index"] .editorial-collection.matched-photo-selection .collection-item:nth-child(n){width:100%;max-width:none;padding:0}
+@media(max-width:700px){body[data-page="index"] .matched-photo-selection .collection-photo-group{grid-template-columns:1fr;gap:32px}}
