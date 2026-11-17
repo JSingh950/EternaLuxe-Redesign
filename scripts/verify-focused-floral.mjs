@@ -2,7 +2,8 @@ import fs from 'node:fs/promises';import {execFileSync} from 'node:child_process
 const base=process.env.TEST_URL||'http://localhost:4173';const baseline='rollback/before-focused-floral-2026-11-16';
 const strip=url=>url.split('?')[0];
 // The review draft retains every existing page, photograph and navigation destination.
-for(const file of execFileSync('git',['ls-tree','--name-only',baseline+':dist'],{encoding:'utf8'}).trim().split('\n').filter(f=>f.endsWith('.html'))){const before=execFileSync('git',['show',baseline+':dist/'+file],{encoding:'utf8'}),after=await fs.readFile('dist/'+file,'utf8');
+for(const file of execFileSync('git',['ls-tree','--name-only',baseline+':dist'],{encoding:'utf8'}).trim().split('\n').filter(f=>f.endsWith('.html'))){let before=execFileSync('git',['show',baseline+':dist/'+file],{encoding:'utf8'});const after=await fs.readFile('dist/'+file,'utf8');
+ if(file==='index.html')before=before.replace(/<section class="collection-section[^"]*"[^>]*>[\s\S]*?<\/section>/g,'').replace(/<section class="house-motion"[^>]*>[\s\S]*?<\/section>/g,'');
  for(const attr of ['href','src','poster']){const urls=html=>new Set([...html.matchAll(new RegExp(attr+'="([^"]+)"','g'))].map(m=>strip(m[1])));const old=urls(before),now=urls(after);for(const url of old)assert(now.has(url),`${file}: removed ${attr} ${url}`);}
 }
 const browser=await chromium.launch();try{
@@ -24,7 +25,9 @@ const browser=await chromium.launch();try{
   }
   if(route==='index'){
    assert.equal(await page.locator('.campaign-arrangement').count(),2);
-   assert.equal(await page.locator('.matched-photo-selection .collection-item').count(),4);
+   assert.equal(await page.locator('.collection-section,.house-motion,.architectural-ribbon').count(),0,'Approved Home removals are absent');
+   for(const article of await page.locator('.discovery-pair article').all())assert.equal(await article.evaluate(e=>getComputedStyle(e,'::before').content),'none');
+   for(const link of await page.locator('.discovery-pair .text-link').all())assert.equal(await link.evaluate(e=>getComputedStyle(e).borderBottomWidth),'0px');
    const club=await page.locator('.club-image').evaluate(e=>({padding:getComputedStyle(e).padding,radius:getComputedStyle(e).borderRadius,bg:getComputedStyle(e).backgroundColor}));assert.equal(club.padding,'0px');assert.equal(club.radius,'12px');assert.equal(club.bg,'rgba(0, 0, 0, 0)');
    assert.equal(await page.locator('.club-feature').evaluate(e=>getComputedStyle(e,'::before').content),'none');
    const tint=await page.locator('.botanical-campaign').evaluate(e=>getComputedStyle(e).getPropertyValue('--campaign-blue').trim());assert.equal(tint,'#e5dccb');
@@ -34,6 +37,6 @@ const browser=await chromium.launch();try{
   }
  }
  await page.close();}
- const page=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});await page.goto(base+'/');assert(await page.locator('.campaign-arrangement img').first().isVisible());assert(await page.locator('[data-organic-frame]').first().isVisible());await page.close();
+ const page=await browser.newPage({javaScriptEnabled:false,viewport:{width:375,height:812}});await page.goto(base+'/');assert(await page.locator('.campaign-arrangement img').first().isVisible());assert(await page.locator('.club-image img').isVisible());await page.close();
 }finally{await browser.close();}
 console.log('Revised floral draft verified: matched actual photograph dimensions without mats, retained media/links, rounded Club media, warm neutral scenes, hero layers, pricing and no-JS at four widths.');
