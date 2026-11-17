@@ -637,3 +637,26 @@ body[data-page="atelier"] .wall-options .collection-item:nth-child(n) .collectio
 
 
 
+
+/* One organic mat for floral photographs. The inner safe area preserves every photo edge. */
+:root{--organic-photo-shape:36% 22% 35% 25% / 20% 29% 18% 31%;--organic-photo-mat:#e8e1d4}
+body[data-page] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame],
+body[data-page] main .archive-grid>.editorial-image:nth-child(n)>picture[data-organic-frame],
+body[data-page] main .atelier-opening>.editorial-image:nth-child(n)>picture[data-organic-frame]{
+ display:block!important;width:100%!important;height:auto!important;aspect-ratio:4/5!important;max-height:none!important;min-width:0;
+ box-sizing:border-box;padding:12%!important;border-radius:var(--organic-photo-shape)!important;background:var(--organic-photo-mat)!important;overflow:hidden!important;
+}
+body[data-page] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame]>picture,
+body[data-page] main .archive-grid>.editorial-image:nth-child(n)>picture[data-organic-frame],
+body[data-page] main .atelier-opening>.editorial-image:nth-child(n)>picture[data-organic-frame]{min-height:0}
+body[data-page] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame]>picture{display:block;width:100%!important;height:100%!important;aspect-ratio:auto!important;border-radius:0!important;overflow:visible!important;background:transparent!important;max-height:none!important}
+body[data-page] main .collection-item[data-image-shape]:nth-child(n) .collection-photo[data-organic-frame] img,
+body[data-page] main .archive-grid>.editorial-image:nth-child(n)>picture[data-organic-frame] img,
+body[data-page] main .atelier-opening>.editorial-image:nth-child(n)>picture[data-organic-frame] img{display:block;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;max-height:none!important;transform:none!important;border-radius:0!important}
+body[data-page] main .collection-item[data-image-shape]:nth-child(n){padding-top:0;align-self:start}
+body[data-page="index"] .editorial-collection{align-items:start}
+body[data-page] main .collection-item .item-caption{display:block;padding-top:18px;min-width:0}
+body[data-page] main .collection-item .price{display:block;padding-top:8px;white-space:normal}
+body[data-page] main .collection-item .price small{text-align:left}
+body[data-page="archive"] .archive-grid>.editorial-image:nth-child(n){padding-top:0;margin-top:0;min-width:0}
+
