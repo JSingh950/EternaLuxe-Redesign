@@ -59,3 +59,14 @@ Latest review: `output/focused-floral-review-20261117/index.html`. The 16 Novemb
 Revised verification passed for actual matching image dimensions at 375/768/1440/1920px, original media and links, full-width no-mat images, transparent Club backing, warm scene colors, hero layers, Club price and no-JavaScript visibility. Grouped Show More and filtering were also verified. The full layout suite passed for all 30 public pages at four viewports, and all 14 existing tests passed.
 
 The revised photograph verifier also checks every revealed Collections photograph (using Show More), confirms the actual image rectangle equals its matching slot with zero mat padding, and limits the calculated cover crop to under 7.5% of source area. The original flower colors and image files remain unchanged. Companion pairs and crops are shown at full resolution in the latest review.
+
+## Feature publication — 17 November 2026
+
+The owner explicitly requested pushing the reviewed changes to the live website. That request authorizes publication of the matched-photo groups and approved companion pairs, rounded Club media without the added oval, restored floral scenes, and warm neutral backgrounds. It supersedes the earlier draft-only publication hold for these additions.
+
+The five numbered removals remain unselected and have not been applied. Slideshows, ribbons, short rules and CTA underlines therefore remain in actual source and production. The local review artifacts are historical previews; their “proposed” screenshots still illustrate those unapproved removals and should not be mistaken for the complete live state.
+
+- Published source: `7bbb7a1` (feature commits remain separately revertible).
+- Staged production deployment: `dpl_FQAjVvQafATLAjULsDeXuR2GDgDN`, promoted after the deployed focused verification passed at four viewport widths.
+- Live site: https://eternaluxe-redesign.vercel.app/
+- Frozen Part 2 repository remains untouched; the `rollback/before-focused-floral-2026-11-16` tag preserves the pre-feature baseline.
