@@ -28,7 +28,6 @@ export function botanicalCampaign(){
     <h2 id="campaign-blush-title"><span>Form. </span><span>Feeling. </span><span>Flowers.</span></h2>
     <a class="text-link" href="atelier.html">Discover the Atelier <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
    </div>
-   <div class="campaign-detail" aria-hidden="true"><img src="assets/brand/campaign-arrangement-5-640.webp" alt="" width="640" height="753" loading="lazy" decoding="async"></div>
   </article>
  </section>`;
 }
