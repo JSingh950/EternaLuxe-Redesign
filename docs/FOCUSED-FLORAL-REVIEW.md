@@ -41,3 +41,21 @@ The review screenshot generator uses the unchanged baseline server at `BASELINE_
 - Full layout suite passed for all 30 public pages at four viewports.
 - Production homepage was checked against the frozen Part 2 baseline and remains unchanged.
 - Three feature commits and this review commit are saved locally on main. They are not pushed or deployed while the required deletion review is pending.
+
+## 17 November revisions — supersedes the first draft for Collections and Club
+
+The owner rejected added mats as a substitute for matching image sizes, approved slight background cropping, and approved adding two existing pieces as companions on Home while retaining Amber and Scarlet.
+
+- Collections now groups the original 20 cards by compatible native proportions. Actual images fill equal-size slots within each group: 4:5 editorial, 4:3 landscape and 2:3 portrait. All padding/mats are removed for those photographs. The grouped layout preserves filters, Show More and all piece URLs; no cards are deleted.
+- Home has two approved pairs: Amber + Plum Study (landscape), Scarlet Sculpture + Orchid Salon (portrait). The two original pieces remain. These are existing collection photographs, not new generated assets.
+- The homepage Club photograph has 12px rounding on the media itself with no oval backing or mat. The existing Floral Club page video has the same light rounding. Neither photograph nor film is replaced; all Club text, pricing and CTA destinations remain.
+- Restored scene backgrounds use ivory/champagne/stone neutrals (#e5dccb, #eee5d7 and related highlights), while the flowers retain their original colors.
+- Other pages' prior organic-card draft is unchanged by this revision.
+
+The five numbered removals are **still unapproved**: the owner selected “Approve selected items — I’ll list the numbers,” but has not supplied numbers. All five remain in actual draft source. Proposed screenshots only hide them for review.
+
+Latest review: `output/focused-floral-review-20261117/index.html`. The 16 November artifact remains a historical before state.
+
+Revised verification passed for actual matching image dimensions at 375/768/1440/1920px, original media and links, full-width no-mat images, transparent Club backing, warm scene colors, hero layers, Club price and no-JavaScript visibility. Grouped Show More and filtering were also verified. The full layout suite passed for all 30 public pages at four viewports, and all 14 existing tests passed.
+
+The revised photograph verifier also checks every revealed Collections photograph (using Show More), confirms the actual image rectangle equals its matching slot with zero mat padding, and limits the calculated cover crop to under 7.5% of source area. The original flower colors and image files remain unchanged. Companion pairs and crops are shown at full resolution in the latest review.

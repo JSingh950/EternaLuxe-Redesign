@@ -1,13 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {chromium} from 'playwright';
-const out=path.resolve(process.env.OUTPUT_DIR||'output/focused-floral-review-20261116');const beforeBase=process.env.BASELINE_URL||'http://127.0.0.1:4181';const draftBase=process.env.DRAFT_URL||'http://localhost:4173';await fs.mkdir(out,{recursive:true});
+const out=path.resolve(process.env.OUTPUT_DIR||'output/focused-floral-review-20261117');const beforeBase=process.env.BASELINE_URL||'http://127.0.0.1:4181';const draftBase=process.env.DRAFT_URL||'http://localhost:4173';await fs.mkdir(out,{recursive:true});
 const browser=await chromium.launch();
 const proposedCSS=`.house-motion,.architectural-ribbon{display:none!important}body[data-page="index"] .discovery-pair article:before{content:none!important}.discovery-pair article{border-top:0!important}.text-link{border-bottom:0!important;text-decoration:none!important}`;
 async function open(base,route,preview=false,width=1440){
  const page=await browser.newPage({viewport:{width,height:1000},reducedMotion:'reduce'});
  await page.addInitScript(()=>{sessionStorage.setItem('eternaluxe-opening-v1','complete');localStorage.setItem('eternaluxe-privacy-v1',JSON.stringify({necessary:true,expiresAt:Date.now()+86400000}));});
  await page.goto(base+'/'+route+'.html',{waitUntil:'networkidle'});
+ if(route==='collections')for(let n=0;n<5&&await page.locator('[data-show-more]').isVisible();n++)await page.locator('[data-show-more]').evaluate(button=>button.click());
  await page.addStyleTag({content:'.site-header,.skip-link,.cookie-banner{visibility:hidden!important}'+(preview?proposedCSS:'')});
  await page.evaluate(async()=>{for(const image of document.images){image.loading='eager';try{await image.decode()}catch{}}await document.fonts.ready;window.gsap?.set('[data-reveal]',{autoAlpha:1,y:0});window.gsap?.globalTimeline.pause();document.querySelectorAll('video').forEach(v=>v.pause());});
  return page;
@@ -19,6 +20,7 @@ async function crop(page,selector,file,margin=60,windowHeight){
 }
 const items=[];
 try{
+ if(!process.argv.includes('--finish')){
  const home=await open(beforeBase,'index');
  await mark(home,'.house-motion','1 · HOME: moving gallery and its controls');await crop(home,'.house-motion','remove-1-before.png');
  await home.close();
@@ -29,5 +31,19 @@ try{
  const afterHouse=await open(draftBase,'house',true);await crop(afterHouse,'#house-philosophy','remove-2-after.png',160);await crop(afterHouse,'#house-philosophy','remove-3b-after.png',100);await crop(afterHouse,'#ikebana','remove-3c-after.png',80,650);await afterHouse.close();
  for(const [key,selector]of [['frames','.editorial-collection'],['club','.club-feature']]){const before=await open(beforeBase,'index');await crop(before,selector,key+'-before.png',40);await before.close();const after=await open(draftBase,'index',true);await crop(after,selector,key+'-after.png',40);await after.close();}
  for(const width of [375,1440]){const p=await open(draftBase,'index',true,width);await crop(p,'.botanical-campaign','restored-scenes-'+width+'.png',24);await crop(p,'.club-feature','club-'+width+'.png',24);await p.screenshot({path:path.join(out,'homepage-proposed-'+width+'.png'),fullPage:true});await p.close();}
+
+ }
+ const cp=await open(draftBase,'collections',true);
+ for(let n=0;n<5&&await cp.locator('[data-show-more]').isVisible();n++)await cp.locator('[data-show-more]').evaluate(button=>button.click());
+ await cp.evaluate(()=>{window.gsap?.set('[data-reveal]',{autoAlpha:1,y:0});});
+ await crop(cp,'.collection-grid','collections-all-after.png',24);
+ for(const group of ['editorial','landscape','portrait'])await crop(cp,`[data-photo-layout="${group}"]`,'collections-'+group+'-after.png',24);
+ await cp.close();
+ const cv=await open(draftBase,'floral-club',true);await crop(cv,'.club-intro .film','club-video-after.png',24);await cv.close();
+ // Preserve the previous draft in the before column for the requested revisions.
+ const previous=path.resolve('output/focused-floral-review-20261116');
+ await fs.copyFile(path.join(previous,'frames-after.png'),path.join(out,'frames-before.png'));
+ await fs.copyFile(path.join(previous,'club-after.png'),path.join(out,'club-before.png'));
+ await fs.copyFile(path.join(previous,'restored-scenes-1440.png'),path.join(out,'scenes-before.png'));
 }finally{await browser.close();}
 console.log('Created marked before/after screenshots at '+out);
