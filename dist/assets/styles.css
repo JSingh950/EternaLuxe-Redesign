@@ -332,7 +332,7 @@ main :is(h1,h2,h3,p,a,button,label,summary,table){position:relative;z-index:2}
 /* Complete, balanced collection rows with no staggered voids. */
 body[data-page="collections"] .page-intro{
  position:relative;z-index:1;padding-top:clamp(54px,6vw,88px);padding-bottom:clamp(60px,7vw,104px);
- overflow:visible;background:linear-gradient(176deg,var(--paper) 0 73%,#e8e0d2 73% 100%)
+ overflow:visible;background:linear-gradient(180deg,var(--paper),#e8e0d2 55%,var(--paper))
 }
 body[data-page="collections"] .page-intro:after{content:none}
 body[data-page="collections"] .collections-shell{position:relative;isolation:isolate;overflow:visible;padding-top:clamp(34px,4vw,64px)}
@@ -415,7 +415,7 @@ body[data-page="archive"] .archive-grid{position:relative;z-index:2;padding-bott
  .architectural-field:before,.diagonal-sweep:before{display:none}
  .collection-grid .collection-item:nth-child(n){margin:0!important}
  .collection-grid .collection-item:nth-child(n) .collection-photo picture{aspect-ratio:4/5!important}
- body[data-page="collections"] .page-intro{padding-top:46px;padding-bottom:58px;background:linear-gradient(177deg,var(--paper) 0 80%,#e8e0d2 80% 100%)}
+ body[data-page="collections"] .page-intro{padding-top:46px;padding-bottom:58px;background:linear-gradient(180deg,var(--paper),#e8e0d2 55%,var(--paper))}
  body[data-page="collections"] .collections-shell{padding-top:30px}
  body[data-page="collections"] .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 14px}
  body[data-page="index"] .venue-caption{display:block;min-height:0;padding:24px 24px 38px}
@@ -759,3 +759,18 @@ body[data-page="index"] .discovery-pair .text-link{border-bottom:0;text-decorati
 
 /* Keep the House section joins continuous with their shared ivory surface. */
 body[data-page="house"] .house-film-colophon,body[data-page="house"] .invitation{border:0}
+
+/* Shared tonal transitions affect backgrounds only, leaving media and controls crisp. */
+:root{--tonal-fade:clamp(64px,8vw,128px)}
+.about-story,.membership{
+ --section-tone:#e8e0d2;
+ background:linear-gradient(180deg,var(--paper),var(--section-tone) var(--tonal-fade),var(--section-tone) calc(100% - var(--tonal-fade)),var(--paper));
+}
+.membership{--section-tone:#e9e3d8}
+.site-footer{background:linear-gradient(180deg,var(--paper),#eae4d9 var(--tonal-fade));border-top:0}
+.architectural-field:before,.diagonal-sweep:before{
+ mask-image:radial-gradient(ellipse at 60% 55%,#000 20%,transparent 75%);
+}
+.campaign-color-field{mask-image:radial-gradient(ellipse at 60% 50%,#000 35%,transparent 74%)}
+.campaign-seam svg{filter:blur(18px);transform:scaleY(1.15)}
+.campaign-panel--blush{background:linear-gradient(180deg,var(--campaign-blush) 60%,var(--paper))}
