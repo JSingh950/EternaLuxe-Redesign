@@ -57,7 +57,7 @@ body .house-cinema-film .film-toggle,body .house-composition-screen .film-toggle
 @media(max-width:700px){.collection-grid .collection-item:nth-child(5n+4){width:auto;margin-left:15%}.filter-bar{grid-template-columns:1fr 1fr}.filter-count{justify-self:start}}
 /* Floating photographic collection: two identical groups create a seamless cycle. */
 .house-motion{padding:60px 0 100px;background:var(--ivory)}
-.house-motion-philosophy{display:block!important;max-width:900px;margin:auto}.house-motion-philosophy .house-philosophy-copy{max-width:650px;margin:auto}
+.house-motion-philosophy{display:grid;max-width:1440px;margin:auto}.house-motion-philosophy .house-philosophy-copy{max-width:450px;margin:0}
 .motion-heading{padding:0 var(--gutter) 45px;display:flex;justify-content:space-between;align-items:end;gap:30px}
 .motion-heading .eyebrow{margin-bottom:14px}.motion-heading>p{font-size:12px;color:var(--muted)}
 .motion-canvas{position:relative;overflow:hidden;padding:30px 0 60px;isolation:isolate}
@@ -804,3 +804,33 @@ body[data-page="floral-club"] .club-intro video{object-fit:contain}
 .selected-work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 32px;align-items:start}.selected-work-grid picture{border-radius:12px}.selected-work-grid img{height:auto;object-fit:contain}.selected-work-grid figcaption{margin-top:14px}
 @media(max-width:700px){.selected-work-grid{grid-template-columns:1fr}}
 .selected-work-grid figcaption,.selected-work .collection-note,.commission-introduction .caption{display:block}
+
+/* House composition: reconnect the retained stories after the gallery removal. */
+body[data-page="house"] .house-cinema-screen{max-width:1440px;margin:auto;padding:clamp(32px,5vw,72px) var(--gutter);grid-template-columns:1fr 1fr;gap:clamp(32px,7vw,100px)}
+body[data-page="house"] .house-cinema-film{width:auto;height:clamp(440px,65svh,640px);max-height:none;max-width:100%;aspect-ratio:9/16;border-radius:12px}
+body[data-page="house"] .house-cinema-title{justify-self:center;max-width:440px}
+body[data-page="house"] .house-cinema-title h1{font-size:clamp(64px,7.5vw,112px);line-height:1.04}
+body[data-page="house"] .house-motion-philosophy{grid-template-columns:1fr 1fr;gap:clamp(32px,7vw,100px);padding:clamp(64px,7vw,104px) var(--gutter);align-items:center}
+body[data-page="house"] .house-philosophy-copy{max-width:450px;justify-self:center;padding:0}
+body[data-page="house"] .house-philosophy-copy h2{font-size:clamp(40px,4.4vw,66px);margin-bottom:24px}
+.house-philosophy-study picture{border-radius:12px;overflow:hidden}.house-philosophy-study img{height:auto;object-fit:contain}.house-philosophy-study figcaption{display:block;margin-top:14px}
+body[data-page="house"] #ikebana{padding-top:0}
+body[data-page="house"] #ikebana .page-intro{padding:32px var(--gutter)}
+body[data-page="house"] .film-editorial{padding:64px var(--gutter);margin-bottom:0;gap:clamp(32px,7vw,100px);grid-template-columns:1fr 1fr}
+body[data-page="house"] .film-editorial>.film{height:clamp(380px,42vw,560px);width:auto;max-height:none;aspect-ratio:9/16;border-radius:12px;overflow:hidden}
+body[data-page="house"] .film-editorial video{object-fit:contain}
+body[data-page="house"] .film-editorial .caption{display:block;margin-top:16px}
+body[data-page="house"] .selected-work{padding-top:64px;padding-bottom:64px}
+.selected-work-grid{gap:36px}.selected-work-grid figure{min-width:0}.selected-work-grid picture{display:flex;align-items:center;justify-content:center;height:clamp(300px,34vw,480px);overflow:hidden;background:transparent}.selected-work-grid img{width:auto;max-width:100%;height:auto;max-height:100%;object-fit:contain}
+.selected-work-film{max-width:720px;margin-bottom:40px;border-radius:12px;overflow:hidden}
+@media(max-width:700px){
+ body[data-page="house"] .house-cinema-screen{grid-template-columns:1fr;padding:32px 24px 40px;gap:28px}
+ body[data-page="house"] .house-cinema-film{height:auto;width:min(100%,300px);grid-row:1}
+ body[data-page="house"] .house-cinema-title{justify-self:start}
+ body[data-page="house"] .house-cinema-title h1{font-size:56px}
+ body[data-page="house"] .house-motion-philosophy{grid-template-columns:1fr;padding:48px 24px;gap:32px}
+ body[data-page="house"] .house-philosophy-copy{justify-self:start}
+ body[data-page="house"] .film-editorial{grid-template-columns:1fr;padding:40px 24px;gap:32px}
+ body[data-page="house"] .film-editorial>.film{height:auto;width:min(100%,280px);max-height:none}
+ .selected-work-grid picture{height:auto;max-height:none}.selected-work-grid img{width:100%;max-height:none}
+}
